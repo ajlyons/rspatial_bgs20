@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Spatial Data Analysis with R Exercise 3. Bundled Data, Sorting, Lists, and Saving Data</title>
+
+<script src="lib/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="lib/navigation-1.1/tabsets.js"></script>
+<link href="lib/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="lib/highlightjs-9.12.0/highlight.js"></script>
+<link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACkUlEQVQ4jX2SW0jTcRTHTzNyeZlh6lqmm3POdNPC6SxSEzaqafkykOFoIxTDWpKRFV6iQMNLFyMSsQvUW0WORc2WWBmGKEGZXUyz0NrmNmfa1PYgfHsQ1v5oHjgvX875/M45vy/R8mDJ9caxrFIL5CUWJB00Q9n+7Q+l1BetUMuMTL3JpTB0QVnejd1Hu9DQ60G5eQbqB7PIvj0L2bUZ0KZzghWbs0o7Fx3Tc/B6vStm6+g0wrQvIKh2gKKyUxnNSZoO685SC1YDeL1e9Ll+Ia7WCd5pJ4hojQ8g1nViezETYBqZx93BOdwa9jAgsdUT4J6ZQqC6f4GIiLYU9/RzNWYIdU9hd/8rLjN7UGT8DbWROVVMlQsBBWas142DiIikdfbFMF0POIVm2NzM1zwLS+mvcSsnEajpBSv/8RIgucGJ1EYXEs+NwjrlWfUGMee/Y2PFJIJLrFibex8kOsahhCYnUlpnIL1kh9X9/yMKG2yIOOlAsPYnAveZsE75EEQUQLwTwy5Rsxvx9UxApKEPEYY+BiSizA623oaggkdgq4xLKwRLq7i8sy6EFlpg8wNEVwyAd3wAbZ8cPu3CazeCC/sRojYjaL8Jvm8MPWLDBm03A8CveQ9+7RBia4cYU4QfeokwzTOwc6/4OzKXHap/C5ufD0RNo0i4OAZR81dcnnD69Mp3PxBe9GRkuZdFKk7sqTcQ132EpGUMydetSLnpgOSGHVtbxpHU9AX8mkFEG55/ZrjQL1h82V6esPLVh8Sr40i940J6xzzS7s1C0m6HqHEEiTnatgT5gcPijHxltFwhjpRIQpZjBAJ2lFTBFW5TiOPT8mXx6apdcRl5OaJM1Q6hLC9ls3RPTLgok0NELCKiv02kPqt/O1MZAAAAAElFTkSuQmCC" rel="icon" type="image/x-icon" />
+<script language="javascript" type="text/javascript">
+function TriShowHide(shID) {
+  shIDspan = shID + "span";
+  shIDdiv = shID + "div";
+  if (document.getElementById(shIDdiv).style.display != 'block') {
+    document.getElementById(shIDdiv).style.display = 'block';
+    txtSpan = "&#9660;";
+  } else {
+    document.getElementById(shIDdiv).style.display = 'none';
+    txtSpan = "&#9654;";
+  }
+  document.getElementById(shIDspan).innerHTML = txtSpan + " ";
+}
+function showHide(shID) {
+  if (shID=="soln-show-all") {
+    var allAnswerCode = document.getElementsByClassName("answer-code");
+    for (i = 0; i < allAnswerCode.length; i++) {
+        allAnswerCode[i].style.display = 'block';
+    }
+  } else if (shID=="soln-hide-all") {
+    var allAnswerCode = document.getElementsByClassName("answer-code");
+    for (i = 0; i < allAnswerCode.length; i++) {
+        allAnswerCode[i].style.display = 'none';
+    }
+  } else if (shID=="hints-show-all") {
+    var allAnswerCode = document.getElementsByClassName("hint");
+    for (i = 0; i < allAnswerCode.length; i++) {
+        allAnswerCode[i].style.display = 'block';
+    }
+  } else if (shID=="hints-hide-all") {
+    var allAnswerCode = document.getElementsByClassName("hint");
+    for (i = 0; i < allAnswerCode.length; i++) {
+        allAnswerCode[i].style.display = 'none';
+    }
+  } else {
+    if (document.getElementById(shID)) {
+      if (document.getElementById(shID).style.display != 'block') {
+        document.getElementById(shID).style.display = 'block';
+      } else {
+        document.getElementById(shID).style.display = 'none';
+      }
+    }
+  }
+}
+function CopyToClipboard(containerid) {
+if (document.selection) {
+    var range = document.body.createTextRange();
+    range.moveToElementText(document.getElementById(containerid));
+    range.select().createTextRange();
+    document.execCommand("copy");
+} else if (window.getSelection) {
+    var range = document.createRange();
+    range.selectNode(document.getElementById(containerid));
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    // alert("text copied")
+}}
+</script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="..\css\slidy_styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore"><span class="course-subtitle">Spatial Data Analysis with R</span><br/><span class="ex-subtitle">Exercise 3. Bundled Data, Sorting, Lists, and Saving Data</span></h1>
+
+</div>
+
+
+<style type="text/css">
+body {font-size:14pt;}
+code.r{font-size: 20px;}
+pre {font-size: 20px}
+</style>
+<div id="instructions" class="section level3">
+<h3>Instructions</h3>
+<ul>
+<li><span id="soln_odrinn" style="color:#008040; cursor:pointer;" onclick="showHide(&#39;odrinn&#39;);return false;">Setup R</span> (if you haven’t already)</li>
+</ul>
+<div id="odrinn" style="display:none; margin-left:4em;">
+<p><strong>Working on your computer:</strong><br />
+i. Install <a href="https://cran.r-project.org/">R</a>, <a href="https://www.rstudio.com/products/rstudio/download/">RStudio</a>, and the <a href="../setup.html">required packages</a>.<br />
+ii. Download and unzip the <a href="https://github.com/ajlyons/rspatial_bgs20" target="_blank">workshop materials</a>.</p>
+<p><strong>Using RStudio Cloud:</strong><br />
+i. Log-in to your RStudio Cloud account.<br />
+ii. Clone the workshop <a href="https://rstudio.cloud/project/587922" target="_blank">RStudio Cloud Project</a> (which already has all the data and pacakages installed).<br />
+iii. Click ‘Save a permanent copy’ to save a copy in your own workspace.</p>
+</div>
+<!--- Download the <a href="abcd">data file</a> and unzip it. --->
+<ul>
+<li><p>Create a new R script in RStudio (File → New File → R Script).</p></li>
+<li><p>Click the ‘Copy’ button below to copy the questions to the clipboard, then paste them into your script. Under each question, write R code. Run each line of R code as you enter it (press the Run button or ctrl+enter) to make sure it works.</p></li>
+<li><p>Remember to save your script periodically to avoid losing work if RStudio crashes.</p></li>
+<li><p>If you get stuck, click on the ‘hint’ link to see a hint, or the question number to see the answer. Click again to hide.</p></li>
+<li><p>Questions? Ask the instructor.</p></li>
+</ul>
+<hr class="hrdivider">
+<div class="copy-button">
+<button onclick="CopyToClipboard(&#39;qtn_div&#39;);return false;">
+Copy questions
+</button>
+</div>
+<div id="qtn_div" class="ex-qtn">
+<p>###################<br/>#### <strong>SORT DATA</strong> ####<br/>###################</p>
+<p># <tt>Nile</tt> is a dataset that comes with the <em>datasets</em> package, and contains the<br />
+#  annual flow of the river Nile from 1871-1970.</p>
+<p><a id="qtn_zfhrcd" href="#" class="showhidelink" onclick="showHide('zfhrcd');return false;"># 1.</a> What type of object is <em>Nile</em>?</p>
+<div id="zfhrcd" class="answer-code">
+<pre class="r"><code>class(Nile)</code></pre>
+<pre><code>## [1] &quot;ts&quot;</code></pre>
+<p><tt>ts</tt> = time series. A Time Series object is basically a numeric vector with additional attributes that save the time points.</p>
+</div>
+<p><a id="qtn_jdaltg" href="#" class="showhidelink" onclick="showHide('jdaltg');return false;"># 2.</a> How many values are there in <em>Nile</em>?</p>
+<div id="jdaltg" class="answer-code">
+<pre class="r"><code>length(Nile)</code></pre>
+<pre><code>## [1] 100</code></pre>
+</div>
+<p><a id="qtn_wckfld" href="#" class="showhidelink" onclick="showHide('wckfld');return false;"># 3.</a> Plot the Nile data</p>
+<div id="wckfld" class="answer-code">
+<pre class="r"><code>plot(Nile)</code></pre>
+<p><img src="ex03_sort-save_files/figure-html/plot_nile-1.png" width="672" /></p>
+</div>
+<p><a id="qtn_fpulpd" href="#" class="showhidelink" onclick="showHide('fpulpd');return false;"># 4.</a> Write expressions that return the i) lowest 3 values from <em>Nile</em>, ii) the top 3<br />
+#  values, and iii) middle three values</p>
+<div id="fpulpd" class="answer-code">
+<pre class="r"><code>sort(Nile)[1:3]</code></pre>
+<pre><code>## [1] 456 649 676</code></pre>
+<pre class="r"><code>sort(Nile, decreasing = TRUE)[1:3]</code></pre>
+<pre><code>## [1] 1370 1260 1250</code></pre>
+<pre class="r"><code>mid_idx &lt;- round(length(Nile) / 2)
+sort(Nile)[seq(from=mid_idx-1, to=mid_idx+1)]</code></pre>
+<pre><code>## [1] 874 890 897</code></pre>
+</div>
+<p>######################################<br/>#### <strong>CREATE AND MANIPULATE A LIST</strong> ####<br/>######################################</p>
+<p><a id="qtn_ncnwzg" href="#" class="showhidelink" onclick="showHide('ncnwzg');return false;"># 5.</a> Create three vectors:<br />
+# i. your favorite colors<br />
+# ii. ten random numbers from a uniform distribution ranging from 10 to 20<br />
+# iii. five randomly chosen letters of the alphabet</p>
+<div id="ncnwzg" class="answer-code">
+<pre class="r"><code>my_cols &lt;- c(&quot;green&quot;, &quot;crimson&quot;, &quot;bronze&quot;)
+my_nums &lt;- runif(10, min=10, max=20)
+my_letters &lt;- sample(LETTERS, size=5, replace=FALSE)</code></pre>
+</div>
+<p><a id="qtn_lusnod" href="#" class="showhidelink" onclick="showHide('lusnod');return false;"># 6.</a> Combine the three vectors you created above into a list.</p>
+<div id="lusnod" class="answer-code">
+<pre class="r"><code>my_list &lt;- list(colors=my_cols, nums=my_nums, ltrs=my_letters)
+my_list</code></pre>
+<pre><code>## $colors
+## [1] &quot;green&quot;   &quot;crimson&quot; &quot;bronze&quot; 
+## 
+## $nums
+##  [1] 14.12812 18.91697 12.46954 19.74248 12.72604 14.32798 17.15191 18.64179 10.70489 17.18949
+## 
+## $ltrs
+## [1] &quot;C&quot; &quot;T&quot; &quot;A&quot; &quot;E&quot; &quot;Y&quot;</code></pre>
+</div>
+<p><a id="qtn_nnkyrr" href="#" class="showhidelink" onclick="showHide('nnkyrr');return false;"># 7.</a> Write expressions that returns the class of each element of your list.</p>
+<div id="nnkyrr" class="answer-code">
+<pre class="r"><code>class(my_list$colors)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="r"><code>class(my_list$nums)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>class(my_list$ltrs)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<p>You could also use</p>
+<pre class="r"><code>str(my_list)</code></pre>
+<pre><code>## List of 3
+##  $ colors: chr [1:3] &quot;green&quot; &quot;crimson&quot; &quot;bronze&quot;
+##  $ nums  : num [1:10] 14.1 18.9 12.5 19.7 12.7 ...
+##  $ ltrs  : chr [1:5] &quot;C&quot; &quot;T&quot; &quot;A&quot; &quot;E&quot; ...</code></pre>
+<pre class="r"><code>sapply(my_list, class)</code></pre>
+<pre><code>##      colors        nums        ltrs 
+## &quot;character&quot;   &quot;numeric&quot; &quot;character&quot;</code></pre>
+</div>
+<p><a id="qtn_upstrl" href="#" class="showhidelink" onclick="showHide('upstrl');return false;"># 8.</a> Delete one of the list elements. Verify it’s gone.</p>
+<div id="upstrl" class="answer-code">
+<pre class="r"><code>my_list$ltrs &lt;- NULL
+names(my_list)</code></pre>
+<pre><code>## [1] &quot;colors&quot; &quot;nums&quot;</code></pre>
+</div>
+<p>#############################<br/>#### <strong>SAVING DATA TO DISK</strong> ####<br/>#############################</p>
+<p><a id="qtn_zenxza" href="#" class="showhidelink" onclick="showHide('zenxza');return false;"># 9.</a> Where is R’s ‘home’ directory on your computer?</p>
+<div id="zenxza" class="answer-code">
+<pre class="r"><code>setwd(&quot;~&quot;)
+getwd()</code></pre>
+<pre><code>## [1] &quot;C:/Users/Andy/Documents&quot;</code></pre>
+</div>
+<p><a id="qtn_qsyxru" href="#" class="showhidelink" onclick="showHide('qsyxru');return false;"># 10.</a> Save the list object you created above as a R data file to your home directory.</p>
+<div id="qsyxru" class="answer-code">
+<pre class="r"><code>save(my_list, file=&quot;~/MyListData.RData&quot;)</code></pre>
+</div>
+<p><a id="qtn_xxbrob" href="#" class="showhidelink" onclick="showHide('xxbrob');return false;"># 11.</a> Delete the list object you created above from memory. Verify it’s deleted.</p>
+<div id="xxbrob" class="answer-code">
+<pre class="r"><code>rm(my_list)
+my_list</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;my_list&#39; not found</code></pre>
+</div>
+<p><a id="qtn_nayatk" href="#" class="showhidelink" onclick="showHide('nayatk');return false;"># 12.</a> Load the R data file you saved to the home directory earlier. Verify the list<br />
+#  is back in memory.</p>
+<div id="nayatk" class="answer-code">
+<pre class="r"><code>load(&quot;~/MyListData.RData&quot;)
+my_list</code></pre>
+</div>
+</div>
+<!-- end question div -->
+</div>
+
+<hr>
+<div style="float:right; width:33%; text-align:right;">
+<a href="../index.html" style="text-decoration:none;">Course outline</a>
+</div>
+
+<div style="float:right; width:33%; text-align:center;">
+<a href="#" style="text-decoration:none;" onclick="showHide('soln-show-all');return false;">show all solutions</a> | <a href="#" style="text-decoration:none;" onclick="showHide('soln-hide-all');return false;">hide all solutions</a>
+</div>
+
+<div style="width:33%;">
+<a href="#" style="text-decoration:none;" onclick="showHide('hints-show-all');return false;">show all hints</a> | <a href="#" style="text-decoration:none;" onclick="showHide('hints-hide-all');return false;">hide all hints</a>
+</div>
+<br/>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

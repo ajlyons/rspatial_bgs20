@@ -446,7 +446,7 @@ C: Show table of contents</p>
 </div>
 <div class="tryit">
 <p>Click the little clipboard icon button to copy the lines below, the paste them into the console in R.</p>
-<div class="indented1 indented1r">
+<div class="indented1 indented1-r">
 <div class="sourceCode" id="cb1"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">xvals =<span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>pi <span class="op">*</span><span class="st"> </span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>)<span class="op">/</span><span class="dv">100</span></a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw">plot</span>(<span class="dt">x =</span> xvals, <span class="dt">y =</span> <span class="kw">cos</span>(xvals), <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</a></code></pre></div>
 <p><img src="01_intro_files/figure-slidy/first_code-1.png" width="768" /></p>
@@ -454,7 +454,7 @@ C: Show table of contents</p>
 </div>
 <!--- TryIt --->
 <p><img src="./images/rstudio_1000x590.png" style="border:1px solid dimgray;" /></p>
-<p>Run the following script:</p>
+<p>Copy the following commands in a new script window and run (<a href="https://gist.githubusercontent.com/javierluraschi/d9d3383df627c45b7133103d87b674bc/raw" target="_blank">source</a>):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">f1u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;</span><span class="st">  </span><span class="dv">3</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>), <span class="dv">3</span><span class="op">*</span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">-</span>(x<span class="op">/</span><span class="dv">7</span>)<span class="op">^</span><span class="dv">2</span>), <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb2-2" title="2">f1d &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>), <span class="dv">-3</span><span class="op">*</span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">-</span>(x<span class="op">/</span><span class="dv">7</span>)<span class="op">^</span><span class="dv">2</span>), <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb2-3" title="3">f2u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.50</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.75</span>), <span class="dv">3</span><span class="op">*</span><span class="kw">abs</span>(x)<span class="op">+</span><span class="fl">0.75</span>, <span class="dv">0</span>)</a>
@@ -467,9 +467,6 @@ C: Show table of contents</p>
 <a class="sourceLine" id="cb2-10" title="10">bm &lt;-<span class="st"> </span><span class="cf">function</span>(r,x) <span class="kw">ifelse</span>(r<span class="op">%%</span><span class="dv">2</span><span class="op">==</span><span class="dv">0</span>, <span class="kw">fu</span>(x), <span class="kw">fd</span>(x))</a>
 <a class="sourceLine" id="cb2-11" title="11"><span class="kw">par</span>(<span class="dt">bg=</span><span class="st">&quot;#02233f&quot;</span>, <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</a>
 <a class="sourceLine" id="cb2-12" title="12"><span class="kw">plot</span>(<span class="dt">x=</span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">0.065</span>), <span class="dt">y=</span><span class="kw">Vectorize</span>(bm)(<span class="dv">1</span><span class="op">:</span><span class="dv">216</span>, <span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">0.065</span>)), <span class="dt">col=</span><span class="st">&quot;#999900&quot;</span>, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>)</a></code></pre></div>
-<p style="font-size:90%;">
-Source: <a href="https://gist.githubusercontent.com/javierluraschi/d9d3383df627c45b7133103d87b674bc/raw" class="uri">https://gist.githubusercontent.com/javierluraschi/d9d3383df627c45b7133103d87b674bc/raw</a>
-</p>
 </div>
 <div id="r-studio-shortcuts" class="slide section level1">
 <h1>R Studio Shortcuts</h1>

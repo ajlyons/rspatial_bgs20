@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="Syntax Review" />
-  <meta name="copyright" content="<span class='footer-right'><a href='../acknowledgements.html'>Acknowledgements</a></span><span class='footer-right'><a href='../ https://tinyurl.com/rspatial-bgs20 ' target='_blank'>Forum</a></span><span class='footer-right'><a href=' https://ajlyons.github.io/rspatial_bgs20/ '> https://ajlyons.github.io/rspatial_bgs20/ </a></span><span class='footer-right'><a href='../index.html'>Home</a></span><span class='footer-subtitle'> Spatial Data Analysis with R </span>"/>
+  <meta name="copyright" content="<span class='footer-right'><a href='../acknowledgements.html'>Acknowledgements</a></span><span class='footer-right'><a href=' https://notes.typo3.org/p/rspatial-bgs20 ' target='_blank'>Forum</a></span><span class='footer-right'><a href=' https://ajlyons.github.io/rspatial_bgs20/ '> https://ajlyons.github.io/rspatial_bgs20/ </a></span><span class='footer-right'><a href='../index.html'>Home</a></span><span class='footer-subtitle'> Spatial Data Analysis with R </span>"/>
   <meta name="font-size-adjustment" content="2"/>
   <title>Spatial Data Analysis with R  BayGeo, Spring 2020</title>
   <style type="text/css">code{white-space: pre;}</style>
@@ -186,7 +186,7 @@ Syntax Review <br/><img src='images/rsyntax256_485x140.png'/>
 <pre><code>## [1] &quot;vanilla&quot;</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">start_date &lt;-<span class="st"> </span><span class="kw">Sys.Date</span>()</a>
 <a class="sourceLine" id="cb5-2" title="2">start_date</a></code></pre></div>
-<pre><code>## [1] &quot;2020-03-28&quot;</code></pre>
+<pre><code>## [1] &quot;2020-04-03&quot;</code></pre>
 </div>
 <div id="updating-variables" class="slide section level1">
 <h1>Updating Variables</h1>
@@ -320,7 +320,7 @@ SignatureMethod
 <tt><strong>rnorm()</strong></tt> is a function that can generate multiple random numbers:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">devs &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb16-2" title="2">devs</a></code></pre></div>
-<pre><code>## [1] -0.897188559  1.946541099 -2.360829284 -0.009405809  0.771723593</code></pre>
+<pre><code>## [1]  1.1144755  1.6722763 -1.8519802 -0.2751549 -0.4861535</code></pre>
 <p><br />
 <tt>c()</tt> stands for <em>combine</em>. It returns a vector containing the arguments passed (which all have to be the same type).</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">yn &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)</a>
@@ -329,7 +329,8 @@ SignatureMethod
 <p><br />
 <tt>LETTERS</tt> is an example of a built-in <strong>constant</strong>. It contains a vector of length 26 containing characters:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">LETTERS</a></code></pre></div>
-<pre><code>##  [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot; &quot;P&quot; &quot;Q&quot; &quot;R&quot; &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot;</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot; &quot;P&quot; &quot;Q&quot; &quot;R&quot; &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot;
+## [25] &quot;Y&quot; &quot;Z&quot;</code></pre>
 <div class="infobox">
 <p>The <tt><em>[1]</em></tt> and <tt><em>[18]</em></tt> in the output tells you the index of the element displayed after it.</p>
 </div>

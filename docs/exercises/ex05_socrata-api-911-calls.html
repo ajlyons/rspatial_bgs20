@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Spatial Data Analysis with R Exercise 5. Make a Map of 911 Calls</title>
+
+<script src="lib/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="lib/navigation-1.1/tabsets.js"></script>
+<link href="lib/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="lib/highlightjs-9.12.0/highlight.js"></script>
+<script src="lib/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="lib/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="lib/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="lib/klippy-0.0.0.9500/js/klippy.min.js"></script>
+<link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACkUlEQVQ4jX2SW0jTcRTHTzNyeZlh6lqmm3POdNPC6SxSEzaqafkykOFoIxTDWpKRFV6iQMNLFyMSsQvUW0WORc2WWBmGKEGZXUyz0NrmNmfa1PYgfHsQ1v5oHjgvX875/M45vy/R8mDJ9caxrFIL5CUWJB00Q9n+7Q+l1BetUMuMTL3JpTB0QVnejd1Hu9DQ60G5eQbqB7PIvj0L2bUZ0KZzghWbs0o7Fx3Tc/B6vStm6+g0wrQvIKh2gKKyUxnNSZoO685SC1YDeL1e9Ll+Ia7WCd5pJ4hojQ8g1nViezETYBqZx93BOdwa9jAgsdUT4J6ZQqC6f4GIiLYU9/RzNWYIdU9hd/8rLjN7UGT8DbWROVVMlQsBBWas142DiIikdfbFMF0POIVm2NzM1zwLS+mvcSsnEajpBSv/8RIgucGJ1EYXEs+NwjrlWfUGMee/Y2PFJIJLrFibex8kOsahhCYnUlpnIL1kh9X9/yMKG2yIOOlAsPYnAveZsE75EEQUQLwTwy5Rsxvx9UxApKEPEYY+BiSizA623oaggkdgq4xLKwRLq7i8sy6EFlpg8wNEVwyAd3wAbZ8cPu3CazeCC/sRojYjaL8Jvm8MPWLDBm03A8CveQ9+7RBia4cYU4QfeokwzTOwc6/4OzKXHap/C5ufD0RNo0i4OAZR81dcnnD69Mp3PxBe9GRkuZdFKk7sqTcQ132EpGUMydetSLnpgOSGHVtbxpHU9AX8mkFEG55/ZrjQL1h82V6esPLVh8Sr40i940J6xzzS7s1C0m6HqHEEiTnatgT5gcPijHxltFwhjpRIQpZjBAJ2lFTBFW5TiOPT8mXx6apdcRl5OaJM1Q6hLC9ls3RPTLgok0NELCKiv02kPqt/O1MZAAAAAElFTkSuQmCC" rel="icon" type="image/x-icon" />
+<script language="javascript" type="text/javascript">
+function TriShowHide(shID) {
+  shIDspan = shID + "span";
+  shIDdiv = shID + "div";
+  if (document.getElementById(shIDdiv).style.display != 'block') {
+    document.getElementById(shIDdiv).style.display = 'block';
+    txtSpan = "&#9660;";
+  } else {
+    document.getElementById(shIDdiv).style.display = 'none';
+    txtSpan = "&#9654;";
+  }
+  document.getElementById(shIDspan).innerHTML = txtSpan + " ";
+}
+function showHide(shID) {
+  if (shID=="soln-show-all") {
+    var allAnswerCode = document.getElementsByClassName("answer-code");
+    for (i = 0; i < allAnswerCode.length; i++) {
+        allAnswerCode[i].style.display = 'block';
+    }
+  } else if (shID=="soln-hide-all") {
+    var allAnswerCode = document.getElementsByClassName("answer-code");
+    for (i = 0; i < allAnswerCode.length; i++) {
+        allAnswerCode[i].style.display = 'none';
+    }
+  } else if (shID=="hints-show-all") {
+    var allAnswerCode = document.getElementsByClassName("hint");
+    for (i = 0; i < allAnswerCode.length; i++) {
+        allAnswerCode[i].style.display = 'block';
+    }
+  } else if (shID=="hints-hide-all") {
+    var allAnswerCode = document.getElementsByClassName("hint");
+    for (i = 0; i < allAnswerCode.length; i++) {
+        allAnswerCode[i].style.display = 'none';
+    }
+  } else {
+    if (document.getElementById(shID)) {
+      if (document.getElementById(shID).style.display != 'block') {
+        document.getElementById(shID).style.display = 'block';
+      } else {
+        document.getElementById(shID).style.display = 'none';
+      }
+    }
+  }
+}
+function CopyToClipboard(containerid) {
+if (document.selection) {
+    var range = document.body.createTextRange();
+    range.moveToElementText(document.getElementById(containerid));
+    range.select().createTextRange();
+    document.execCommand("copy");
+} else if (window.getSelection) {
+    var range = document.createRange();
+    range.selectNode(document.getElementById(containerid));
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    // alert("text copied")
+}}
+</script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="..\css\slidy_styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore"><span class="course-subtitle">Spatial Data Analysis with R</span><br/><span class="ex-subtitle">Exercise 5. Make a Map of 911 Calls</span></h1>
+
+</div>
+
+
+<style type="text/css">
+body {font-size:14pt;}
+code.r{font-size: 20px;}
+pre {font-size: 20px}
+</style>
+<div id="instructions" class="section level3">
+<h3>Instructions</h3>
+<ul>
+<li><span id="soln_odrinn" style="color:#008040; cursor:pointer;" onclick="showHide(&#39;odrinn&#39;);return false;">Setup R</span> (if you haven’t already)</li>
+</ul>
+<div id="odrinn" style="display:none; margin-left:4em;">
+<p><strong>Working on your computer:</strong><br />
+i. Install <a href="https://cran.r-project.org/">R</a>, <a href="https://www.rstudio.com/products/rstudio/download/">RStudio</a>, and the <a href="../setup.html">required packages</a>.<br />
+ii. Download and unzip the <a href="https://github.com/ajlyons/rspatial_bgs20" target="_blank">workshop materials</a>.</p>
+<p><strong>Using RStudio Cloud:</strong><br />
+i. Log-in to your RStudio Cloud account.<br />
+ii. Clone the workshop <a href="https://rstudio.cloud/project/587922" target="_blank">RStudio Cloud Project</a> (which already has all the data and pacakages installed).<br />
+iii. Click ‘Save a permanent copy’ to save a copy in your own workspace.</p>
+</div>
+<!--- Download the <a href="abcd">data file</a> and unzip it. --->
+<ul>
+<li><p>Create a new R script in RStudio (File → New File → R Script).</p></li>
+<li><p>Click the ‘Copy’ button below to copy the questions to the clipboard, then paste them into your script. Under each question, write R code. Run each line of R code as you enter it (press the Run button or ctrl+enter) to make sure it works.</p></li>
+<li><p>Remember to save your script periodically to avoid losing work if RStudio crashes.</p></li>
+<li><p>If you get stuck, click on the ‘hint’ link to see a hint, or the question number to see the answer. Click again to hide.</p></li>
+<li><p>Questions? Ask the instructor.</p></li>
+</ul>
+<script>
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<div class="indented3">
+
+</div>
+<hr class="hrdivider">
+<div class="copy-button">
+<button onclick="CopyToClipboard(&#39;qtn_div&#39;);return false;">
+Copy questions
+</button>
+</div>
+<div id="qtn_div" class="ex-qtn">
+<p>##################################################<br/>#### <strong>MAKE A MAP OF 911 CALLS IN SAN FRANCISCO</strong> ####<br/>##################################################</p>
+<p># In this exercise, you’ll compute the number of 911 calls per Supervisor<br />
+#  District for Halloween 2018. You’ll then make a chorlopleth map of the number<br />
+#  of calls per Supervisor District.</p>
+<p><a id="qtn_zwurov" href="#" class="showhidelink" onclick="showHide('zwurov');return false;"># 1.</a> Import the Supervisor District Boundaries <a href="#" class="showhidehint" onclick="showHide('ephzll');return false;"></a></p>
+<div id="ephzll" class="hint">
+<p>The data url is: <a href="https://data.sfgov.org/dataset/Current-Supervisor-Districts/keex-zmn4" class="uri">https://data.sfgov.org/dataset/Current-Supervisor-Districts/keex-zmn4</a></p>
+</div>
+<!--- hint_ephzll --->
+<div id="zwurov" class="answer-code">
+<pre class="r klippy copyme"><code>library(sf)
+sup_dist_bnd &lt;- sf::read_sf(&quot;https://data.sfgov.org/resource/keex-zmn4.geojson&quot;)
+glimpse(sup_dist_bnd)
+plot(sup_dist_bnd[&#39;supdistpad&#39;])</code></pre>
+<pre><code>## Observations: 11
+## Variables: 6
+## $ supdistpad &lt;chr&gt; &quot;11&quot;, &quot;09&quot;, &quot;03&quot;, &quot;01&quot;, &quot;08&quot;, &quot;02&quot;, &quot;04&quot;, &quot;07&quot;, &quot;10&quot;, &quot;06&quot;, &quot;05&quot;
+## $ supdist    &lt;chr&gt; &quot;SUPERVISORIAL DISTRICT 11&quot;, &quot;SUPERVISORIAL DISTRICT 9&quot;, &quot;SUPERVISORIAL DISTR...
+## $ supname    &lt;chr&gt; &quot;Safai&quot;, &quot;Ronen&quot;, &quot;Peskin&quot;, &quot;Fewer&quot;, &quot;Mandelman&quot;, &quot;Stefani&quot;, &quot;Mar&quot;, &quot;Yee&quot;, &quot;W...
+## $ supervisor &lt;chr&gt; &quot;11&quot;, &quot;9&quot;, &quot;3&quot;, &quot;1&quot;, &quot;8&quot;, &quot;2&quot;, &quot;4&quot;, &quot;7&quot;, &quot;10&quot;, &quot;6&quot;, &quot;5&quot;
+## $ numbertext &lt;chr&gt; &quot;ELEVEN&quot;, &quot;NINE&quot;, &quot;THREE&quot;, &quot;ONE&quot;, &quot;EIGHT&quot;, &quot;TWO&quot;, &quot;FOUR&quot;, &quot;SEVEN&quot;, &quot;TEN&quot;, &quot;SI...
+## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.4225 3..., MULTIPOLYGON (((-122.4109 3..., ...</code></pre>
+<p><img src="ex05_socrata-api-911-calls_files/figure-html/load_dist_bnd_klippy-1.png" width="672" /></p>
+</div>
+<!--- ans_zwurov --->
+<p><a id="qtn_qsnsvp" href="#" class="showhidelink" onclick="showHide('qsnsvp');return false;"># 2.</a> What is the URL for the Fire Department Calls for Service? Which field contains<br />
+#  the name of the Supervisor District? Which field contains the call date?</p>
+<div id="qsnsvp" class="answer-code">
+<p>Looking at the <a href="https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3" target="_blank">Fire Department Calls for Service data page</a>, we find:</p>
+<ul>
+<li><p>The data URL is <a href="https://data.sfgov.org/resource/nuek-vuh3.json" class="uri">https://data.sfgov.org/resource/nuek-vuh3.json</a></p></li>
+<li><p>The field that contains the name of the Supervisor District is <tt>‘supervisor_district’</tt>, and the field with the call date is <tt>‘call_date’</tt>.</p></li>
+</ul>
+</div>
+<!--- ans_qsnsvp --->
+<p><a id="qtn_sxcost" href="#" class="showhidelink" onclick="showHide('sxcost');return false;"># 3.</a> Import unique 911 responses for 10/31/2018. How many responses were there? <a href="#" class="showhidehint" onclick="showHide('dnczhz');return false;"></a></p>
+<div id="dnczhz" class="hint">
+<p>See the final example in Using the <a href="../index.html" target="_blank">Socrata API</a>.</p>
+<p>The Fire Department Calls for Service table records <strong>responses</strong> to a 911 call (and there are usually more than one unit responding to a single call). To capture the number of calls, you need to use <tt>distinct</tt> with ‘incident_number’ to remove duplicates.</p>
+</div>
+<!--- hint_dnczhz --->
+<div id="sxcost" class="answer-code">
+<pre class="r klippy copyme"><code>ems_resp_url &lt;- &quot;https://data.sfgov.org/resource/nuek-vuh3.json?&quot;
+
+## Download unique rows for district supervisor &amp; incident id
+pq_select &lt;- &quot;$select=distinct supervisor_district,incident_number&quot;
+pq_where &lt;- &quot;&amp;$where=call_date between &#39;2018-10-31T00:00:00&#39; and &#39;2018-10-31T23:59:59&#39;&quot;
+pq_order &lt;- &quot;&amp;$order=supervisor_district&quot;
+ems_df &lt;- read.socrata(ems_resp_url %&gt;% 
+                         paste0(pq_select, pq_where, pq_order) %&gt;% 
+                         URLencode())
+glimpse(ems_df)</code></pre>
+<pre><code>## Observations: 368
+## Variables: 2
+## $ supervisor_district &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;...
+## $ incident_number     &lt;chr&gt; &quot;18127307&quot;, &quot;18127336&quot;, &quot;18127347&quot;, &quot;18127349&quot;, &quot;18127377&quot;, &quot;1812742...</code></pre>
+<p>⇒ There were 368 responses.</p>
+</div>
+<!--- ans_sxcost --->
+<p><a id="qtn_okkmtf" href="#" class="showhidelink" onclick="showHide('okkmtf');return false;"># 4.</a> Compute the total number of calls per Supervisor District.</p>
+<div id="okkmtf" class="answer-code">
+<pre class="r klippy copyme"><code>## Compute the number of calls per Supervisor District
+ems_totals_df &lt;- ems_df %&gt;% 
+  dplyr::group_by(supervisor_district) %&gt;% 
+  dplyr::summarise(num_calls = n())
+ems_totals_df</code></pre>
+<pre><code>## # A tibble: 12 x 2
+##    supervisor_district num_calls
+##    &lt;chr&gt;                   &lt;int&gt;
+##  1 1                          14
+##  2 10                         36
+##  3 11                         15
+##  4 2                          17
+##  5 3                          48
+##  6 4                          11
+##  7 5                          27
+##  8 6                         104
+##  9 7                          31
+## 10 8                          30
+## 11 9                          33
+## 12 None                        2</code></pre>
+</div>
+<!--- ans_okkmtf --->
+<p><a id="qtn_zyfflq" href="#" class="showhidelink" onclick="showHide('zyfflq');return false;"># 5.</a> Find the columns that connect the supervisor district boundary attribute table<br />
+#  and the summary of calls per district.</p>
+<div id="zyfflq" class="answer-code">
+<pre class="r klippy copyme"><code>glimpse(ems_totals_df)
+glimpse(sup_dist_bnd)</code></pre>
+<pre><code>## Observations: 12
+## Variables: 2
+## $ supervisor_district &lt;chr&gt; &quot;1&quot;, &quot;10&quot;, &quot;11&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;None&quot;
+## $ num_calls           &lt;int&gt; 14, 36, 15, 17, 48, 11, 27, 104, 31, 30, 33, 2
+## Observations: 11
+## Variables: 6
+## $ supdistpad &lt;chr&gt; &quot;11&quot;, &quot;09&quot;, &quot;03&quot;, &quot;01&quot;, &quot;08&quot;, &quot;02&quot;, &quot;04&quot;, &quot;07&quot;, &quot;10&quot;, &quot;06&quot;, &quot;05&quot;
+## $ supdist    &lt;chr&gt; &quot;SUPERVISORIAL DISTRICT 11&quot;, &quot;SUPERVISORIAL DISTRICT 9&quot;, &quot;SUPERVISORIAL DISTR...
+## $ supname    &lt;chr&gt; &quot;Safai&quot;, &quot;Ronen&quot;, &quot;Peskin&quot;, &quot;Fewer&quot;, &quot;Mandelman&quot;, &quot;Stefani&quot;, &quot;Mar&quot;, &quot;Yee&quot;, &quot;W...
+## $ supervisor &lt;chr&gt; &quot;11&quot;, &quot;9&quot;, &quot;3&quot;, &quot;1&quot;, &quot;8&quot;, &quot;2&quot;, &quot;4&quot;, &quot;7&quot;, &quot;10&quot;, &quot;6&quot;, &quot;5&quot;
+## $ numbertext &lt;chr&gt; &quot;ELEVEN&quot;, &quot;NINE&quot;, &quot;THREE&quot;, &quot;ONE&quot;, &quot;EIGHT&quot;, &quot;TWO&quot;, &quot;FOUR&quot;, &quot;SEVEN&quot;, &quot;TEN&quot;, &quot;SI...
+## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.4225 3..., MULTIPOLYGON (((-122.4109 3..., ...</code></pre>
+<div class="indented1">
+<p>⇒ In the 911 calls table, the (unpadded) district number is saved in a character field called <tt>‘<strong>supervisor_district</strong>’</tt>.</p>
+<p>⇒ In <tt>sup_dist_bnd</tt>, the district number is in a character field called <tt>‘<strong>supervisor</strong>’</tt>.</p>
+</div>
+</div>
+<!--- ans_zyfflq --->
+<p><a id="qtn_vntccu" href="#" class="showhidelink" onclick="showHide('vntccu');return false;"># 6.</a> Join the number of calls per Supervisor District table to the attribute table<br />
+#  of the Supervisor District boundaries.</p>
+<div id="vntccu" class="answer-code">
+<pre class="r klippy copyme"><code>sup_dist_bnd &lt;- sup_dist_bnd %&gt;% 
+  dplyr::left_join(ems_totals_df, by = c(supervisor = &quot;supervisor_district&quot;))
+sup_dist_bnd %&gt;% dplyr::select(supdistpad, supname, num_calls)</code></pre>
+<pre><code>## Simple feature collection with 11 features and 3 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: -122.5149 ymin: 37.70813 xmax: -122.3279 ymax: 37.83243
+## CRS:            4326
+## # A tibble: 11 x 4
+##    supdistpad supname   num_calls                                                            geometry
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;                                                  &lt;MULTIPOLYGON [°]&gt;
+##  1 11         Safai            15 (((-122.4225 37.71789, -122.4225 37.71782, -122.4235 37.7172, -122~
+##  2 09         Ronen            33 (((-122.4109 37.76941, -122.4109 37.76932, -122.4108 37.76923, -12~
+##  3 03         Peskin           48 (((-122.392 37.79387, -122.3922 37.79393, -122.3925 37.79377, -122~
+##  4 01         Fewer            14 (((-122.4937 37.78761, -122.4937 37.78649, -122.4935 37.7835, -122~
+##  5 08         Mandelman        30 (((-122.4233 37.77206, -122.4233 37.77194, -122.4232 37.77181, -12~
+##  6 02         Stefani          17 (((-122.4192 37.80845, -122.4192 37.80839, -122.4191 37.8078, -122~
+##  7 04         Mar              11 (((-122.4749 37.76179, -122.475 37.76175, -122.4759 37.76171, -122~
+##  8 07         Yee              31 (((-122.4485 37.75904, -122.4485 37.75895, -122.4485 37.75861, -12~
+##  9 10         Walton           36 (((-122.399 37.76973, -122.3982 37.76904, -122.3974 37.76844, -122~
+## 10 06         Haney           104 (((-122.3938 37.79374, -122.3932 37.79323, -122.3925 37.79377, -12~
+## 11 05         Brown            27 (((-122.4216 37.78662, -122.4214 37.78653, -122.4214 37.78617, -12~</code></pre>
+</div>
+<!--- ans_vntccu --->
+<p><a id="qtn_ksxzkz" href="#" class="showhidelink" onclick="showHide('ksxzkz');return false;"># 7.</a> Make a choropleth map of the results</p>
+<div id="ksxzkz" class="answer-code">
+<pre class="r klippy copyme"><code>library(tmap)
+tm_shape(sup_dist_bnd) + 
+  tm_polygons(col=&#39;num_calls&#39;, title=&quot;Num 911 calls&quot;, n=10) +
+  tm_legend(legend.outside=T) +
+  tm_layout(main.title=&quot;911 Calls, Oct 31, 2018&quot;,
+            main.title.size = 1.5,
+            main.title.fontface = 2,
+            main.title.fontfamily = &quot;serif&quot;)</code></pre>
+<p><img src="ex05_socrata-api-911-calls_files/figure-html/make_map_klippy-1.png" width="672" /></p>
+</div>
+<!--- ans_ksxzkz --->
+</div>
+<!-- qtn_div -->
+</div>
+
+<hr>
+<div style="float:right; width:33%; text-align:right;">
+<a href="../index.html" style="text-decoration:none;">Course outline</a>
+</div>
+
+<div style="float:right; width:33%; text-align:center;">
+<a href="#" style="text-decoration:none;" onclick="showHide('soln-show-all');return false;">show all solutions</a> | <a href="#" style="text-decoration:none;" onclick="showHide('soln-hide-all');return false;">hide all solutions</a>
+</div>
+
+<div style="width:33%;">
+<a href="#" style="text-decoration:none;" onclick="showHide('hints-show-all');return false;">show all hints</a> | <a href="#" style="text-decoration:none;" onclick="showHide('hints-hide-all');return false;">hide all hints</a>
+</div>
+<br/>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

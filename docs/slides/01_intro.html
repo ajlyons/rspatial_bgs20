@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="Introduction" />
-  <meta name="copyright" content="<span class='footer-right'><a href='../acknowledgements.html'>Acknowledgements</a></span><span class='footer-right'><a href='../ https://tinyurl.com/rspatial-bgs20 ' target='_blank'>Forum</a></span><span class='footer-right'><a href=' https://ajlyons.github.io/rspatial_bgs20/ '> https://ajlyons.github.io/rspatial_bgs20/ </a></span><span class='footer-right'><a href='../index.html'>Home</a></span><span class='footer-subtitle'> Spatial Data Analysis with R </span>"/>
+  <meta name="copyright" content="<span class='footer-right'><a href='../acknowledgements.html'>Acknowledgements</a></span><span class='footer-right'><a href=' https://notes.typo3.org/p/rspatial-bgs20 ' target='_blank'>Forum</a></span><span class='footer-right'><a href=' https://ajlyons.github.io/rspatial_bgs20/ '> https://ajlyons.github.io/rspatial_bgs20/ </a></span><span class='footer-right'><a href='../index.html'>Home</a></span><span class='footer-subtitle'> Spatial Data Analysis with R </span>"/>
   <meta name="font-size-adjustment" content="2"/>
   <title>Spatial Data Analysis with R BayGeo, Spring 2020</title>
   <style type="text/css">code{white-space: pre;}</style>
@@ -156,9 +156,83 @@ Introduction <br/><img src='images/intro_472x220.png'/>
 <script type="text/javascript">w3c_slidy.mouse_click_enabled = false;</script>
 <p><img src="images/anr_montage-wide_1120x520.png" /></p>
 </div>
-<div id="some-r-work" class="slide section level1">
-<h1>Some R Work</h1>
-<p><img src="images/tlocoh_1164x644.png" style="border:1px solid dimgray;" /></p>
+<div id="some-of-my-r-work" class="slide section level1">
+<h1>Some of My R Work</h1>
+<h2 id="t-locoh">T-LoCoH</h2>
+<p>Home range constructor and spatial-temporal pattern analysis for wildlife tracking data</p>
+<p><a href="http://tlocoh.r-forge.r-project.org/" target="_blank">http://tlocoh.r-forge.r-project.org/</a></p>
+<p><img src="images/tlocoh_1164x644.png" style="border:1px solid dimgray; width:800px;" /></p>
+<h2 id="uavimg">uavimg</h2>
+<p>Data management utilities for drone mapping.</p>
+<p><a href="https://github.com/ucanr-igis/uavimg" target="_blank">https://github.com/ucanr-igis/uavimg</a></p>
+<p><img src="images/uasimg_catalog_260x260.jpg" /></p>
+<div class="indented1">
+<ul>
+<li><p>Catalogs and manages drone images (<a href="https://data.andylyons.org/test/flt01_1013_1019_250ft_report.html" target="_blank">sample</a>)</p></li>
+<li><p>Estimates footprints, computes overlap, explorts flight area to Shapefile</p></li>
+<li><p>Creates World Files for single images</p></li>
+</ul>
+</div>
+<p><br />
+<br />
+</p>
+<h2 id="caladaptr">caladaptr</h2>
+<p>Bring climate data from Cal-Adapt into R using the API</p>
+<p><a href="https://ucanr-igis.github.io/caladaptr-dev/caladaptr_intro_2019-12-19.html" target="_blank">https://ucanr-igis.github.io/caladaptr-dev/caladaptr_intro_2019-12-19.html</a></p>
+<p><img src="images/caladapr-logo_600x130x16.png" style="width:300px;" /></p>
+<p>Helper functions to select, filter, and aggregate data on the server</p>
+<p><br />
+<br />
+</p>
+<h2 id="shiny-apps">Shiny Apps</h2>
+<p>Drone Mission Planner for Reforestation Monitoring Protocol<br />
+<a href="https://ucanr-igis.shinyapps.io/uav_stocking_survey/" target="_blank">https://ucanr-igis.shinyapps.io/uav_stocking_survey/</a></p>
+<p>Stock Pond Volume Calculator<br />
+<a href="https://ucanr-igis.shinyapps.io/PondCalc/" target="_blank">https://ucanr-igis.shinyapps.io/PondCalc/</a></p>
+<p>Calculator for Estimating Costs and Benefits of Medusahead Control<br />
+<a href="https://ucanr.shinyapps.io/medusahead_ipm/" target="_blank">https://ucanr.shinyapps.io/medusahead_ipm/</a></p>
+</div>
+<div id="about-you" class="slide section level1">
+<h1>About You…</h1>
+</div>
+<div id="zoom-checklist" class="slide section level1">
+<h1>Zoom Checklist</h1>
+<div class="indented1">
+<p>☑ Can you hear me?</p>
+<p>☑ Do you have a recent version of the Zoom client installed?</p>
+<p><img src="images/zoom_uipdate360x632x256.png" style="display:block; margin:1em 2em; border:1px solid grey; width:300px;" /></p>
+<p>☑ Do you know how to <strong>mute</strong> and <strong>unmute</strong> yourself?</p>
+<div class="indented2">
+<ul>
+<li>laptops: microphone button, alt + A, or spacebar</li>
+<li>tablets: tap once in center of screen → ‘tap to speak’</li>
+<li>phones:
+<ul>
+<li><tt>*6</tt></li>
+<li>join your laptop meeting and use those controls (<tt># + participant id + #</tt>)</li>
+<li>use the mute button on your phone app</li>
+</ul></li>
+</ul>
+</div>
+<p>☑ Do you know how to share <strong>just one</strong> window?</p>
+<p><img src="images/zoom_share_screen_button_470x52_x256.png" style="display:block; margin:1em 2em; border:1px solid grey; width:470px;" /></p>
+<p><img src="images/zoom_share_screen_900x558.png" style="display:block; margin:1em 2em; border:1px solid grey; width:760px;" /></p>
+<p>☑ Do you know how to <strong>raise your hand</strong>?</p>
+<p><img src="images/zoom_participants_button_477x52x256.png" style="display:block; margin:1em 2em; border:1px solid grey; width:477px;" /></p>
+<p><img src="images/zoom_nonverbal-feedback-btns_394x52x256.png" style="display:block; margin:1em 2em; border:1px solid grey; width:394px;" /></p>
+</div>
+</div>
+<div id="schedule" class="slide section level1">
+<h1>Schedule</h1>
+<p>All sessions on Zoom.</p>
+<div class="indented1">
+<ul>
+<li><p><strong>Apr. 4</strong>. 10:00a - 3:00p. Intro, R syntax working with vector data</p></li>
+<li><p><strong>TBD</strong>. 6:30p - 9:00p. 2D data, projections, attribute queries, geoprocessing</p></li>
+<li><p><strong>TBD</strong>. 6:30p - 9:00p. Spatial Queries, Intro to Raster Data</p></li>
+<li><p><strong>Apr 18</strong>. 10:00a - 3:00p. Raster data manipulations and analyses, Projects</p></li>
+</ul>
+</div>
 </div>
 <div id="workshop-goals" class="slide section level1">
 <h1>Workshop Goals</h1>
@@ -209,7 +283,7 @@ Introduction <br/><img src='images/intro_472x220.png'/>
 <div id="workshop-materials" class="slide section level1">
 <h1>Workshop Materials</h1>
 <p><strong>Community Forum:</strong><br />
-<a href="https://tinyurl.com/rspatial-bgs20" class="uri">https://tinyurl.com/rspatial-bgs20</a></p>
+<a href="https://notes.typo3.org/p/rspatial-bgs20" class="uri">https://notes.typo3.org/p/rspatial-bgs20</a></p>
 <div class="compact">
 <ul>
 <li>questions<br />
@@ -284,7 +358,7 @@ C: Show table of contents</p>
 <li>a programming language to write scripts</li>
 <li>software (“environment”) that interprets scripts written in R</li>
 <li>inspired by ‘S’ (1976), first beta version ~2000</li>
-<li><em>many</em> user-contributed packages: <em>CRAN</em>: 15489; <em>Bioconductor</em>: 1810; <em>R-Forge</em>: 2088; <em>GitHub</em>: 47493 [<a href="https://rdrr.io/" target="_blank">source</a>]</li>
+<li><em>many</em> user-contributed packages: <em>CRAN</em>: &gt;17,000; <em>Bioconductor</em>: &gt;1,900; <em>R-Forge</em>: &gt;2,100; <em>GitHub</em>: &gt;57,000 [<a href="https://rdrr.io/" target="_blank">source</a>]</li>
 </ul>
 </div>
 <div class="colright">
@@ -304,7 +378,7 @@ C: Show table of contents</p>
 <h1>R. vs. Desktop GIS</h1>
 <div class="colleft">
 <img src="images/rlogo_120x120.png">
-<ul class="incremental">
+<ul>
 <li>
 familiar
 </li>
@@ -330,7 +404,7 @@ free and open source
 </div>
 <div class="colright">
 <img src="images/esri_logo_120x120.png"> <img src="images/qgis_logo_120x120.png">
-<ul class="incremental">
+<ul>
 <li>
 one-off maps
 </li>

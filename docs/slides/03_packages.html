@@ -168,7 +168,10 @@ Working with Packages<br/><img src='images/packages_200x202.png'/>
 <div id="tidyverse" class="slide section level1">
 <h1>Tidyverse</h1>
 <p><img src="./images/tidyverse_814x440.png" /></p>
-<p>The tidyverse is a collection of R packages that share common principles and are designed to work together seamlessly. You can install the core tidyverse packages collectively with: <tt>install.packages(“tidyverse”)</tt></p>
+<p>The tidyverse is a <strong>collection of R packages</strong> that share common design principles and are designed to work together seamlessly.</p>
+<p>They generally support piping syntax which looks like this:</p>
+<p><code>x &lt;- mydata %&gt;% filter(weight &gt; 40) %&gt;% group_by(zipcode) %&gt;% ...</code></p>
+<p>You can install the core tidyverse packages collectively with: <tt>install.packages(“tidyverse”)</tt></p>
 <p>More info: <a href="http://tidyverse.org" target="_blank">http://tidyverse.org</a></p>
 </div>
 <div id="other-packages" class="slide section level1">
@@ -365,7 +368,7 @@ demo(webmap)
 <a class="sourceLine" id="cb14-2" title="2"><span class="kw">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
 <a class="sourceLine" id="cb14-3" title="3"><span class="kw">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
 <a class="sourceLine" id="cb14-4" title="4"></a>
-<a class="sourceLine" id="cb14-5" title="5"><span class="co"># from here on out, anytime we call select() or filter(), </span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="co"># From here on out, anytime we call select() or filter(), </span></a>
 <a class="sourceLine" id="cb14-6" title="6"><span class="co"># R will use the dplyr version.</span></a></code></pre></div>
 </div>
 </div>

@@ -171,17 +171,23 @@ Working with Packages<br/><img src='images/packages_200x202.png'/>
 <p>The tidyverse is a collection of R packages that share common principles and are designed to work together seamlessly. You can install the core tidyverse packages collectively with: <tt>install.packages(“tidyverse”)</tt></p>
 <p>More info: <a href="http://tidyverse.org" target="_blank">http://tidyverse.org</a></p>
 </div>
-<div id="packages-for-rspatial_bgs20" class="slide section level1">
-<h1>Packages for rspatial_bgs20</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(htmltools)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="cf">if</span> (params<span class="op">$</span>cinfo_df<span class="op">$</span>course_name <span class="op">==</span><span class="st">&quot;rspatial_gif_f19&quot;</span>) {</a>
-<a class="sourceLine" id="cb1-3" title="3">  <span class="kw">h1</span>(<span class="st">&quot;Remote Sensing Packages&quot;</span>)</a>
-<a class="sourceLine" id="cb1-4" title="4">}</a></code></pre></div>
-<p>Animal movement: <tt>adehabitatHR/LT/MA</tt>, <tt>moveVis</tt></p>
-<p>Community Ecology: <tt>vegan</tt></p>
-<p>Landscape Ecology: <tt>spatialEco</tt>, <tt>SDMTools</tt></p>
-<p>Species Distribution Models: <tt>dismo</tt></p>
-<p>Other?</p>
+<div id="other-packages" class="slide section level1">
+<h1>Other Packages</h1>
+<h2>
+Ecology
+</h2>
+<p>
+Animal movement: <kbd>adehabitatHR/LT/MA</kbd> , <kbd>moveVis</kbd>
+</p>
+<p>
+Community Ecology: <kbd>vegan</kbd>
+</p>
+<p>
+Landscape Ecology: <kbd>spatialEco</kbd> , <kbd>SDMTools</kbd>
+</p>
+<p>
+Species Distribution Models: <kbd>dismo</kbd>
+</p>
 </div>
 <div id="installing-and-loading-packages" class="slide section level1">
 <h1>Installing and Loading Packages</h1>
@@ -191,44 +197,44 @@ Working with Packages<br/><img src='images/packages_200x202.png'/>
 <p><img src="./images/rstudio_install-packages_378x281.png" /></p>
 </div>
 <h3 id="console">Console</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;raster&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;raster&quot;</span>)</a></code></pre></div>
 <div class="tip">
 <p>You can indicate which specific repository (web site) to install from from with the <tt>repos</tt> argument:</p>
 <div class="indented1 indented1-r">
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;raster&quot;</span>, <span class="ot">TRUE</span>, <span class="dt">repos=</span><span class="st">&quot;http://cran.cnr.berkeley.edu/&quot;</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="kw">install.packages</span>(<span class="st">&quot;tlocoh&quot;</span>, <span class="dt">repos=</span><span class="st">&quot;http://R-Forge.R-project.org&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;raster&quot;</span>, <span class="ot">TRUE</span>, <span class="dt">repos=</span><span class="st">&quot;http://cran.cnr.berkeley.edu/&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">install.packages</span>(<span class="st">&quot;tlocoh&quot;</span>, <span class="dt">repos=</span><span class="st">&quot;http://R-Forge.R-project.org&quot;</span>)</a></code></pre></div>
 </div>
 </div>
 <h3 id="from-github">From GitHub</h3>
 <p>A <strong>lot</strong> of packages are on GitHub. Install them with the <tt>devtools</tt> package:</p>
 <div class="indented1 indented1-r">
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">library</span>(devtools)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw">install_github</span>(<span class="st">&quot;ucanr-igis/uavimg&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">library</span>(devtools)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">install_github</span>(<span class="st">&quot;ucanr-igis/uavimg&quot;</span>)</a></code></pre></div>
 </div>
 <h3 id="trouble-shooting-package-problems">Trouble Shooting Package Problems</h3>
 <p><strong>Dependencies</strong>. Most packages require other packages to work. That means they all have to be installed to work properly.</p>
 <p><strong>Package not available</strong>. A common error message:</p>
 <div class="indented1 indented1-r">
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co">## Warning: package &#39;Roster&#39; is not available (for R version 3.4.4)</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co">## Warning: package &#39;Roster&#39; is not available (for R version 3.4.4)</span></a></code></pre></div>
 </div>
 <p>Most of the time, a warning like this means the package doesn’t exist at all. Check your spelling, capitalization, and whether it might be in a different repository.</p>
 </div>
 <div id="loading" class="slide section level1">
 <h1>Loading</h1>
 <p>Load = bring a package into memory so you can use it in R.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">library</span>(raster)</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">require</span>(raster)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">library</span>(raster)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">require</span>(raster)</a></code></pre></div>
 <div class="tip">
 <p><strong>Unload a package</strong>:</p>
 <div class="indented1 indented1r">
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">detach</span>(<span class="st">&quot;package:raster&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">detach</span>(<span class="st">&quot;package:raster&quot;</span>)</a></code></pre></div>
 </div>
 <p><strong>Update a package</strong>:</p>
 <div class="indented1 indented1r">
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">update.packages</span>(<span class="dt">oldPkgs=</span><span class="st">&quot;raster&quot;</span>)  <span class="co">## update a single package</span></a>
-<a class="sourceLine" id="cb9-2" title="2"></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="kw">update.packages</span>()    <span class="co">## update ALL installed packages</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">update.packages</span>(<span class="dt">oldPkgs=</span><span class="st">&quot;raster&quot;</span>)  <span class="co">## update a single package</span></a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw">update.packages</span>()    <span class="co">## update ALL installed packages</span></a></code></pre></div>
 </div>
 </div>
 </div>
@@ -315,10 +321,19 @@ demo(webmap)
 <div class="tryit">
 <p>View the datasets that come with the ‘sp’ package.</p>
 <div class="indented1 indented1r">
-<div class="sourceCode" id="cb10"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co">## Voew datasets in the sp package</span></a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="kw">data</span>(<span class="dt">package=</span><span class="st">&quot;sp&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co">## First, make sure sp is installed (if not, install it!!)</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw">library</span>(sp)</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="co">## View datasets in the sp package</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="kw">data</span>(<span class="dt">package=</span><span class="st">&quot;sp&quot;</span>)</a></code></pre></div>
 </div>
 <p>How about the <tt>maps</tt> package?</p>
+<p><span id="soln_aclspu" class="showhidesoln" onclick="showHide(&#39;aclspu&#39;);return false;">Soln</span></p>
+<div id="aclspu" class="hint">
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">library</span>(maps)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw">data</span>(<span class="dt">package =</span> <span class="st">&quot;maps&quot;</span>)</a></code></pre></div>
+</div>
+<!--- soln_aclspu --->
 </div>
 <div class="tip">
 <p>To see a list of datasets in all packages currently loaded, run <tt>data()</tt> without an argument.</p>
@@ -344,6 +359,15 @@ demo(webmap)
 <a class="sourceLine" id="cb13-5" title="5">y &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>()</a></code></pre></div>
 <div class="tip">
 <p>When you use the <tt><em>package_name</em>::<em>function_name</em></tt> syntax, you don’t actually have to first load the package with <tt>library()</tt>.</p>
+<p>Another way you can deal with duplicate function names is to use the <code>conflicted</code> package. This package let’s you declare what package R should turn to first for specific functions, regardless of what other packages are loaded or in what order they were loaded.</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">library</span>(conflicted)</a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="kw">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
+<a class="sourceLine" id="cb14-4" title="4"></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="co"># from here on out, anytime we call select() or filter(), </span></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="co"># R will use the dplyr version.</span></a></code></pre></div>
+</div>
 </div>
 </div>
 <div id="summary" class="slide section level1">

@@ -306,22 +306,20 @@ Introduction <br/><img src='images/intro_472x220.png'/>
 </ul>
 </div>
 <p><strong>Slides and exercises:</strong></p>
-<!-- *Workshop computers*:  
-<tt>c:\\rspatial_scgis19-master\\docs\\</tt>  
--->
-<p><em>Website</em>:<br />
-See <a href="https://ajlyons.github.io/rspatial_bgs20/" target="_blank">https://ajlyons.github.io/rspatial_bgs20/</a></p>
-<p><em>Your own computer</em>:<br />
-See <a href="../setup.html" target="_blank">Setup Instructions</a> to download the materials</p>
-<p><strong>Virtual Environment:</strong></p>
-<p><a href="https://rstudio.cloud/project/587922" target="_blank">https://rstudio.cloud/project/587922</a> (data and packages installed)</p>
-<p><strong>Github repository:</strong><br />
-<a href="https://github.com/ajlyons/rspatial_bgs20" target="_blank">https://github.com/ajlyons/rspatial_bgs20</a></p>
-<p><strong>Other Resources &amp; Cheatsheets:</strong><br />
-See <a href="https://ajlyons.github.io/rspatial_bgs20/resources.html" target="_blank">resources.html</a></p>
+<div class="indented2">
+<p><em>Website</em>: <a href="https://ajlyons.github.io/rspatial_bgs20/" target="_blank">https://ajlyons.github.io/rspatial_bgs20/</a></p>
+<p><em>On your own computer</em>: see <a href="../setup.html" target="_blank">Setup</a> to download the materials</p>
+<!-- *Workshop computers*:  `c:\\rspatial_scgis19-master\\docs\\` -->
 </div>
-<div id="keyboard-shortcuts" class="slide section level1">
-<h1>Keyboard Shortcuts</h1>
+<p><strong>Virtual Environment</strong>:<br />
+<a href="https://rstudio.cloud/project/587922" target="_blank">https://rstudio.cloud/project/587922</a> (data and packages installed)</p>
+<p><strong>Github repository</strong>:<br />
+<a href="https://github.com/ajlyons/rspatial_bgs20" target="_blank">https://github.com/ajlyons/rspatial_bgs20</a></p>
+<p><strong>Other Resources &amp; Cheatsheets</strong>:<br />
+See <a href="https://ajlyons.github.io/rspatial_bgs20/resources.html" target="_blank">Resources.html</a></p>
+</div>
+<div id="keyboard-shortcuts-for-slides" class="slide section level1">
+<h1>Keyboard Shortcuts for Slides</h1>
 Keyboard shortcuts for slides:
 <div class="indented2">
 <p>A: toggle display of current vs all slides<br />
@@ -420,12 +418,12 @@ C: Show table of contents</p>
 </ul>
 </div>
 <h2 id="workshop-project">Workshop Project</h2>
-<p>RStudio Cloud project for this workshop:</p>
-<p><a href="https://rstudio.cloud/project/587922" target="_blank">https://rstudio.cloud/project/587922</a></p>
+<p>RStudio Cloud project for this workshop: <a href="https://rstudio.cloud/project/587922" target="_blank">https://rstudio.cloud/project/587922</a></p>
 <p><img src="images/rstudio-cloud_save-perm-copy_334x58.png" /></p>
 </div>
 <div id="rstudio-tour" class="slide section level1">
 <h1>RStudio Tour</h1>
+<p><img src="./images/rstudio_1000x590.png" style="display:block; float:right; width:500px; border:1px solid grey;" /></p>
 <div class="indented1">
 <ul>
 <li>Explore the interface<br />
@@ -445,29 +443,36 @@ C: Show table of contents</p>
 </ul>
 </div>
 <div class="tryit">
-<p>Click the little clipboard icon button to copy the lines below, the paste them into the console in R.</p>
+<p>Click the little clipboard icon button to copy the lines below, the paste them into the console or script window in R.</p>
 <div class="indented1 indented1-r">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">xvals =<span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>pi <span class="op">*</span><span class="st"> </span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>)<span class="op">/</span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw">plot</span>(<span class="dt">x =</span> xvals, <span class="dt">y =</span> <span class="kw">cos</span>(xvals), <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">## Plot a cosine wave</span></a>
+<a class="sourceLine" id="cb1-2" title="2">xvals =<span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>pi <span class="op">*</span><span class="st"> </span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>)<span class="op">/</span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">plot</span>(<span class="dt">x =</span> xvals, <span class="dt">y =</span> <span class="kw">cos</span>(xvals), <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</a></code></pre></div>
 <p><img src="01_intro_files/figure-slidy/first_code-1.png" width="768" /></p>
 </div>
 </div>
 <!--- TryIt --->
-<p><img src="./images/rstudio_1000x590.png" style="border:1px solid dimgray;" /></p>
-<p>Copy the following commands in a new script window and run (<a href="https://gist.githubusercontent.com/javierluraschi/d9d3383df627c45b7133103d87b674bc/raw" target="_blank">source</a>):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">f1u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;</span><span class="st">  </span><span class="dv">3</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>), <span class="dv">3</span><span class="op">*</span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">-</span>(x<span class="op">/</span><span class="dv">7</span>)<span class="op">^</span><span class="dv">2</span>), <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb2-2" title="2">f1d &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>), <span class="dv">-3</span><span class="op">*</span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">-</span>(x<span class="op">/</span><span class="dv">7</span>)<span class="op">^</span><span class="dv">2</span>), <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb2-3" title="3">f2u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.50</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.75</span>), <span class="dv">3</span><span class="op">*</span><span class="kw">abs</span>(x)<span class="op">+</span><span class="fl">0.75</span>, <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb2-4" title="4">f2d &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;</span><span class="st"> </span><span class="dv">-4</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;</span><span class="st"> </span><span class="dv">4</span>), <span class="kw">abs</span>(x<span class="op">/</span><span class="dv">2</span>)<span class="op">-</span>(<span class="dv">3</span><span class="op">*</span><span class="kw">sqrt</span>(<span class="dv">33</span>)<span class="op">-</span><span class="dv">7</span>)<span class="op">*</span>x<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">112-3</span> <span class="op">+</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">-</span>(<span class="kw">abs</span>(<span class="kw">abs</span>(x)<span class="op">-</span><span class="dv">2</span>)<span class="op">-</span><span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span>), <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb2-5" title="5">f3u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((x <span class="op">&gt;</span><span class="st"> </span><span class="fl">-0.5</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5</span>), <span class="fl">2.25</span>, <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb2-6" title="6">f4u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;</span><span class="st">  </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">3</span>), <span class="dv">6</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">10</span>)<span class="op">/</span><span class="dv">7</span> <span class="op">+</span><span class="st"> </span>(<span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">abs</span>(x)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">abs</span>(<span class="kw">abs</span>(x)<span class="op">-</span><span class="dv">1</span>)<span class="op">/</span>(<span class="kw">abs</span>(x)<span class="op">-</span><span class="dv">1</span>)) <span class="op">-</span><span class="st"> </span><span class="dv">6</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">10</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">4</span><span class="op">-</span>(<span class="kw">abs</span>(x)<span class="op">-</span><span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">14</span>, <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb2-7" title="7">f5u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.75</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>), <span class="dv">9-8</span><span class="op">*</span><span class="kw">abs</span>(x), <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb2-8" title="8">fu &lt;-<span class="st"> </span><span class="cf">function</span> (x) <span class="kw">f1u</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">f2u</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">f3u</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">f4u</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">f5u</span>(x)</a>
-<a class="sourceLine" id="cb2-9" title="9">fd &lt;-<span class="st"> </span><span class="cf">function</span> (x) <span class="kw">f1d</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">f2d</span>(x)</a>
-<a class="sourceLine" id="cb2-10" title="10">bm &lt;-<span class="st"> </span><span class="cf">function</span>(r,x) <span class="kw">ifelse</span>(r<span class="op">%%</span><span class="dv">2</span><span class="op">==</span><span class="dv">0</span>, <span class="kw">fu</span>(x), <span class="kw">fd</span>(x))</a>
-<a class="sourceLine" id="cb2-11" title="11">opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">bg=</span><span class="st">&quot;#02233f&quot;</span>, <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb2-12" title="12"><span class="kw">plot</span>(<span class="dt">x=</span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">0.065</span>), <span class="dt">y=</span><span class="kw">Vectorize</span>(bm)(<span class="dv">1</span><span class="op">:</span><span class="dv">216</span>, <span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">0.065</span>)), <span class="dt">col=</span><span class="st">&quot;#999900&quot;</span>, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb2-13" title="13"><span class="kw">par</span>(opar)</a></code></pre></div>
+<div class="tryit">
+<p>Copy the following commands into a new script window, select them all, and cliick ‘Run’ (or ctrl + enter):</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co">## Plot the batman logo</span></a>
+<a class="sourceLine" id="cb2-2" title="2">f1u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;</span><span class="st">  </span><span class="dv">3</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>), <span class="dv">3</span><span class="op">*</span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">-</span>(x<span class="op">/</span><span class="dv">7</span>)<span class="op">^</span><span class="dv">2</span>), <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb2-3" title="3">f1d &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>), <span class="dv">-3</span><span class="op">*</span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">-</span>(x<span class="op">/</span><span class="dv">7</span>)<span class="op">^</span><span class="dv">2</span>), <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4">f2u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.50</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.75</span>), <span class="dv">3</span><span class="op">*</span><span class="kw">abs</span>(x)<span class="op">+</span><span class="fl">0.75</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb2-5" title="5">f2d &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;</span><span class="st"> </span><span class="dv">-4</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;</span><span class="st"> </span><span class="dv">4</span>), <span class="kw">abs</span>(x<span class="op">/</span><span class="dv">2</span>)<span class="op">-</span>(<span class="dv">3</span><span class="op">*</span><span class="kw">sqrt</span>(<span class="dv">33</span>)<span class="op">-</span><span class="dv">7</span>)<span class="op">*</span>x<span class="op">^</span><span class="dv">2</span><span class="op">/</span><span class="dv">112-3</span> <span class="op">+</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">1</span><span class="op">-</span>(<span class="kw">abs</span>(<span class="kw">abs</span>(x)<span class="op">-</span><span class="dv">2</span>)<span class="op">-</span><span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span>), <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb2-6" title="6">f3u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((x <span class="op">&gt;</span><span class="st"> </span><span class="fl">-0.5</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5</span>), <span class="fl">2.25</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb2-7" title="7">f4u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;</span><span class="st">  </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">3</span>), <span class="dv">6</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">10</span>)<span class="op">/</span><span class="dv">7</span> <span class="op">+</span><span class="st"> </span>(<span class="fl">1.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">abs</span>(x)) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">abs</span>(<span class="kw">abs</span>(x)<span class="op">-</span><span class="dv">1</span>)<span class="op">/</span>(<span class="kw">abs</span>(x)<span class="op">-</span><span class="dv">1</span>)) <span class="op">-</span><span class="st"> </span><span class="dv">6</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">10</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">4</span><span class="op">-</span>(<span class="kw">abs</span>(x)<span class="op">-</span><span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">14</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb2-8" title="8">f5u &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">ifelse</span> ((<span class="kw">abs</span>(x) <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.75</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(x) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>), <span class="dv">9-8</span><span class="op">*</span><span class="kw">abs</span>(x), <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb2-9" title="9">fu &lt;-<span class="st"> </span><span class="cf">function</span> (x) <span class="kw">f1u</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">f2u</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">f3u</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">f4u</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">f5u</span>(x)</a>
+<a class="sourceLine" id="cb2-10" title="10">fd &lt;-<span class="st"> </span><span class="cf">function</span> (x) <span class="kw">f1d</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">f2d</span>(x)</a>
+<a class="sourceLine" id="cb2-11" title="11">bm &lt;-<span class="st"> </span><span class="cf">function</span>(r,x) <span class="kw">ifelse</span>(r<span class="op">%%</span><span class="dv">2</span><span class="op">==</span><span class="dv">0</span>, <span class="kw">fu</span>(x), <span class="kw">fd</span>(x))</a>
+<a class="sourceLine" id="cb2-12" title="12">opar &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">bg=</span><span class="st">&quot;#02233f&quot;</span>, <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="kw">plot</span>(<span class="dt">x=</span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">0.065</span>), <span class="dt">y=</span><span class="kw">Vectorize</span>(bm)(<span class="dv">1</span><span class="op">:</span><span class="dv">216</span>, <span class="kw">seq</span>(<span class="op">-</span><span class="dv">7</span>,<span class="dv">7</span>,<span class="fl">0.065</span>)), <span class="dt">col=</span><span class="st">&quot;#999900&quot;</span>, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="kw">par</span>(opar)</a></code></pre></div>
+<p>(<a href="https://gist.githubusercontent.com/javierluraschi/d9d3383df627c45b7133103d87b674bc/raw" target="_blank"><em>source</em></a>)</p>
+</div>
+</div>
+<!--- TryIt --->
 </div>
 <div id="r-studio-shortcuts" class="slide section level1">
 <h1>R Studio Shortcuts</h1>
@@ -485,7 +490,7 @@ C: Show table of contents</p>
 <h1>R. vs. Desktop GIS</h1>
 <div class="colleft">
 <img src="images/rlogo_120x120.png">
-<ul>
+<ul class="incremental">
 <li>
 familiar
 </li>
@@ -511,7 +516,7 @@ free and open source
 </div>
 <div class="colright">
 <img src="images/esri_logo_120x120.png"> <img src="images/qgis_logo_120x120.png">
-<ul>
+<ul class="incremental">
 <li>
 one-off maps
 </li>

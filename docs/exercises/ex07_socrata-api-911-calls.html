@@ -302,11 +302,11 @@ plot(sup_dist_bnd[&#39;supdistpad&#39;])</code></pre>
 <pre><code>## Observations: 11
 ## Variables: 6
 ## $ supdistpad &lt;chr&gt; &quot;11&quot;, &quot;09&quot;, &quot;03&quot;, &quot;01&quot;, &quot;08&quot;, &quot;02&quot;, &quot;04&quot;, &quot;07&quot;, &quot;10&quot;, &quot;06&quot;, &quot;05&quot;
-## $ supdist    &lt;chr&gt; &quot;SUPERVISORIAL DISTRICT 11&quot;, &quot;SUPERVISORIAL DISTRICT 9&quot;, &quot;SUPERVISORIAL DIST...
-## $ supname    &lt;chr&gt; &quot;Safai&quot;, &quot;Ronen&quot;, &quot;Peskin&quot;, &quot;Fewer&quot;, &quot;Mandelman&quot;, &quot;Stefani&quot;, &quot;Mar&quot;, &quot;Yee&quot;, &quot;...
+## $ supdist    &lt;chr&gt; &quot;SUPERVISORIAL DISTRICT 11&quot;, &quot;SUPERVISORIAL DISTRICT 9&quot;, &quot;SUPERVISORIAL DISTRICT 3&quot;, &quot;SUPE...
+## $ supname    &lt;chr&gt; &quot;Safai&quot;, &quot;Ronen&quot;, &quot;Peskin&quot;, &quot;Fewer&quot;, &quot;Mandelman&quot;, &quot;Stefani&quot;, &quot;Mar&quot;, &quot;Yee&quot;, &quot;Walton&quot;, &quot;Hane...
 ## $ supervisor &lt;chr&gt; &quot;11&quot;, &quot;9&quot;, &quot;3&quot;, &quot;1&quot;, &quot;8&quot;, &quot;2&quot;, &quot;4&quot;, &quot;7&quot;, &quot;10&quot;, &quot;6&quot;, &quot;5&quot;
-## $ numbertext &lt;chr&gt; &quot;ELEVEN&quot;, &quot;NINE&quot;, &quot;THREE&quot;, &quot;ONE&quot;, &quot;EIGHT&quot;, &quot;TWO&quot;, &quot;FOUR&quot;, &quot;SEVEN&quot;, &quot;TEN&quot;, &quot;S...
-## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.4225 3..., MULTIPOLYGON (((-122.4109 3...,...</code></pre>
+## $ numbertext &lt;chr&gt; &quot;ELEVEN&quot;, &quot;NINE&quot;, &quot;THREE&quot;, &quot;ONE&quot;, &quot;EIGHT&quot;, &quot;TWO&quot;, &quot;FOUR&quot;, &quot;SEVEN&quot;, &quot;TEN&quot;, &quot;SIX&quot;, &quot;FIVE&quot;
+## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.4225 3..., MULTIPOLYGON (((-122.4109 3..., MULTIPOLYGON ...</code></pre>
 <p><img src="ex07_socrata-api-911-calls_files/figure-html/load_dist_bnd_klippy-1.png" width="672" /></p>
 </div>
 <!--- ans_zwurov --->
@@ -339,8 +339,8 @@ ems_df &lt;- read.socrata(ems_resp_url %&gt;%
 glimpse(ems_df)</code></pre>
 <pre><code>## Observations: 368
 ## Variables: 2
-## $ supervisor_district &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1...
-## $ incident_number     &lt;chr&gt; &quot;18127307&quot;, &quot;18127336&quot;, &quot;18127347&quot;, &quot;18127349&quot;, &quot;18127377&quot;, &quot;181274...</code></pre>
+## $ supervisor_district &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;10&quot;, &quot;10&quot;,...
+## $ incident_number     &lt;chr&gt; &quot;18127307&quot;, &quot;18127336&quot;, &quot;18127347&quot;, &quot;18127349&quot;, &quot;18127377&quot;, &quot;18127420&quot;, &quot;18127430...</code></pre>
 <p>⇒ There were 368 responses.</p>
 </div>
 <!--- ans_sxcost --->
@@ -380,11 +380,11 @@ glimpse(sup_dist_bnd)</code></pre>
 ## Observations: 11
 ## Variables: 6
 ## $ supdistpad &lt;chr&gt; &quot;11&quot;, &quot;09&quot;, &quot;03&quot;, &quot;01&quot;, &quot;08&quot;, &quot;02&quot;, &quot;04&quot;, &quot;07&quot;, &quot;10&quot;, &quot;06&quot;, &quot;05&quot;
-## $ supdist    &lt;chr&gt; &quot;SUPERVISORIAL DISTRICT 11&quot;, &quot;SUPERVISORIAL DISTRICT 9&quot;, &quot;SUPERVISORIAL DIST...
-## $ supname    &lt;chr&gt; &quot;Safai&quot;, &quot;Ronen&quot;, &quot;Peskin&quot;, &quot;Fewer&quot;, &quot;Mandelman&quot;, &quot;Stefani&quot;, &quot;Mar&quot;, &quot;Yee&quot;, &quot;...
+## $ supdist    &lt;chr&gt; &quot;SUPERVISORIAL DISTRICT 11&quot;, &quot;SUPERVISORIAL DISTRICT 9&quot;, &quot;SUPERVISORIAL DISTRICT 3&quot;, &quot;SUPE...
+## $ supname    &lt;chr&gt; &quot;Safai&quot;, &quot;Ronen&quot;, &quot;Peskin&quot;, &quot;Fewer&quot;, &quot;Mandelman&quot;, &quot;Stefani&quot;, &quot;Mar&quot;, &quot;Yee&quot;, &quot;Walton&quot;, &quot;Hane...
 ## $ supervisor &lt;chr&gt; &quot;11&quot;, &quot;9&quot;, &quot;3&quot;, &quot;1&quot;, &quot;8&quot;, &quot;2&quot;, &quot;4&quot;, &quot;7&quot;, &quot;10&quot;, &quot;6&quot;, &quot;5&quot;
-## $ numbertext &lt;chr&gt; &quot;ELEVEN&quot;, &quot;NINE&quot;, &quot;THREE&quot;, &quot;ONE&quot;, &quot;EIGHT&quot;, &quot;TWO&quot;, &quot;FOUR&quot;, &quot;SEVEN&quot;, &quot;TEN&quot;, &quot;S...
-## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.4225 3..., MULTIPOLYGON (((-122.4109 3...,...</code></pre>
+## $ numbertext &lt;chr&gt; &quot;ELEVEN&quot;, &quot;NINE&quot;, &quot;THREE&quot;, &quot;ONE&quot;, &quot;EIGHT&quot;, &quot;TWO&quot;, &quot;FOUR&quot;, &quot;SEVEN&quot;, &quot;TEN&quot;, &quot;SIX&quot;, &quot;FIVE&quot;
+## $ geometry   &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-122.4225 3..., MULTIPOLYGON (((-122.4109 3..., MULTIPOLYGON ...</code></pre>
 <div class="indented1">
 <p>⇒ In the 911 calls table, the (unpadded) district number is saved in a character field called <tt>‘<strong>supervisor_district</strong>’</tt>.</p>
 <p>⇒ In <tt>sup_dist_bnd</tt>, the district number is in a character field called <tt>‘<strong>supervisor</strong>’</tt>.</p>
@@ -403,19 +403,19 @@ sup_dist_bnd %&gt;% dplyr::select(supdistpad, supname, num_calls)</code></pre>
 ## bbox:           xmin: -122.5149 ymin: 37.70813 xmax: -122.3279 ymax: 37.83243
 ## CRS:            4326
 ## # A tibble: 11 x 4
-##    supdistpad supname   num_calls                                                           geometry
-##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;                                                 &lt;MULTIPOLYGON [°]&gt;
-##  1 11         Safai            15 (((-122.4225 37.71789, -122.4225 37.71782, -122.4235 37.7172, -12~
-##  2 09         Ronen            33 (((-122.4109 37.76941, -122.4109 37.76932, -122.4108 37.76923, -1~
-##  3 03         Peskin           48 (((-122.392 37.79387, -122.3922 37.79393, -122.3925 37.79377, -12~
-##  4 01         Fewer            14 (((-122.4937 37.78761, -122.4937 37.78649, -122.4935 37.7835, -12~
-##  5 08         Mandelman        30 (((-122.4233 37.77206, -122.4233 37.77194, -122.4232 37.77181, -1~
-##  6 02         Stefani          17 (((-122.4192 37.80845, -122.4192 37.80839, -122.4191 37.8078, -12~
-##  7 04         Mar              11 (((-122.4749 37.76179, -122.475 37.76175, -122.4759 37.76171, -12~
-##  8 07         Yee              31 (((-122.4485 37.75904, -122.4485 37.75895, -122.4485 37.75861, -1~
-##  9 10         Walton           36 (((-122.399 37.76973, -122.3982 37.76904, -122.3974 37.76844, -12~
-## 10 06         Haney           104 (((-122.3938 37.79374, -122.3932 37.79323, -122.3925 37.79377, -1~
-## 11 05         Brown            27 (((-122.4216 37.78662, -122.4214 37.78653, -122.4214 37.78617, -1~</code></pre>
+##    supdistpad supname   num_calls                                                                         geometry
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;                                                               &lt;MULTIPOLYGON [°]&gt;
+##  1 11         Safai            15 (((-122.4225 37.71789, -122.4225 37.71782, -122.4235 37.7172, -122.4238 37.7170~
+##  2 09         Ronen            33 (((-122.4109 37.76941, -122.4109 37.76932, -122.4108 37.76923, -122.4108 37.769~
+##  3 03         Peskin           48 (((-122.392 37.79387, -122.3922 37.79393, -122.3925 37.79377, -122.3932 37.7932~
+##  4 01         Fewer            14 (((-122.4937 37.78761, -122.4937 37.78649, -122.4935 37.7835, -122.4925 37.7835~
+##  5 08         Mandelman        30 (((-122.4233 37.77206, -122.4233 37.77194, -122.4232 37.77181, -122.4231 37.771~
+##  6 02         Stefani          17 (((-122.4192 37.80845, -122.4192 37.80839, -122.4191 37.8078, -122.4189 37.8068~
+##  7 04         Mar              11 (((-122.4749 37.76179, -122.475 37.76175, -122.4759 37.76171, -122.4759 37.7617~
+##  8 07         Yee              31 (((-122.4485 37.75904, -122.4485 37.75895, -122.4485 37.75861, -122.4483 37.758~
+##  9 10         Walton           36 (((-122.399 37.76973, -122.3982 37.76904, -122.3974 37.76844, -122.3967 37.7678~
+## 10 06         Haney           104 (((-122.3938 37.79374, -122.3932 37.79323, -122.3925 37.79377, -122.3922 37.793~
+## 11 05         Brown            27 (((-122.4216 37.78662, -122.4214 37.78653, -122.4214 37.78617, -122.4213 37.785~</code></pre>
 </div>
 <!--- ans_vntccu --->
 <p><a id="qtn_ksxzkz" href="#" class="showhidelink" onclick="showHide('ksxzkz');return false;"># 7.</a> Make a choropleth map of the results</p>

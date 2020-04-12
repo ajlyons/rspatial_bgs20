@@ -156,28 +156,49 @@ Working with Files and Folders <br/><img src='images/folders_400x300.jpg'/>
 <script>
   addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
-<p>When you import or export objects to disk using a script, you don’t have the luxury of an ‘Open’ or ‘Save As’ dialog. You have to specify where it’s coming from (or going to).</p>
+<p>When you import or export objects to disk using a script, you don’t have the luxury of an ‘Open…’ or ‘Save As…’ dialog. You have to specify where it’s coming from (or going to).</p>
 <p>All file paths are relative to the <strong>working directory</strong>. You can view the working directory with <code>getwd()</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">## View the working directory</span></a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw">getwd</span>()</a></code></pre></div>
-<p>To see a list of files in the current working directory, use <code>list.files()</code>:</p>
+<div class="infobox">
+<p>‘directory’ = ‘folder’</p>
+</div>
+<!--- infobox --->
+<p>To see a list of files in the current working directory, use <code>list.files(x)</code>, where <em>x</em> is a directory.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co">## List the files in the current working directory</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co">## Note &#39;.&#39; is shorthand for the current working directory</span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="kw">list.files</span>(<span class="st">&quot;.&quot;</span>)</a></code></pre></div>
-<p>But what if you want to list files that in a subdirectory of the current directory? Use as the folder:</p>
-<p><code>./mysubfolder</code></p>
-<p>Here <code>.</code> signifies ’start at the working directory, and <code>/mysubfolder</code> tell R to look in a subfolder.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co">## List the files in the &#39;data&#39; folder</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw">list.files</span>(<span class="st">&quot;./data&quot;</span>)</a></code></pre></div>
+<div class="tip">
+<p><code>list.files()</code> also lists directories</p>
+<p>Optional arguments let you specify a pattern, recurse subdirectories, etc.</p>
+</div>
+<!--- tip --->
+<p><br />
+</p>
+<p>To list files in a <em>subdirectory</em> of the current directory:</p>
+<div class="indented3">
+<code>list.files("./mysubfolder")</code>
+</div>
+<p>Here ‘<code>.</code>’ tells R to start at the working directory, and then go into ‘<code>mysubfolder</code>’.</p>
 <div class="infobox">
 <p>R always requires forward slashes (<code>/</code>), not back slashes (<code>\</code>).</p>
 <p>Sorry Windows users!</p>
 </div>
 <!--- tip --->
+<p><br />
+</p>
+<div class="tryit">
+<p>List all the Shapefiles in the <code>data</code> directory.</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co">## List the Shapefiles in the &#39;data&#39; directory</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">list.files</span>(<span class="st">&quot;./data&quot;</span>, <span class="dt">pattern =</span> <span class="st">&quot;*.shp&quot;</span>)</a></code></pre></div>
+</div>
+</div>
+<!--- TryIt --->
 </div>
 <div id="absolute-file-paths" class="slide section level1">
 <h1>Absolute File Paths</h1>
-<p>An absolute file path starts with <code>'/'</code>, which indicates the root directory. It may also include a volumne (drive letter). Examples:</p>
+<p>An absolute file path starts with <code>'/'</code>, which indicates the root directory. It may also include a volume (drive letter). Examples:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co">## Define a file name that begins with the root directory (on the current drive / volumne)</span></a>
 <a class="sourceLine" id="cb4-2" title="2">x &lt;-<span class="st"> &quot;/temp/test.csv&quot;</span></a>
 <a class="sourceLine" id="cb4-3" title="3"></a>
@@ -190,7 +211,7 @@ Working with Files and Folders <br/><img src='images/folders_400x300.jpg'/>
 <pre><code>## [1] TRUE</code></pre>
 <div class="tip">
 <p>To ensure you didn’t type a filename incorrectly, use <code>file.exists()</code></p>
-<p>File names on Windows are <em>not</em> case sensitive, but for compatibility with Linux make it a practice to match the case.</p>
+<p>File names on Windows are <em>not</em> case sensitive, but for compatibility across platforms make it a practice to match the case.</p>
 </div>
 <!--- tip --->
 </div>
@@ -207,7 +228,7 @@ Working with Files and Folders <br/><img src='images/folders_400x300.jpg'/>
 <a class="sourceLine" id="cb8-7" title="7"><span class="co">## Import</span></a>
 <a class="sourceLine" id="cb8-8" title="8">my_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(csv_fn)</a></code></pre></div>
 <div class="tryit">
-<p>What type of object (data class) does <code>read.csv()</code> return?</p>
+<p>What type of object (class) does <code>read.csv()</code> return?</p>
 <p><span id="soln_xtuhwz" class="showhidesoln" onclick="showHide(&#39;xtuhwz&#39;);return false;">Answer</span></p>
 <div id="xtuhwz" class="hint indented1 indented1-r">
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">class</span>(my_data)</a></code></pre></div>
@@ -223,59 +244,81 @@ Working with Files and Folders <br/><img src='images/folders_400x300.jpg'/>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">setwd</span>(<span class="st">&quot;/projects/soc101/sf_census/&quot;</span>)</a></code></pre></div>
 <div class="tip">
 <p>You can also set the working directory from the RStudio <em>Session</em> menu.</p>
+<p>If you create a RStudio Project, the working directory defaults to the Project folder.</p>
 </div>
 </div>
 <div id="home-directory" class="slide section level1">
 <h1>‘Home’ Directory</h1>
-<p>The <strong>‘Home’ directory</strong> is usually your Documents folder, and can be specified with the <tt><strong>~</strong></tt> character.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">tools<span class="op">::</span><span class="kw">file_path_as_absolute</span>(<span class="st">&quot;~&quot;</span>)</a></code></pre></div>
-<pre><code>## [1] &quot;C:/Users/Andy/Documents&quot;</code></pre>
-<p>The <strong>‘root’ directory</strong> on the current volume (drive) can be specified with the ‘<tt><strong>/</strong></tt>’ character. You can specify the drive letter if you’d like also (e.g., <tt>c:/</tt>).</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">setwd</span>(<span class="st">&quot;/projects/soc101/sf_census&quot;</span>)</a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="kw">getwd</span>()</a>
-<a class="sourceLine" id="cb14-3" title="3"><span class="kw">setwd</span>(<span class="st">&quot;./data&quot;</span>)</a>
-<a class="sourceLine" id="cb14-4" title="4"><span class="kw">getwd</span>()</a>
-<a class="sourceLine" id="cb14-5" title="5">tools<span class="op">::</span><span class="kw">file_path_as_absolute</span>(<span class="st">&quot;.&quot;</span>)</a></code></pre></div>
-<div class="tryit">
-<p>Try these functions:</p>
-<div class="indented1 indented1-r">
-<div class="sourceCode" id="cb15"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">getwd</span>()</a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="kw">path.expand</span>(<span class="st">&quot;~&quot;</span>)</a>
-<a class="sourceLine" id="cb15-3" title="3"><span class="kw">list.files</span>(<span class="st">&quot;~&quot;</span>)</a>
-<a class="sourceLine" id="cb15-4" title="4">tools<span class="op">::</span><span class="kw">file_path_as_absolute</span>(<span class="st">&quot;./data&quot;</span>)</a>
-<a class="sourceLine" id="cb15-5" title="5"><span class="kw">list.files</span>(<span class="st">&quot;./data&quot;</span>, <span class="dt">pattern=</span><span class="st">&quot;.shp$&quot;</span>)</a>
-<a class="sourceLine" id="cb15-6" title="6">x &lt;-<span class="st"> </span><span class="kw">file.choose</span>()</a>
-<a class="sourceLine" id="cb15-7" title="7">x</a>
-<a class="sourceLine" id="cb15-8" title="8"><span class="kw">file.exists</span>(x)</a></code></pre></div>
+<p>The <strong>‘Home’ directory</strong> is usually your Documents folder. Example;</p>
+<div class="indented3">
+<code>C:/Users/Andy/Documents</code>
 </div>
+<p>You can tell R to start in the Home directory with the <strong><code>~</code></strong> character:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co">## List files in your &#39;Home&#39; directory</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw">list.files</span>(<span class="st">&quot;~&quot;</span>)</a></code></pre></div>
 </div>
-<div class="tip">
-<p>Use <strong><tt>file.choose()</tt></strong> to get a file name with a standard file selection window.</p>
-</div>
+<div id="convenience-functions" class="slide section level1">
+<h1>Convenience Functions</h1>
+<h3 id="file.choose"><code>file.choose()</code></h3>
+<p>allows you to pick a file using a file selection dialog, then returns the name.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co">## Select a file</span></a>
+<a class="sourceLine" id="cb13-2" title="2">x &lt;-<span class="st"> </span><span class="kw">file.choose</span>()</a>
+<a class="sourceLine" id="cb13-3" title="3"></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="co">## View x</span></a>
+<a class="sourceLine" id="cb13-5" title="5">x</a></code></pre></div>
+<p><br />
+</p>
+<h3 id="file.path"><code>file.path()</code></h3>
+<p>lets you concatenate folders and files to construct a syntactically valid name:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co">## Construct a complete file name from a set of directories and a file name</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="kw">file.path</span>(<span class="st">&quot;~&quot;</span>, <span class="st">&quot;BaseLayers&quot;</span>, <span class="st">&quot;California&quot;</span>, <span class="st">&quot;Parks.shp&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;~/BaseLayers/California/Parks.shp&quot;</code></pre>
+<p><br />
+</p>
+<h3 id="file_path_as_absolute"><code>file_path_as_absolute()</code></h3>
+<p>(from the <code>tools</code> package) shows you the absolute path for any folder:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co">## View the expanded path of the &#39;data&#39; folder</span></a>
+<a class="sourceLine" id="cb16-2" title="2">tools<span class="op">::</span><span class="kw">file_path_as_absolute</span>(<span class="st">&quot;./data&quot;</span>)</a></code></pre></div>
 </div>
 <div id="saving-r-objects-to-disk" class="slide section level1">
 <h1>Saving R Objects to Disk</h1>
-<p>You can save individual variables to disk with the <tt><strong>save()</strong></tt> function. <tt>save()</tt> saves objects in a binary, compressed file format that R understands. This makes it very flexible and easy to bring back into R using the sister function <strong><tt>load()</tt></strong>.</p>
-<p>If you don’t specify a directory as part of the file name, it will go in the working directory.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">x_nums &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>) <span class="op">*</span><span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb16-2" title="2"></a>
-<a class="sourceLine" id="cb16-3" title="3"><span class="co">## Save to to My Documents</span></a>
-<a class="sourceLine" id="cb16-4" title="4"><span class="kw">save</span>(x_nums, <span class="dt">file=</span><span class="st">&quot;~/my_random_numbers.RData&quot;</span>)</a></code></pre></div>
-<div class="infobox">
+<p>You can save individual objects (variables) to disk with <strong><code>save()</code></strong>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co">## Create 1000 random values</span></a>
+<a class="sourceLine" id="cb17-2" title="2">rnd_vals &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>) <span class="op">*</span><span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb17-3" title="3"></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="co">## Save to the Home directory</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="kw">save</span>(rnd_vals, <span class="dt">file=</span><span class="st">&quot;~/my_random_numbers.RData&quot;</span>)</a></code></pre></div>
+<div class="tip">
 <p><strong>.RData</strong> and <strong>.Rda</strong> are common extensions for R data files, but you can name your file anything you want.</p>
+<p>To save multiple objects to the same file, use the <strong>list</strong> argument:</p>
+<div class="indented3" style="font-family:monospace;">
+<p>save(<strong>list = c(“x”, “y”)</strong>, file = “~/xy.RData”)</p>
 </div>
-<p>To save your entire <strong>workspace</strong> (all variables in memory), use the <tt>save.image()</tt> function. RStudio also has a ‘Save Workspace’ button on the ‘Environment’ window, and will probably ask if you want to save your workspace when you quit the program.</p>
-<h2 id="loading-saved-objects-back-into-r">Loading Saved Objects Back into R</h2>
-<p>To load a file back into memory, use the <tt><strong>load()</strong></tt> function.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">load</span>(<span class="st">&quot;~/first_try.RData&quot;</span>)</a></code></pre></div>
+<p>To save your entire <strong>workspace</strong> (<em>all</em> variables in memory), use <code>save.image()</code>. RStudio also has a ‘Save Workspace’ button on the ‘Environment’ window, and will probably ask if you want to save your workspace when you quit the program.</p>
+</div>
+<!---- tip --->
+<p><br />
+</p>
+<h2 id="load-saved-objects-back-into-r">Load Saved Objects Back into R</h2>
+<p><code>save()</code> stores objects in a binary, compressed file format that R understands. This makes it very flexible and easy to bring back into R using the sister function <strong><tt>load()</tt></strong>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co">## Delete rnd_vals from memory</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="kw">rm</span>(rnd_vals)</a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="kw">ls</span>()</a>
+<a class="sourceLine" id="cb18-4" title="4"></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="co">## Load the saved file</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="kw">load</span>(<span class="st">&quot;~/my_random_numbers.RData&quot;</span>)</a>
+<a class="sourceLine" id="cb18-7" title="7"></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="co">## View objects in memory. (rnd_vals should be back!)</span></a>
+<a class="sourceLine" id="cb18-9" title="9"><span class="kw">ls</span>()</a></code></pre></div>
 </div>
 <div id="saving-and-sourcing-scripts" class="slide section level1">
 <h1>Saving and Sourcing Scripts</h1>
 <p>You can save and open scripts, R Markdown files, etc. from the RStudio <strong>File</strong> menu.</p>
 <p>If you have a set of commands that you want to rerun repeatedly, you can save them as a *.R file and then run them all at once with <tt><strong>source()</strong></tt> function.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">source</span>(<span class="st">&quot;import_clean_data.R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">source</span>(<span class="st">&quot;import_clean_data.R&quot;</span>)</a></code></pre></div>
 <div class="tip">
-<p><tt><strong>source()</strong></tt> automatically runs all the commands in a script, so only use it with scripts that are ‘ready-to-go’. To run commands one-by-one, open it in RStudio.</p>
+<p><tt><strong>source()</strong></tt> automatically runs all the commands in a script, so only use it with scripts that are ‘ready-to-go’.</p>
+<p>To run commands one-by-one, open the script in RStudio and use the ‘run’ button.</p>
 </div>
 </div>
 <div id="rstudio-files-pane" class="slide section level1">
@@ -284,18 +327,21 @@ Working with Files and Folders <br/><img src='images/folders_400x300.jpg'/>
 <p><img src="images/rstudio-files-pane_616x504x256.png" style="display:block; margin-left:3em; border:1px solid grey;" /></p>
 <div class="tip">
 <p>You can open many files by clicking on them in Files pane:</p>
-<ul>
-<li><code>.R</code> - open for editing</li>
-<li><code>.txt</code>, <code>.css</code> - open for editing</li>
-<li><code>.RData</code>, <code>.rda</code> - import objects into RStudio</li>
-</ul>
+<div class="indented1">
+<p><code>*.R</code>, <code>*.txt</code>, <code>*.css</code> - clicking will open for editing<br />
+<code>*.RData</code>, <code>*.rda</code> - clicking will import them into RStudio</p>
+</div>
 </div>
 <!--- tip --->
 </div>
 <div id="summary" class="slide section level1">
 <h1>Summary</h1>
-<p>Functions that import or export data typically require a file name.</p>
-<p>File names are in reference to the current Working Directory.</p>
+<p>Importing and exporting data typically requires passing a <strong>file name</strong>.</p>
+<p>File names are in reference to the current <strong>Working Directory</strong>, which you specify with the ‘<strong><code>.</code></strong>’</p>
+<p>The ‘Home’ Directory is a good place to store things you use frequently.</p>
+<p>Convenience functions like <code>file.exists()</code> and <code>list.files()</code> can make your life easier.</p>
+<p><br />
+</p>
 <p>
 <strong>Next: </strong> <a href="05_importing-vector.html">Importing and Plotting Vector Data</a>
 </p>

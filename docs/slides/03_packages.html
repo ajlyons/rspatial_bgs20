@@ -199,11 +199,13 @@ Species Distribution Models: <kbd>dismo</kbd>
 </div>
 <div id="installing-and-loading-packages" class="slide section level1">
 <h1>Installing and Loading Packages</h1>
-<p>Install = download</p>
+<p>‘Install’ = download</p>
 <h3 id="rstudio-packages-tab">RStudio Packages Tab</h3>
 <div class="indented2">
 <p><img src="./images/rstudio_install-packages_378x281.png" /></p>
 </div>
+<p><br />
+</p>
 <h3 id="console">Console</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;raster&quot;</span>)</a></code></pre></div>
 <div class="tip">
@@ -214,13 +216,18 @@ Species Distribution Models: <kbd>dismo</kbd>
 <a class="sourceLine" id="cb2-3" title="3"><span class="kw">install.packages</span>(<span class="st">&quot;tlocoh&quot;</span>, <span class="dt">repos=</span><span class="st">&quot;http://R-Forge.R-project.org&quot;</span>)</a></code></pre></div>
 </div>
 </div>
+<p><br />
+</p>
 <h3 id="from-github">From GitHub</h3>
 <p>A <strong>lot</strong> of packages are on GitHub. Install them with the <tt>devtools</tt> package:</p>
 <div class="indented1 indented1-r">
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">library</span>(devtools)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw">install_github</span>(<span class="st">&quot;ucanr-igis/uavimg&quot;</span>)</a></code></pre></div>
 </div>
-<h3 id="trouble-shooting-package-problems">Trouble Shooting Package Problems</h3>
+<p><br />
+</p>
+<div class="infobox">
+<p>Trouble Shooting Package Install Problems</p>
 <p><strong>Dependencies</strong>. Most packages require other packages to work. That means they all have to be installed to work properly.</p>
 <p><strong>Package not available</strong>. A common error message:</p>
 <div class="indented1 indented1-r">
@@ -228,9 +235,11 @@ Species Distribution Models: <kbd>dismo</kbd>
 </div>
 <p>Most of the time, a warning like this means the package doesn’t exist at all. Check your spelling, capitalization, and whether it might be in a different repository.</p>
 </div>
+<!--- infobox --->
+</div>
 <div id="loading" class="slide section level1">
 <h1>Loading</h1>
-<p>Load = bring a package into memory so you can use it in R.</p>
+<p>‘Load’ = bring a package into memory so you can use it in R.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">library</span>(raster)</a></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">require</span>(raster)</a></code></pre></div>
 <div class="tip">
@@ -336,7 +345,7 @@ demo(webmap)
 <a class="sourceLine" id="cb9-5" title="5"><span class="kw">data</span>(<span class="dt">package=</span><span class="st">&quot;sp&quot;</span>)</a></code></pre></div>
 </div>
 <p>How about the <tt>maps</tt> package?</p>
-<p><span id="soln_aclspu" class="showhidesoln" onclick="showHide(&#39;aclspu&#39;);return false;">Soln</span></p>
+<p><span id="soln_aclspu" class="showhidesoln" onclick="showHide(&#39;aclspu&#39;);return false;">Ans</span></p>
 <div id="aclspu" class="hint">
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">library</span>(maps)</a>
 <a class="sourceLine" id="cb10-2" title="2"><span class="kw">data</span>(<span class="dt">package =</span> <span class="st">&quot;maps&quot;</span>)</a></code></pre></div>
@@ -356,27 +365,32 @@ demo(webmap)
 </div>
 </div>
 <div id="duplicate-function-names" class="slide section level1">
-<h1>Duplicate function names</h1>
+<h1>Duplicate Function Names</h1>
 <p>Occasionally two or more packages will have a function with the same name. <img src="images/sad-face-32x32.png" /></p>
-<p>R will use whichever one it finds first.</p>
-<p>Best Practice: use the package name and the <tt>::</tt> reference to specify which package a function is from.</p>
+<p>R will use whichever one was loaded first. <img src="images/sad-face-32x32.png" /> <img src="images/sad-face-32x32.png" /></p>
+<p>Best practice: use the package name and the <code>::</code> reference to specify which package a function is from.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">x &lt;-<span class="st"> </span>sp<span class="op">::</span><span class="kw">over</span>()</a>
 <a class="sourceLine" id="cb13-2" title="2">x &lt;-<span class="st"> </span>grDevices<span class="op">::</span><span class="kw">over</span>()</a>
 <a class="sourceLine" id="cb13-3" title="3"></a>
 <a class="sourceLine" id="cb13-4" title="4">y &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">select</span>()</a>
 <a class="sourceLine" id="cb13-5" title="5">y &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>()</a></code></pre></div>
 <div class="tip">
-<p>When you use the <tt><em>package_name</em>::<em>function_name</em></tt> syntax, you don’t actually have to first load the package with <tt>library()</tt>.</p>
-<p>Another way you can deal with duplicate function names is to use the <code>conflicted</code> package. This package let’s you declare what package R should turn to first for specific functions, regardless of what other packages are loaded or in what order they were loaded.</p>
-<div class="indented1 indented1-r">
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">library</span>(conflicted)</a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="kw">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
-<a class="sourceLine" id="cb14-3" title="3"><span class="kw">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
-<a class="sourceLine" id="cb14-4" title="4"></a>
-<a class="sourceLine" id="cb14-5" title="5"><span class="co"># From here on out, anytime we call select() or filter(), </span></a>
-<a class="sourceLine" id="cb14-6" title="6"><span class="co"># R will use the dplyr version.</span></a></code></pre></div>
+<p>When you use the <em><code>package_name::function_name</code></em> syntax, you don’t actually have to first load the package with <tt>library()</tt>.</p>
 </div>
-</div>
+<p><br />
+</p>
+<h2 id="resolving-name-conflicts-with-the-conflicted-package">Resolving Name Conflicts with the <code>conflicted</code> Package</h2>
+<p>When you call a function that exists in multiple packages, R uses whichever package was loaded first.</p>
+<p>The <code>conflicted</code> package helps you avoid problems with duplicate function names, by specifying which one to prioritize <em>no matter what order</em> they were loaded.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">library</span>(conflicted)</a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="co"># Set conflict preference</span></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="kw">conflict_prefer</span>(<span class="st">&quot;filter&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="kw">conflict_prefer</span>(<span class="st">&quot;count&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="kw">conflict_prefer</span>(<span class="st">&quot;select&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</a>
+<a class="sourceLine" id="cb14-7" title="7"></a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="co"># From here on out, anytime we call select() or filter(), R will</span></a>
+<a class="sourceLine" id="cb14-9" title="9"><span class="co"># always use the dplyr version.</span></a></code></pre></div>
 </div>
 <div id="summary" class="slide section level1">
 <h1>Summary</h1>

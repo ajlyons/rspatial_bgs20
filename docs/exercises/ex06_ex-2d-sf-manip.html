@@ -318,14 +318,23 @@ quakes %&gt;% pull(depth) %&gt;% summary()</code></pre>
 <p><img src="ex06_ex-2d-sf-manip_files/figure-html/hist_quakes-1.png" width="672" /></p>
 </div>
 <!--- ans_iqzbzo --->
-<p><a id="qtn_usnbfu" href="#" class="showhidelink" onclick="showHide('usnbfu');return false;"># 4.</a> What was the most common magnitude? <a href="#" class="showhidehint" onclick="showHide('ikvvsm');return false;"></a></p>
+<p><a id="qtn_usnbfu" href="#" class="showhidelink" onclick="showHide('usnbfu');return false;"># 4.</a> What was the median magnitude of the quakes in this dataset? What was the most<br />
+#  common magnitude (i.e., mode)? <a href="#" class="showhidehint" onclick="showHide('ikvvsm');return false;"></a></p>
 <div id="ikvvsm" class="hint">
-<p>By definition, the median is the most common value of a dataset.</p>
+<p>By definition, the <em>median</em> is the ‘middle’ value of a data set when sorted. The <em>mode</em> is the most common value.</p>
+<p>Getting the median is relatively easy using a built-in function. Find the mode will require a little more creativity.</p>
 </div>
 <!--- hint_ikvvsm --->
 <div id="usnbfu" class="answer-code">
-<pre class="r"><code>median(quakes$mag)</code></pre>
+<pre class="r"><code>## Median
+median(quakes$mag)</code></pre>
 <pre><code>## [1] 4.6</code></pre>
+<pre class="r"><code>## Mode
+quakes %&gt;% group_by(mag) %&gt;% count() %&gt;% as_tibble() %&gt;% top_n(1, n)</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##     mag     n
+##   &lt;dbl&gt; &lt;int&gt;
+## 1   4.5   107</code></pre>
 </div>
 <!--- ans_usnbfu --->
 <p>########################<br/>#### <strong>MAPPING QUAKES</strong> ####<br/>########################</p>

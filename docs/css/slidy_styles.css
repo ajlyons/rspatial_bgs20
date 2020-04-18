@@ -461,6 +461,11 @@ p.exercises_desc {
   background-color:#e6fee6;
 }
 
+.sample_code {
+  background-color:transparent;
+  margin-left: 2em;
+  border: 2px solid lightgray;
+}
 
 /* ======== No longer used ==============
 td {

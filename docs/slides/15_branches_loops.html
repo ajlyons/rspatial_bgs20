@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Automation with Branches and Loops" />
+  <meta name="copyright" content="<span class='footer-right'><a href='../acknowledgements.html'>Acknowledgements</a></span><span class='footer-right'><a href=' https://notes.typo3.org/p/rspatial-bgs20 ' target='_blank'>Forum</a></span><span class='footer-right'><a href=' https://ajlyons.github.io/rspatial_bgs20/ '> https://ajlyons.github.io/rspatial_bgs20/ </a></span><span class='footer-right'><a href='../index.html'>Home</a></span><span class='footer-subtitle'> Spatial Data Analysis with R </span>"/>
+  <meta name="font-size-adjustment" content="2"/>
+  <title>Spatial Data Analysis with R  BayGeo, Spring 2020</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACkUlEQVQ4jX2SW0jTcRTHTzNyeZlh6lqmm3POdNPC6SxSEzaqafkykOFoIxTDWpKRFV6iQMNLFyMSsQvUW0WORc2WWBmGKEGZXUyz0NrmNmfa1PYgfHsQ1v5oHjgvX875/M45vy/R8mDJ9caxrFIL5CUWJB00Q9n+7Q+l1BetUMuMTL3JpTB0QVnejd1Hu9DQ60G5eQbqB7PIvj0L2bUZ0KZzghWbs0o7Fx3Tc/B6vStm6+g0wrQvIKh2gKKyUxnNSZoO685SC1YDeL1e9Ll+Ia7WCd5pJ4hojQ8g1nViezETYBqZx93BOdwa9jAgsdUT4J6ZQqC6f4GIiLYU9/RzNWYIdU9hd/8rLjN7UGT8DbWROVVMlQsBBWas142DiIikdfbFMF0POIVm2NzM1zwLS+mvcSsnEajpBSv/8RIgucGJ1EYXEs+NwjrlWfUGMee/Y2PFJIJLrFibex8kOsahhCYnUlpnIL1kh9X9/yMKG2yIOOlAsPYnAveZsE75EEQUQLwTwy5Rsxvx9UxApKEPEYY+BiSizA623oaggkdgq4xLKwRLq7i8sy6EFlpg8wNEVwyAd3wAbZ8cPu3CazeCC/sRojYjaL8Jvm8MPWLDBm03A8CveQ9+7RBia4cYU4QfeokwzTOwc6/4OzKXHap/C5ufD0RNo0i4OAZR81dcnnD69Mp3PxBe9GRkuZdFKk7sqTcQ132EpGUMydetSLnpgOSGHVtbxpHU9AX8mkFEG55/ZrjQL1h82V6esPLVh8Sr40i940J6xzzS7s1C0m6HqHEEiTnatgT5gcPijHxltFwhjpRIQpZjBAJ2lFTBFW5TiOPT8mXx6apdcRl5OaJM1Q6hLC9ls3RPTLgok0NELCKiv02kPqt/O1MZAAAAAElFTkSuQmCC" rel="icon" type="image/x-icon" />
+  <script language="javascript" type="text/javascript">
+  function TriShowHide(shID) {
+    shIDspan = shID + "span";
+    shIDdiv = shID + "div";
+    if (document.getElementById(shIDdiv).style.display != 'block') {
+      document.getElementById(shIDdiv).style.display = 'block';
+      txtSpan = "&#9660;";
+    } else {
+      document.getElementById(shIDdiv).style.display = 'none';
+      txtSpan = "&#9654;";
+    }
+    document.getElementById(shIDspan).innerHTML = txtSpan + " ";
+  }
+  function showHide(shID) {
+    if (shID=="soln-show-all") {
+      var allAnswerCode = document.getElementsByClassName("answer-code");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'block';
+      }
+    } else if (shID=="soln-hide-all") {
+      var allAnswerCode = document.getElementsByClassName("answer-code");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'none';
+      }
+    } else if (shID=="hints-show-all") {
+      var allAnswerCode = document.getElementsByClassName("hint");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'block';
+      }
+    } else if (shID=="hints-hide-all") {
+      var allAnswerCode = document.getElementsByClassName("hint");
+      for (i = 0; i < allAnswerCode.length; i++) {
+          allAnswerCode[i].style.display = 'none';
+      }
+    } else {
+      if (document.getElementById(shID)) {
+        if (document.getElementById(shID).style.display != 'block') {
+          document.getElementById(shID).style.display = 'block';
+        } else {
+          document.getElementById(shID).style.display = 'none';
+        }
+      }
+    }
+  }
+  function CopyToClipboard(containerid) {
+  if (document.selection) {
+      var range = document.body.createTextRange();
+      range.moveToElementText(document.getElementById(containerid));
+      range.select().createTextRange();
+      document.execCommand("copy");
+  } else if (window.getSelection) {
+      var range = document.createRange();
+      range.selectNode(document.getElementById(containerid));
+      window.getSelection().addRange(range);
+      document.execCommand("copy");
+      // alert("text copied")
+  }}
+  </script>
+  <link href="lib/slidy-2/styles/slidy.css" rel="stylesheet" />
+  <script src="lib/slidy-2/scripts/slidy.js"></script>
+  <script src="lib/slidy_shiny-1/slidy_shiny.js"></script>
+  <script src="lib/clipboard-1.7.1/clipboard.min.js"></script>
+  <link href="lib/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+  <link href="lib/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+  <script src="lib/klippy-0.0.0.9500/js/klippy.min.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+   href="..\css\slidy_styles.css" />
+  <meta name="duration" content="0" />
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title"><span class="course-title">Spatial Data Analysis with R </span><br/><span class="course-subtitle">BayGeo, Spring 2020</span></h1>
+  <p class="author">
+Automation with Branches and Loops <br/><img src='images/gears_rainbow_512x202x256.png'/>
+  </p>
+</div>
+<div id="branching-with-if-else-and-ifelse" class="slide section level1">
+<h1>Branching with <code>if</code>, <code>else</code>, and <code>ifelse</code></h1>
+<script type="text/javascript">w3c_slidy.mouse_click_enabled = false;</script>
+<script>
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<p><code>if</code> and <code>else</code> statements are control structures that let you control how a code should execute based on a set of pre-established conditions.</p>
+<p>Syntax:</p>
+<p><code>if (condition) {statement} else {other statement}</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">x &lt;-<span class="st"> </span><span class="dv">7</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="cf">if</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="dv">7</span>) {</a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="kw">print</span>(x)</a>
+<a class="sourceLine" id="cb1-4" title="4">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="kw">print</span>(<span class="st">&quot;NOT BIG ENOUGH!!&quot;</span>)</a>
+<a class="sourceLine" id="cb1-6" title="6">}</a></code></pre></div>
+<pre><code>## [1] &quot;NOT BIG ENOUGH!!&quot;</code></pre>
+<div class="infobox">
+<ul>
+<li>the conditional expression after the <code>if</code> statement much be in (parentheses)<br />
+</li>
+<li>Use {curly braces} to define chunks of code<br />
+</li>
+<li>indentation is not mandatory, but makes the code more legible<br />
+</li>
+</ul>
+</div>
+<!--- infobox --->
+<h2 id="chaining-multiple-tests-with-and-and-or">Chaining multiple tests with ‘and’ and ‘or’</h2>
+<p>You can chain together expressions that test for multiple conditions using operators for <em>and</em> and <em>or</em>.</p>
+<p>Note however R doesn’t use the keywords <em>and</em> and <em>or</em>. Rather use <code>||</code> for ‘or’, and <code>&amp;&amp;</code> for ‘and’.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">x &lt;-<span class="st"> </span><span class="dv">4</span>; y &lt;-<span class="st"> </span><span class="dv">8</span></a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">## &#39;or&#39; Test</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span> <span class="op">||</span><span class="st"> </span>y <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb3-5" title="5">  <span class="kw">print</span>(<span class="st">&quot;TRUE&quot;</span>)</a>
+<a class="sourceLine" id="cb3-6" title="6">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb3-7" title="7">  <span class="kw">print</span>(<span class="st">&quot;FALSE&quot;</span>)</a>
+<a class="sourceLine" id="cb3-8" title="8">}</a></code></pre></div>
+<pre><code>## [1] &quot;TRUE&quot;</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co">## &#39;and&#39;</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span> <span class="op">&amp;&amp;</span><span class="st"> </span>y <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="kw">print</span>(<span class="st">&quot;TRUE&quot;</span>)</a>
+<a class="sourceLine" id="cb5-4" title="4">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb5-5" title="5">  <span class="kw">print</span>(<span class="st">&quot;FALSE&quot;</span>)</a>
+<a class="sourceLine" id="cb5-6" title="6">}</a></code></pre></div>
+<pre><code>## [1] &quot;FALSE&quot;</code></pre>
+<h2 id="if---else-if---else">if - else if - else</h2>
+<p>You can string together multiple ‘else if’ checks.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co">## Generate a sample number between 1 and 20</span></a>
+<a class="sourceLine" id="cb7-2" title="2">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">size=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb7-3" title="3">x</a></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co">## See what its divisible by</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="cf">if</span> (x <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb9-3" title="3">  <span class="kw">print</span>(<span class="st">&quot;You picked an even number&quot;</span>)</a>
+<a class="sourceLine" id="cb9-4" title="4">} <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">%%</span><span class="st"> </span><span class="dv">3</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb9-5" title="5">  <span class="kw">print</span>(<span class="st">&quot;You picked a multiple of 3&quot;</span>)</a>
+<a class="sourceLine" id="cb9-6" title="6">} <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">%%</span><span class="st"> </span><span class="dv">5</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb9-7" title="7">  <span class="kw">print</span>(<span class="st">&quot;You picked a multiple of 5&quot;</span>)</a>
+<a class="sourceLine" id="cb9-8" title="8">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb9-9" title="9">  <span class="kw">print</span>(<span class="st">&quot;You picked a prime&quot;</span>)</a>
+<a class="sourceLine" id="cb9-10" title="10">}</a></code></pre></div>
+<pre><code>## [1] &quot;You picked a multiple of 3&quot;</code></pre>
+<h2 id="the-ifelse-function">The <code>ifelse()</code> function</h2>
+<p>A variation of the <code>if-else</code> statement is the <strong><code>ifelse()</code></strong> function. This function is handy for recoding data.</p>
+<p>Syntax:</p>
+<p><code>ifelse(*condition*, *value-if-true*, *value-if-false*)</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">animal &lt;-<span class="st"> </span><span class="kw">ifelse</span>(animal<span class="op">==</span><span class="st">&quot;cat&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)       </a></code></pre></div>
+</div>
+<div id="code-loops" class="slide section level1">
+<h1>Code Loops</h1>
+<ul>
+<li>Loops are fundamental to automation</li>
+<li>Use a <strong>for</strong> loop if you know in advance how many passes<br />
+</li>
+<li>use a <strong>while</strong> loop if you have to do a check to see if you need to continue going through the loop</li>
+</ul>
+<p><img src="images/loops_800x423.png" style="display:block; margin:1em auto;" /></p>
+<h2 id="for-loops">For loops</h2>
+<p>Generic syntax of a for loop:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="cf">for</span> ( ...  ) {</a>
+<a class="sourceLine" id="cb12-2" title="2"> </a>
+<a class="sourceLine" id="cb12-3" title="3">}</a></code></pre></div>
+<p>You generally loop a variable like <em>i</em> over a vector of values to control the loop:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co">## Simple &#39;for&#39; loop</span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>){</a>
+<a class="sourceLine" id="cb13-3" title="3">  <span class="kw">print</span>(i <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb13-4" title="4">}</a></code></pre></div>
+<pre><code>## [1] 1
+## [1] 4
+## [1] 9
+## [1] 16
+## [1] 25</code></pre>
+<p>Often the loop variable is used as an index:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co">## Using a loop variable as an index to grab elements</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) {</a>
+<a class="sourceLine" id="cb15-3" title="3">  <span class="kw">print</span>(state.name[i])</a>
+<a class="sourceLine" id="cb15-4" title="4">}</a></code></pre></div>
+<pre><code>## [1] &quot;Alabama&quot;
+## [1] &quot;Alaska&quot;
+## [1] &quot;Arizona&quot;
+## [1] &quot;Arkansas&quot;
+## [1] &quot;California&quot;</code></pre>
+<p>Loops can be combined with if-else statements:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co">## Loop with an if-then statement in the middle</span></a>
+<a class="sourceLine" id="cb17-2" title="2">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb17-3" title="3"></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb17-5" title="5">    <span class="cf">if</span>(x[i] <span class="op">&gt;=</span><span class="st"> </span><span class="dv">7</span>) { </a>
+<a class="sourceLine" id="cb17-6" title="6">        <span class="kw">print</span>(x[i])</a>
+<a class="sourceLine" id="cb17-7" title="7">    } <span class="cf">else</span> {                     </a>
+<a class="sourceLine" id="cb17-8" title="8">      <span class="kw">print</span>(<span class="st">&quot;NOT BIG ENOUGH!!&quot;</span>)</a>
+<a class="sourceLine" id="cb17-9" title="9">    }</a>
+<a class="sourceLine" id="cb17-10" title="10">}</a></code></pre></div>
+<pre><code>## [1] &quot;NOT BIG ENOUGH!!&quot;
+## [1] &quot;NOT BIG ENOUGH!!&quot;
+## [1] &quot;NOT BIG ENOUGH!!&quot;
+## [1] &quot;NOT BIG ENOUGH!!&quot;
+## [1] &quot;NOT BIG ENOUGH!!&quot;
+## [1] &quot;NOT BIG ENOUGH!!&quot;
+## [1] 7
+## [1] 8
+## [1] 9
+## [1] 10</code></pre>
+<h2 id="while-loops">While Loops</h2>
+<p>The generic form of a while loop is:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="cf">while</span> (some_condition) {</a>
+<a class="sourceLine" id="cb19-2" title="2"></a>
+<a class="sourceLine" id="cb19-3" title="3">  <span class="co">## </span></a>
+<a class="sourceLine" id="cb19-4" title="4">  <span class="co">## lines of code go here</span></a>
+<a class="sourceLine" id="cb19-5" title="5">  <span class="co">##</span></a>
+<a class="sourceLine" id="cb19-6" title="6">  </a>
+<a class="sourceLine" id="cb19-7" title="7">}</a></code></pre></div>
+<p>It’s <em>really</em> important that <em>some_condition</em> will eventually be FALSE, otherwise the loop will run forever!</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co">## Generate a random number i between 0 and 1</span></a>
+<a class="sourceLine" id="cb20-2" title="2">i &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="kw">print</span>(<span class="kw">round</span>(i,<span class="dv">2</span>))</a></code></pre></div>
+<pre><code>## [1] 0.94</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co">## Loop while the random number is &lt; 0.8</span></a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="cf">while</span> (i <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.8</span>) {</a>
+<a class="sourceLine" id="cb22-3" title="3">  <span class="co">## Generate the random number i again</span></a>
+<a class="sourceLine" id="cb22-4" title="4">  i &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb22-5" title="5">  <span class="kw">print</span>(<span class="kw">round</span>(i,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb22-6" title="6">}</a></code></pre></div>
+<div class="tip">
+<p><strong>break</strong></p>
+<p>Another way to escape out of a loop is the <code>break</code> statement:</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb23"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="cf">while</span> (<span class="ot">TRUE</span>) {</a>
+<a class="sourceLine" id="cb23-2" title="2">  <span class="cf">if</span> (some_condition) {</a>
+<a class="sourceLine" id="cb23-3" title="3">    <span class="cf">break</span></a>
+<a class="sourceLine" id="cb23-4" title="4">  }</a>
+<a class="sourceLine" id="cb23-5" title="5">}</a></code></pre></div>
+</div>
+</div>
+<!--- tip --->
+</div>
+<div id="looping-through-data-frames" class="slide section level1">
+<h1>Looping Through Data Frames</h1>
+<p>One of the most common uses of a loop is to loop through a data frame.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co">## Loop thru a data frame</span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(USArrests)) {</a>
+<a class="sourceLine" id="cb24-3" title="3">  </a>
+<a class="sourceLine" id="cb24-4" title="4">  <span class="co">## do something with USArrests[i, ]</span></a>
+<a class="sourceLine" id="cb24-5" title="5">  </a>
+<a class="sourceLine" id="cb24-6" title="6">}</a></code></pre></div>
+<div class="tryit">
+<p>Loop through the data frame <em>mtcars</em>, and print out the value of the <em>wt</em> column.</p>
+<p>[<span id="qtn_baxhcnz" class="showhidesoln" onclick="showHide(&#39;baxhcnz&#39;);return false;">Solution</span>]</p>
+<div id="baxhcnz" class="hint">
+<div class="sourceCode" id="cb25"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(mtcars)) {</a>
+<a class="sourceLine" id="cb25-2" title="2">  <span class="kw">print</span>(mtcars[i, <span class="st">&quot;wt&quot;</span>])</a>
+<a class="sourceLine" id="cb25-3" title="3">}</a></code></pre></div>
+<pre><code>## [1] 2.62
+## [1] 2.875
+## [1] 2.32
+## [1] 3.215
+## [1] 3.44
+## [1] 3.46
+## [1] 3.57
+## [1] 3.19
+## [1] 3.15
+## [1] 3.44
+## [1] 3.44
+## [1] 4.07
+## [1] 3.73
+## [1] 3.78
+## [1] 5.25
+## [1] 5.424
+## [1] 5.345
+## [1] 2.2
+## [1] 1.615
+## [1] 1.835
+## [1] 2.465
+## [1] 3.52
+## [1] 3.435
+## [1] 3.84
+## [1] 3.845
+## [1] 1.935
+## [1] 2.14
+## [1] 1.513
+## [1] 3.17
+## [1] 2.77
+## [1] 3.57
+## [1] 2.78</code></pre>
+</div>
+</div>
+</div>
+<div id="recording-the-results-of-each-iteration" class="slide section level1">
+<h1>Recording the Results of Each Iteration</h1>
+<p>Loops are commonly used to apply an algorithm to each element or row.</p>
+<p>You may want to store or save the results of each pass. A common technique is to create a variable to save the results before you start the loop, and then update or append it within the loop.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="co">## Set up a variable to store the cummulative number of assaults</span></a>
+<a class="sourceLine" id="cb27-2" title="2">num_assaults &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb27-3" title="3"></a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="co">## Loop thru the USArrests data frame and increment the num_assaults variable</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(USArrests)) {</a>
+<a class="sourceLine" id="cb27-6" title="6">  num_assaults &lt;-<span class="st"> </span>num_assaults <span class="op">+</span><span class="st"> </span>USArrests[i, <span class="st">&quot;Assault&quot;</span>]</a>
+<a class="sourceLine" id="cb27-7" title="7">}</a>
+<a class="sourceLine" id="cb27-8" title="8"></a>
+<a class="sourceLine" id="cb27-9" title="9"><span class="co">## Print the final result</span></a>
+<a class="sourceLine" id="cb27-10" title="10"><span class="kw">print</span>(num_assaults)</a></code></pre></div>
+<pre><code>## [1] 8538</code></pre>
+</div>
+<div id="better-alternatives-to-loops" class="slide section level1">
+<h1>(Better) Alternatives to Loops</h1>
+<p>Many R functions are vectorized, so often you don’t actually need a code loop.</p>
+<p>See also <a href="https://www.datacamp.com/community/tutorials/tutorial-on-loops-in-r" target="_blank">Loops Tutorial from DataCamp</a></p>
+<p><strong>Example: add a random offset to each element of sequence</strong></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co">## Addition is vectorized, so we don&#39;t need a loop</span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="kw">data.frame</span>(<span class="dt">num=</span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">num_plus_offset=</span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="fl">0.5</span>))</a></code></pre></div>
+<pre><code>##   num num_plus_offset
+## 1   1        1.064801
+## 2   2        1.477202
+## 3   3        3.018701
+## 4   4        3.955935
+## 5   5        4.792191</code></pre>
+<p>In addition to for and while loops, R has functions like <code>sapply()</code> and <code>lapply()</code> that will apply a function to each element of a vector/list.</p>
+<p><code>sapply()</code> and <code>lapply()</code> are generally usually faster than traditional loops.</p>
+<p><br />
+</p>
+<p>
+<strong>Next: </strong> <a href="16_raster1-import-plot.html">Raster Pt I. Importing and Plotting Raster Data</a>
+</p>
+</div>
+
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+</body>
+</html>

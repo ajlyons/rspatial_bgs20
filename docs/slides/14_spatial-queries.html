@@ -360,7 +360,7 @@ Spatial querying requires features to be in the same crs!
 </div>
 <div id="example-generating-random-points" class="slide section level1">
 <h1>Example: Generating Random Points</h1>
-<p>In this example, we want to generate 500 random points. Because Yosemite is not rectangular, our approach will be to generate a whole bunch of random points within the bounding box (which is easy to do), filter out the ones that fall outside the boundary, and then randomly select 500 from the ones in the park.</p>
+<p>In this example, we want to generate 500 random points. Because Yosemite is not rectangular, our approach will be to generate a whole bunch of random points within the bounding box (which is easy to do), filter out the ones that fall outside the boundary, and then randomly select 500 from the ones in the park .</p>
 <p>First we import the boundary and generate 1500 points within the bounding box.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co">## Import the yosemite border</span></a>
 <a class="sourceLine" id="cb13-2" title="2">yose_bnd &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn=</span><span class="st">&quot;./data&quot;</span>, <span class="dt">layer=</span><span class="st">&quot;yose_boundary&quot;</span>)</a></code></pre></div>

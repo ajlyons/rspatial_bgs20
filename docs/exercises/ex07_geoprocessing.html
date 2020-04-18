@@ -275,6 +275,7 @@ iii. Click ‘Save a permanent copy’ to save a copy in your own workspace.</p>
 <script>
   addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
+<pre><code>## tmap mode set to plotting</code></pre>
 <style type="text/css">
 code {
   background-color:transparent;
@@ -288,67 +289,204 @@ Copy questions
 </div>
 <div id="qtn_div" class="ex-qtn">
 <p>#################################<br/>#### <strong>COMPUTE WATERSHED AREAS</strong> ####<br/>#################################</p>
-<p><a id="qtn_uvatat" href="#" class="showhidelink" onclick="showHide('uvatat');return false;"># 1.</a> Import the YNP watersheds. If needed, project them to UTM Zone 11N WGS84.</p>
+<p><a id="qtn_uvatat" href="#" class="showhidelink" onclick="showHide('uvatat');return false;"># 1.</a> Import the YNP watersheds. If needed, project them to UTM Zone 11N WGS84. <a href="#" class="showhidehint" onclick="showHide('ijgqaf');return false;"></a></p>
+<div id="ijgqaf" class="hint">
+<p>The EPSG number for UTM Zone 11N with datum WGS84 is <code>32611</code>.</p>
+</div>
+<!--- hint_ijgqaf --->
 <div id="uvatat" class="answer-code">
-<pre class="r"><code>## Coming soon!</code></pre>
+<pre class="r klippy copyme"><code>library(sf)
+
+## Define constant for UTM 11N WGS84
+epsg_utm11n_wgs84 &lt;- 32611
+
+## Import watersheds
+gpkg_watershd_fn &lt;- &quot;./data/yose_watersheds.gpkg&quot;
+yose_watersheds &lt;- st_read(gpkg_watershd_fn, layer=&quot;calw221&quot;) %&gt;% 
+  st_transform(epsg_utm11n_wgs84)
+
+## Plot it
+plot(st_geometry(yose_watersheds), axes=TRUE)</code></pre>
+<p><img src="ex07_geoprocessing_files/figure-html/import_watersheds-1.png" width="672" /></p>
+<pre><code>## Reading layer `calw221&#39; from data source `C:\Workshops\R-Spatial\rspatial_mod\outputs\rspatial_bgs20\docs\data\yose_watersheds.gpkg&#39; using driver `GPKG&#39;
+## Simple feature collection with 127 features and 38 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: 1383.82 ymin: -61442.93 xmax: 81596.71 ymax: 26405.66
+## proj4string:    +proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</code></pre>
 </div>
 <!--- ans_uvatat --->
 <p><a id="qtn_urkjql" href="#" class="showhidelink" onclick="showHide('urkjql');return false;"># 2.</a> Create a histogram showing the area of the watersheds in km2. Which is the<br />
 #  largest?</p>
 <div id="urkjql" class="answer-code">
-<pre class="r"><code>## Coming soon!</code></pre>
+<pre class="r klippy copyme"><code>## Compute the area of each watershed
+watershed_area &lt;- st_area(yose_watersheds) %&gt;% units::set_units(&quot;km^2&quot;)
+
+## Show a histogram
+hist(watershed_area, col = &quot;gray&quot;, breaks=20)</code></pre>
+<p><img src="ex07_geoprocessing_files/figure-html/watersheds_area-1.png" width="672" /></p>
+<pre class="r klippy copyme"><code>## Identify the largest record and show the name
+biggest_idx &lt;- which.max(watershed_area)
+yose_watersheds %&gt;% slice(biggest_idx) %&gt;% pull(CDFPWSNAME) %&gt;% as.character()
+
+## Plot the biggest watershed on top of all the watersheds
+tmap_mode(&quot;plot&quot;)
+tm_shape(yose_watersheds) + 
+  tm_borders(col = &quot;gray&quot;) +
+tm_shape(yose_watersheds %&gt;% slice(biggest_idx)) +
+  tm_fill(col = &quot;navy&quot;)</code></pre>
+<p><img src="ex07_geoprocessing_files/figure-html/watersheds_area-2.png" width="672" /></p>
+<pre><code>## [1] &quot;Crane Creek&quot;</code></pre>
+<p>⇒ Crane Creek is the largest</p>
 </div>
 <!--- ans_urkjql --->
-<p>################################################<br/>#### <strong>WHICH WATERSHEDS HAVE BURNED THE MOST?</strong> ####<br/>################################################</p>
-<p><a id="qtn_ybrynm" href="#" class="showhidelink" onclick="showHide('ybrynm');return false;"># 3.</a> Union the watersheds to the larger ‘HU’ units and plot them.</p>
+<p>#############################################<br/>#### <strong>WHICH WATERSHEDS ARE PRONE TO FIRE?</strong> ####<br/>#############################################</p>
+<p><a id="qtn_ybrynm" href="#" class="showhidelink" onclick="showHide('ybrynm');return false;"># 3.</a> Union the watersheds to the larger ‘HU’ units. Plot them.</p>
 <div id="ybrynm" class="answer-code">
-<pre class="r"><code>## Coming soon!</code></pre>
+<pre class="r klippy copyme"><code>## Lump the little watersheds by their &#39;HU&#39; value
+yose_watersheds_hu &lt;- yose_watersheds %&gt;%  group_by(HU) %&gt;% 
+  summarise(HUNAME = first(HUNAME), NUM_WATERSHEDS = n())
+
+## Plot
+tm_shape(yose_watersheds_hu) + 
+  tm_polygons(col=&quot;HUNAME&quot;, title=&quot;HU Watershed&quot;) + 
+tm_shape(yose_watersheds) +
+  tm_borders(col=&quot;gray&quot;, lwd=0.8) +
+tm_layout(legend.outside = T)</code></pre>
+<p><img src="ex07_geoprocessing_files/figure-html/watersheds_union-1.png" width="672" /></p>
 </div>
 <!--- ans_ybrynm --->
 <p><a id="qtn_lnlrwe" href="#" class="showhidelink" onclick="showHide('lnlrwe');return false;"># 4.</a> Import the burned areas layer for 1987-2016. If needed, project it to UTM Zone<br />
 #  11N WGS84.</p>
 <div id="lnlrwe" class="answer-code">
-<pre class="r"><code>## Coming soon!</code></pre>
+<pre class="r klippy copyme"><code>firehist_gdb &lt;- &quot;./data/yose_firehistory.gdb&quot;
+
+## Import the &#39;Fire History Polys&#39; layer  
+yose_firearea8716_ind &lt;- st_read(firehist_gdb, layer=&quot;YNP_FireHistoryPolys&quot;) %&gt;% 
+  filter(YEAR &gt;= 1987, YEAR &lt;= 2016) %&gt;% 
+  st_transform(epsg_utm11n_wgs84)
+
+plot(yose_firearea8716_ind %&gt;% st_geometry(), col = &quot;grey&quot;, axes = TRUE)</code></pre>
+<p><img src="ex07_geoprocessing_files/figure-html/import_firehist-1.png" width="672" /></p>
+<pre><code>## Reading layer `YNP_FireHistoryPolys&#39; from data source `C:\Workshops\R-Spatial\rspatial_mod\outputs\rspatial_bgs20\docs\data\yose_firehistory.gdb&#39; using driver `OpenFileGDB&#39;
+## Simple feature collection with 4422 features and 21 fields
+## geometry type:  GEOMETRY
+## dimension:      XY
+## bbox:           xmin: 240811.5 ymin: 4152616 xmax: 304220.8 ymax: 4227957
+## CRS:            26911</code></pre>
 </div>
 <!--- ans_lnlrwe --->
 <p><a id="qtn_mzzbet" href="#" class="showhidelink" onclick="showHide('mzzbet');return false;"># 5.</a> For each HU watershed, compute the area that burned at least once between<br />
 #  1987-2016.</p>
 <div id="mzzbet" class="answer-code">
+<pre class="r klippy copyme"><code>## Union the individual fire into one big one
+yose_firearea8716_all &lt;- yose_firearea8716_ind %&gt;% st_make_valid() %&gt;% st_union()
 
+## Compute the area of intersection
+hu_fire &lt;- yose_watersheds_hu %&gt;% st_intersection(yose_firearea8716_all)
+
+## Plot
+tm_shape(yose_watersheds_hu) + 
+  tm_polygons(&quot;HUNAME&quot;) +
+tm_shape(hu_fire) +
+  tm_polygons()</code></pre>
+<p><img src="ex07_geoprocessing_files/figure-html/union_fire-1.png" width="672" /></p>
 </div>
 <!--- ans_mzzbet --->
 <p>#####################################<br/>#### <strong>ANALYZING CAMPGROUND ‘SIZE’</strong> ####<br/>#####################################</p>
-<p><a id="qtn_smbidz" href="#" class="showhidelink" onclick="showHide('smbidz');return false;"># 6.</a> Import the Campsites (not Campgrounds) from the Points of Interest layer. If<br />
-#  needed, project them to UTM Zone 11N WGS84.</p>
+<p><a id="qtn_smbidz" href="#" class="showhidelink" onclick="showHide('smbidz');return false;"># 6.</a> Import the Campsites (not Campgrounds) from the YNP Points of Interest layer.<br />
+#  If needed, project them to UTM Zone 11N WGS84.</p>
 <div id="smbidz" class="answer-code">
-<pre class="r"><code>## Coming soon..</code></pre>
+<pre class="r klippy copyme"><code>## Import the Yosemite Points-of-Interest Shapefile and
+## filter it down to just the campsites
+yose_campsites_utm &lt;- st_read(dsn=&quot;./data&quot;, layer=&quot;yose_poi&quot;) %&gt;% 
+  st_transform(epsg_utm11n_wgs84) %&gt;% 
+  filter(POITYPE == &quot;Campsite&quot;)
+
+## Plot the campsites
+plot(yose_campsites_utm %&gt;% st_geometry(), pch=16, asp=1, cex=0.5, axes=TRUE)</code></pre>
+<p><img src="ex07_geoprocessing_files/figure-html/import_campsites-1.png" width="672" /></p>
+<pre><code>## Reading layer `yose_poi&#39; from data source `C:\Workshops\R-Spatial\rspatial_mod\outputs\rspatial_bgs20\docs\data&#39; using driver `ESRI Shapefile&#39;
+## Simple feature collection with 2720 features and 30 fields
+## geometry type:  POINT
+## dimension:      XY
+## bbox:           xmin: 246416.2 ymin: 4153717 xmax: 301510.7 ymax: 4208419
+## CRS:            26911</code></pre>
 </div>
 <!--- ans_smbidz --->
 <p><a id="qtn_pzokxb" href="#" class="showhidelink" onclick="showHide('pzokxb');return false;"># 7.</a> Extract the campsites that are part of the Wawona Campground. Plot them.</p>
 <div id="pzokxb" class="answer-code">
-<pre class="r"><code>## Coming soon....</code></pre>
+<pre class="r klippy copyme"><code>## Filter just those campsites where POINAME = &#39;Wawona Campground Campsite&#39; 
+wawona_campsites &lt;- yose_campsites_utm %&gt;% filter(POINAME == &quot;Wawona Campground Campsite&quot;)
+
+plot(wawona_campsites %&gt;% st_geometry(), pch = 16, axes = TRUE)</code></pre>
+<p><img src="ex07_geoprocessing_files/figure-html/get_wawona_campsites-1.png" width="672" /></p>
 </div>
 <!--- ans_pzokxb --->
 <p><a id="qtn_yprglc" href="#" class="showhidelink" onclick="showHide('yprglc');return false;"># 8.</a> Create a Minimum Convex Polygon (MCP) around the campsites in Wawona Campground,<br />
-#  and plot it.</p>
+#  and plot it. <a href="#" class="showhidehint" onclick="showHide('fvcurj');return false;"></a></p>
+<div id="fvcurj" class="hint">
+<p><code>st_convex_hull()</code> operates on MULTIPOINT features. Convert a POINT object with many features into a MULTIPOINT object with a single feature with <code>st_union()</code>.</p>
+</div>
+<!--- hint_fvcurj --->
 <div id="yprglc" class="answer-code">
-<pre class="r"><code>## Coming soon...</code></pre>
+<pre class="r klippy copyme"><code>## Compute the MCP around the Wawona Campground campsites
+wawona_mcp &lt;- wawona_campsites %&gt;% st_union() %&gt;%  st_convex_hull()
+
+## Plot
+tmap_mode(&quot;plot&quot;)
+tm_shape(wawona_campsites) + tm_symbols(col = &quot;darkgreen&quot;, shape = 16, size = 0.5) +
+  tm_shape(wawona_mcp) + tm_borders(col = &quot;red&quot;) + 
+  tm_layout(title = &quot;Wawona Campground&quot;)</code></pre>
+<p><img src="ex07_geoprocessing_files/figure-html/wawona_mcp-1.png" width="672" /></p>
 </div>
 <!--- ans_yprglc --->
-<p><a id="qtn_qtflna" href="#" class="showhidelink" onclick="showHide('qtflna');return false;"># 9.</a> Do the same for the Bridalveil Creek Campground and the Lower Pines Campground.</p>
+<p><a id="qtn_qtflna" href="#" class="showhidelink" onclick="showHide('qtflna');return false;"># 9.</a> Do the same for the Bridalveil Creek campsites and the Lower Pines campsites.</p>
 <div id="qtflna" class="answer-code">
-<pre class="r"><code>## Coming soon...</code></pre>
+<pre class="r klippy copyme"><code>bridalveil_campsites &lt;- yose_campsites_utm %&gt;% filter(POINAME == &quot;Bridalveil Creek Campsite&quot;)
+bridalveil_mcp &lt;- bridalveil_campsites %&gt;% st_union() %&gt;%  st_convex_hull()
+tm_shape(bridalveil_campsites) + tm_symbols(col = &quot;darkgreen&quot;, shape = 16, size = 0.5) +
+  tm_shape(bridalveil_mcp) + tm_borders(col = &quot;red&quot;) + 
+  tm_layout(title = &quot;Bridalveil Creek&quot;)
+
+lowerpines_campsites &lt;- yose_campsites_utm %&gt;% filter(POINAME == &quot;Lower Pines Campsite&quot;)
+lowerpines_mcp &lt;- lowerpines_campsites %&gt;% st_union() %&gt;%  st_convex_hull()
+tm_shape(lowerpines_campsites) + tm_symbols(col = &quot;darkgreen&quot;, shape = 16, size = 0.5) +
+  tm_shape(lowerpines_mcp) + tm_borders(col = &quot;red&quot;) +
+  tm_layout(title = &quot;Lower Pines&quot;)
+
+## Coming soon...</code></pre>
+<p><img src="ex07_geoprocessing_files/figure-html/bridalveil_lowerpines-1.png" width="672" /><img src="ex07_geoprocessing_files/figure-html/bridalveil_lowerpines-2.png" width="672" /></p>
 </div>
 <!--- ans_qtflna --->
 <p><a id="qtn_qxpalp" href="#" class="showhidelink" onclick="showHide('qxpalp');return false;"># 10.</a> Using the MCPs as a proxy for ‘campground area’, which of these three<br />
 #  campgrounds is the largest?</p>
 <div id="qxpalp" class="answer-code">
-<pre class="r"><code>## Coming soon...</code></pre>
+<pre class="r klippy copyme"><code>wawona_mcp %&gt;%  st_area() %&gt;% set_units(&quot;ha&quot;)
+bridalveil_mcp %&gt;% st_area() %&gt;% set_units(&quot;ha&quot;)
+lowerpines_mcp %&gt;%  st_area() %&gt;% set_units(&quot;ha&quot;)</code></pre>
+<pre><code>## 17.83682 [ha]
+## 6.932616 [ha]
+## 4.336733 [ha]</code></pre>
+<p>⇒ Wawona Campground is the largest by area</p>
 </div>
 <!--- ans_qxpalp --->
 <p><a id="qtn_wrrfkc" href="#" class="showhidelink" onclick="showHide('wrrfkc');return false;"># 11.</a> BONUS: Combine the MCPs into a single sf polygon layer.</p>
 <div id="wrrfkc" class="answer-code">
-<pre class="r"><code>## Coming soon...</code></pre>
+<pre class="r"><code>mcps_all &lt;- st_sf(id = 1:3, 
+                  geometry = st_sfc(wawona_mcp[[1]],
+                                    bridalveil_mcp[[1]], 
+                                    lowerpines_mcp[[1]]))
+mcps_all</code></pre>
+<pre><code>## Simple feature collection with 3 features and 1 field
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: 262757.3 ymin: 4158605 xmax: 273919.8 ymax: 4180273
+## CRS:            NA
+##   id                       geometry
+## 1  1 POLYGON ((263860.9 4158605,...
+## 2  2 POLYGON ((268785.6 4171562,...
+## 3  3 POLYGON ((273814.8 4179960,...</code></pre>
 </div>
 <!--- ans_wrrfkc --->
 </div>

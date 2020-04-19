@@ -148,11 +148,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="slide titlepage">
   <h1 class="title"><span class="course-title">Spatial Data Analysis with R </span><br/><span class="course-subtitle">BayGeo, Spring 2020</span></h1>
   <p class="author">
-Automation with Branches and Loops <br/><img src='images/gears_rainbow_512x202x256.png'/>
+Automation with Branches and Loops <br/><img src='images/code_flowchart_320x280x256.png'/>
   </p>
 </div>
-<div id="branching-with-if-else-and-ifelse" class="slide section level1">
-<h1>Branching with <code>if</code>, <code>else</code>, and <code>ifelse</code></h1>
+<div id="the-keys-to-automation-branches-and-loops" class="slide section level1">
+<h1>The Keys to Automation: Branches and Loops</h1>
+<p><img src="images/linear-vs-loops-branches_744x422x256.png" style="display:block; margin:1em auto;" /></p>
+</div>
+<div id="branching-with-if-and-else-statements" class="slide section level1">
+<h1>Branching with <code>if</code> and <code>else</code> Statements</h1>
 <script type="text/javascript">w3c_slidy.mouse_click_enabled = false;</script>
 <script>
   addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
@@ -160,12 +164,13 @@ Automation with Branches and Loops <br/><img src='images/gears_rainbow_512x202x2
 <p><code>if</code> and <code>else</code> statements are control structures that let you control how a code should execute based on a set of pre-established conditions.</p>
 <p>Syntax:</p>
 <p><code>if (condition) {statement} else {other statement}</code></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">x &lt;-<span class="st"> </span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="cf">if</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="dv">7</span>) {</a>
-<a class="sourceLine" id="cb1-3" title="3">  <span class="kw">print</span>(x)</a>
-<a class="sourceLine" id="cb1-4" title="4">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb1-5" title="5">  <span class="kw">print</span>(<span class="st">&quot;NOT BIG ENOUGH!!&quot;</span>)</a>
-<a class="sourceLine" id="cb1-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">## Example if statement</span></a>
+<a class="sourceLine" id="cb1-2" title="2">x &lt;-<span class="st"> </span><span class="dv">7</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="cf">if</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="dv">7</span>) {</a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="kw">print</span>(x)</a>
+<a class="sourceLine" id="cb1-5" title="5">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb1-6" title="6">  <span class="kw">print</span>(<span class="st">&quot;NOT BIG ENOUGH!!&quot;</span>)</a>
+<a class="sourceLine" id="cb1-7" title="7">}</a></code></pre></div>
 <pre><code>## [1] &quot;NOT BIG ENOUGH!!&quot;</code></pre>
 <div class="infobox">
 <ul>
@@ -178,62 +183,69 @@ Automation with Branches and Loops <br/><img src='images/gears_rainbow_512x202x2
 </ul>
 </div>
 <!--- infobox --->
-<h2 id="chaining-multiple-tests-with-and-and-or">Chaining multiple tests with ‘and’ and ‘or’</h2>
-<p>You can chain together expressions that test for multiple conditions using operators for <em>and</em> and <em>or</em>.</p>
-<p>Note however R doesn’t use the keywords <em>and</em> and <em>or</em>. Rather use <code>||</code> for ‘or’, and <code>&amp;&amp;</code> for ‘and’.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">x &lt;-<span class="st"> </span><span class="dv">4</span>; y &lt;-<span class="st"> </span><span class="dv">8</span></a>
-<a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">## &#39;or&#39; Test</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span> <span class="op">||</span><span class="st"> </span>y <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) {</a>
-<a class="sourceLine" id="cb3-5" title="5">  <span class="kw">print</span>(<span class="st">&quot;TRUE&quot;</span>)</a>
-<a class="sourceLine" id="cb3-6" title="6">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb3-7" title="7">  <span class="kw">print</span>(<span class="st">&quot;FALSE&quot;</span>)</a>
-<a class="sourceLine" id="cb3-8" title="8">}</a></code></pre></div>
-<pre><code>## [1] &quot;TRUE&quot;</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co">## &#39;and&#39;</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span> <span class="op">&amp;&amp;</span><span class="st"> </span>y <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) {</a>
-<a class="sourceLine" id="cb5-3" title="3">  <span class="kw">print</span>(<span class="st">&quot;TRUE&quot;</span>)</a>
-<a class="sourceLine" id="cb5-4" title="4">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb5-5" title="5">  <span class="kw">print</span>(<span class="st">&quot;FALSE&quot;</span>)</a>
-<a class="sourceLine" id="cb5-6" title="6">}</a></code></pre></div>
-<pre><code>## [1] &quot;FALSE&quot;</code></pre>
-<h2 id="if---else-if---else">if - else if - else</h2>
+<div class="tip">
+<p><strong>Composite tests with ‘and’ and ‘or’</strong></p>
+<p>You can test for multiple conditions using the <code>&amp;&amp;</code> (and) and <code>||</code> (or) operators.</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">x &lt;-<span class="st"> </span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb3-2" title="2">y &lt;-<span class="st"> </span><span class="dv">8</span></a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4">(x <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) <span class="op">&amp;&amp;</span><span class="st"> </span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>)</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">(x <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) <span class="op">&amp;&amp;</span><span class="st"> </span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span>)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">(x <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) <span class="op">||</span><span class="st"> </span>(y <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span>)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+<!--- tip --->
+<h2 id="if-else-if-else">if () {…} else if () {…} else {…}</h2>
 <p>You can string together multiple ‘else if’ checks.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co">## Generate a sample number between 1 and 20</span></a>
-<a class="sourceLine" id="cb7-2" title="2">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">size=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb7-3" title="3">x</a></code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co">## See what its divisible by</span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="cf">if</span> (x <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb9-3" title="3">  <span class="kw">print</span>(<span class="st">&quot;You picked an even number&quot;</span>)</a>
-<a class="sourceLine" id="cb9-4" title="4">} <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">%%</span><span class="st"> </span><span class="dv">3</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb9-5" title="5">  <span class="kw">print</span>(<span class="st">&quot;You picked a multiple of 3&quot;</span>)</a>
-<a class="sourceLine" id="cb9-6" title="6">} <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">%%</span><span class="st"> </span><span class="dv">5</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
-<a class="sourceLine" id="cb9-7" title="7">  <span class="kw">print</span>(<span class="st">&quot;You picked a multiple of 5&quot;</span>)</a>
-<a class="sourceLine" id="cb9-8" title="8">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb9-9" title="9">  <span class="kw">print</span>(<span class="st">&quot;You picked a prime&quot;</span>)</a>
-<a class="sourceLine" id="cb9-10" title="10">}</a></code></pre></div>
-<pre><code>## [1] &quot;You picked a multiple of 3&quot;</code></pre>
-<h2 id="the-ifelse-function">The <code>ifelse()</code> function</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co">## Generate a sample number between 1 and 20</span></a>
+<a class="sourceLine" id="cb9-2" title="2">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">size=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb9-3" title="3">x</a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="co">## See what its divisible by</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="cf">if</span> (x <span class="op">%%</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb9-7" title="7">  <span class="kw">print</span>(<span class="st">&quot;You picked an even number&quot;</span>)</a>
+<a class="sourceLine" id="cb9-8" title="8">} <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">%%</span><span class="st"> </span><span class="dv">3</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb9-9" title="9">  <span class="kw">print</span>(<span class="st">&quot;You picked a multiple of 3&quot;</span>)</a>
+<a class="sourceLine" id="cb9-10" title="10">} <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">%%</span><span class="st"> </span><span class="dv">5</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb9-11" title="11">  <span class="kw">print</span>(<span class="st">&quot;You picked a multiple of 5&quot;</span>)</a>
+<a class="sourceLine" id="cb9-12" title="12">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb9-13" title="13">  <span class="kw">print</span>(<span class="st">&quot;You picked a prime&quot;</span>)</a>
+<a class="sourceLine" id="cb9-14" title="14">}</a></code></pre></div>
+<pre><code>## [1] 20
+## [1] &quot;You picked an even number&quot;</code></pre>
+<div class="infobox">
+<p>The <strong><code>ifelse()</code></strong> function</p>
 <p>A variation of the <code>if-else</code> statement is the <strong><code>ifelse()</code></strong> function. This function is handy for recoding data.</p>
 <p>Syntax:</p>
-<p><code>ifelse(*condition*, *value-if-true*, *value-if-false*)</code></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">animal &lt;-<span class="st"> </span><span class="kw">ifelse</span>(animal<span class="op">==</span><span class="st">&quot;cat&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)       </a></code></pre></div>
+<p><span style="font-family:monospace;">ifelse(<em>condition</em>, <em>value-if-true</em>, <em>value-if-false</em>)</span></p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">is_cat &lt;-<span class="st"> </span><span class="kw">ifelse</span>(animal<span class="op">==</span><span class="st">&quot;cat&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)       </a></code></pre></div>
+</div>
+</div>
+<!--- infobox --->
 </div>
 <div id="code-loops" class="slide section level1">
 <h1>Code Loops</h1>
 <ul>
-<li>Loops are fundamental to automation</li>
-<li>Use a <strong>for</strong> loop if you know in advance how many passes<br />
+<li>loops are fundamental to automation</li>
+<li>use a <strong>for</strong> loop if you know in advance how many passes<br />
 </li>
 <li>use a <strong>while</strong> loop if you have to do a check to see if you need to continue going through the loop</li>
 </ul>
-<p><img src="images/loops_800x423.png" style="display:block; margin:1em auto;" /></p>
+<p><img src="images/code-loops_506x400x256.png" /></p>
 <h2 id="for-loops">For loops</h2>
 <p>Generic syntax of a for loop:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="cf">for</span> ( ...  ) {</a>
-<a class="sourceLine" id="cb12-2" title="2"> </a>
-<a class="sourceLine" id="cb12-3" title="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="cf">for</span> (xx <span class="cf">in</span> yy) {</a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3">  <span class="co">## </span></a>
+<a class="sourceLine" id="cb12-4" title="4">  <span class="co">## lines of code go here</span></a>
+<a class="sourceLine" id="cb12-5" title="5">  <span class="co">##</span></a>
+<a class="sourceLine" id="cb12-6" title="6"> </a>
+<a class="sourceLine" id="cb12-7" title="7">}</a></code></pre></div>
 <p>You generally loop a variable like <em>i</em> over a vector of values to control the loop:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co">## Simple &#39;for&#39; loop</span></a>
 <a class="sourceLine" id="cb13-2" title="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>){</a>
@@ -285,25 +297,56 @@ Automation with Branches and Loops <br/><img src='images/gears_rainbow_512x202x2
 <a class="sourceLine" id="cb19-6" title="6">  </a>
 <a class="sourceLine" id="cb19-7" title="7">}</a></code></pre></div>
 <p>It’s <em>really</em> important that <em>some_condition</em> will eventually be FALSE, otherwise the loop will run forever!</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co">## Generate a random number i between 0 and 1</span></a>
-<a class="sourceLine" id="cb20-2" title="2">i &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb20-3" title="3"><span class="kw">print</span>(<span class="kw">round</span>(i,<span class="dv">2</span>))</a></code></pre></div>
-<pre><code>## [1] 0.94</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co">## Loop while the random number is &lt; 0.8</span></a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="cf">while</span> (i <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.8</span>) {</a>
-<a class="sourceLine" id="cb22-3" title="3">  <span class="co">## Generate the random number i again</span></a>
-<a class="sourceLine" id="cb22-4" title="4">  i &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb22-5" title="5">  <span class="kw">print</span>(<span class="kw">round</span>(i,<span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb22-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co">## Define i</span></a>
+<a class="sourceLine" id="cb20-2" title="2">i &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb20-3" title="3"></a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="co">## Go through the loop as long as i is &lt; 0.95</span></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="cf">while</span> (i <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.95</span>) {</a>
+<a class="sourceLine" id="cb20-6" title="6">  <span class="co">## Generate i again as a random number between 0..1</span></a>
+<a class="sourceLine" id="cb20-7" title="7">  i &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb20-8" title="8">  <span class="kw">print</span>(<span class="kw">round</span>(i,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb20-9" title="9">}</a></code></pre></div>
+<pre><code>## [1] 0.94
+## [1] 0.55
+## [1] 0.85
+## [1] 0.15
+## [1] 0.62
+## [1] 0.51
+## [1] 0.75
+## [1] 0.46
+## [1] 0.89
+## [1] 0.34
+## [1] 0.05
+## [1] 0.92
+## [1] 0.52
+## [1] 0.77
+## [1] 0.43
+## [1] 0.11
+## [1] 0.5
+## [1] 0
+## [1] 0.33
+## [1] 0.28
+## [1] 0.9
+## [1] 0.32
+## [1] 0.17
+## [1] 0.05
+## [1] 0.52
+## [1] 0.42
+## [1] 0.07
+## [1] 0.85
+## [1] 0.54
+## [1] 0.03
+## [1] 0.32
+## [1] 0.99</code></pre>
 <div class="tip">
 <p><strong>break</strong></p>
 <p>Another way to escape out of a loop is the <code>break</code> statement:</p>
 <div class="indented1 indented1-r">
-<div class="sourceCode" id="cb23"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="cf">while</span> (<span class="ot">TRUE</span>) {</a>
-<a class="sourceLine" id="cb23-2" title="2">  <span class="cf">if</span> (some_condition) {</a>
-<a class="sourceLine" id="cb23-3" title="3">    <span class="cf">break</span></a>
-<a class="sourceLine" id="cb23-4" title="4">  }</a>
-<a class="sourceLine" id="cb23-5" title="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="cf">while</span> (<span class="ot">TRUE</span>) {</a>
+<a class="sourceLine" id="cb22-2" title="2">  <span class="cf">if</span> (something_important_happens) {</a>
+<a class="sourceLine" id="cb22-3" title="3">    <span class="cf">break</span></a>
+<a class="sourceLine" id="cb22-4" title="4">  }</a>
+<a class="sourceLine" id="cb22-5" title="5">}</a></code></pre></div>
 </div>
 </div>
 <!--- tip --->
@@ -311,12 +354,18 @@ Automation with Branches and Loops <br/><img src='images/gears_rainbow_512x202x2
 <div id="looping-through-data-frames" class="slide section level1">
 <h1>Looping Through Data Frames</h1>
 <p>One of the most common uses of a loop is to loop through a data frame.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co">## Loop thru a data frame</span></a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(USArrests)) {</a>
-<a class="sourceLine" id="cb24-3" title="3">  </a>
-<a class="sourceLine" id="cb24-4" title="4">  <span class="co">## do something with USArrests[i, ]</span></a>
-<a class="sourceLine" id="cb24-5" title="5">  </a>
-<a class="sourceLine" id="cb24-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co">## Loop thru a data frame</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(Orange)) {</a>
+<a class="sourceLine" id="cb23-3" title="3">  circum_by_age &lt;-<span class="st"> </span>Orange[i, <span class="st">&quot;circumference&quot;</span>]  <span class="op">/</span><span class="st">  </span>Orange[i, <span class="st">&quot;age&quot;</span>] </a>
+<a class="sourceLine" id="cb23-4" title="4">  <span class="cf">if</span> (circum_by_age <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.2</span>) {</a>
+<a class="sourceLine" id="cb23-5" title="5">    <span class="kw">cat</span>(<span class="st">&quot;High ratio found in row &quot;</span>, i, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb23-6" title="6">  }</a>
+<a class="sourceLine" id="cb23-7" title="7">}</a></code></pre></div>
+<pre><code>## High ratio found in row  1 
+## High ratio found in row  8 
+## High ratio found in row  15 
+## High ratio found in row  22 
+## High ratio found in row  29</code></pre>
 <div class="tryit">
 <p>Loop through the data frame <em>mtcars</em>, and print out the value of the <em>wt</em> column.</p>
 <p>[<span id="qtn_baxhcnz" class="showhidesoln" onclick="showHide(&#39;baxhcnz&#39;);return false;">Solution</span>]</p>
@@ -363,7 +412,7 @@ Automation with Branches and Loops <br/><img src='images/gears_rainbow_512x202x2
 <h1>Recording the Results of Each Iteration</h1>
 <p>Loops are commonly used to apply an algorithm to each element or row.</p>
 <p>You may want to store or save the results of each pass. A common technique is to create a variable to save the results before you start the loop, and then update or append it within the loop.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="co">## Set up a variable to store the cummulative number of assaults</span></a>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="co">## Set up a variable to store the cummulative number of assaults</span></a>
 <a class="sourceLine" id="cb27-2" title="2">num_assaults &lt;-<span class="st"> </span><span class="dv">0</span></a>
 <a class="sourceLine" id="cb27-3" title="3"></a>
 <a class="sourceLine" id="cb27-4" title="4"><span class="co">## Loop thru the USArrests data frame and increment the num_assaults variable</span></a>
@@ -375,13 +424,107 @@ Automation with Branches and Loops <br/><img src='images/gears_rainbow_512x202x2
 <a class="sourceLine" id="cb27-10" title="10"><span class="kw">print</span>(num_assaults)</a></code></pre></div>
 <pre><code>## [1] 8538</code></pre>
 </div>
+<div id="looping-through-files" class="slide section level1">
+<h1>Looping through Files</h1>
+<p>Create a character vector of file names:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">my_shapefiles &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="st">&quot;./data&quot;</span>, <span class="dt">pattern =</span> <span class="st">&quot;.shp$&quot;</span>)</a>
+<a class="sourceLine" id="cb29-2" title="2"></a>
+<a class="sourceLine" id="cb29-3" title="3"><span class="cf">for</span> (fn <span class="cf">in</span> my_shapefiles) {</a>
+<a class="sourceLine" id="cb29-4" title="4">  <span class="kw">print</span>(fn)</a>
+<a class="sourceLine" id="cb29-5" title="5">  </a>
+<a class="sourceLine" id="cb29-6" title="6">  <span class="co">## Or do something with the file, such as:</span></a>
+<a class="sourceLine" id="cb29-7" title="7">  <span class="co">## x &lt;- st_read(file.path(&quot;./data&quot;, fn)) </span></a>
+<a class="sourceLine" id="cb29-8" title="8">  <span class="co">## st_write(x %&gt;% st_transform(4326), file.path(&quot;./unprojected/&quot;, fn))</span></a>
+<a class="sourceLine" id="cb29-9" title="9">  </a>
+<a class="sourceLine" id="cb29-10" title="10">}</a></code></pre></div>
+<pre><code>## [1] &quot;sf_schools.shp&quot;
+## [1] &quot;veg37.shp&quot;
+## [1] &quot;yose_boundary.shp&quot;
+## [1] &quot;yose_poi.shp&quot;</code></pre>
+<div class="tip">
+<p>The <code>pattern</code> argument in <code>list.files()</code> takes a <em>regular expression</em>.<br />
+To match files by the end of their name (i.e., extension), add the <code>$</code> character at the end (e.g., “.shp$”).<br />
+To match files by the beginning of their name, add the <code>^</code> character at the beginning (e.g., “^sf”)</p>
+<p><strong><code>list.files()</code></strong> has several optional arguments you can use to specify the files returned:</p>
+<div class="indented2">
+<ul>
+<li><code>recursive</code><br />
+</li>
+<li><code>include.dirs</code></li>
+<li><code>ignore.case</code><br />
+</li>
+<li><code>full.names</code><br />
+</li>
+</ul>
+</div>
+<p>Another approach is to create a text file with the file names, and loop through those (see next).</p>
+</div>
+<!--- tip --->
+</div>
+<div id="looping-through-the-lines-of-a-text-file" class="slide section level1">
+<h1>Looping through the Lines of a Text File</h1>
+<p>Another common automation technique is to loop through the lines of a text file, which may contain file names, sets of parameters, etc.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co">## Define a filename to a text file</span></a>
+<a class="sourceLine" id="cb31-2" title="2">txt_fn &lt;-<span class="st"> &quot;./data/proverbs.txt&quot;</span></a>
+<a class="sourceLine" id="cb31-3" title="3"></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="co">## Open a &#39;read-only&#39; connection to the text file</span></a>
+<a class="sourceLine" id="cb31-5" title="5">con =<span class="st"> </span><span class="kw">file</span>(txt_fn, <span class="st">&quot;r&quot;</span>)</a>
+<a class="sourceLine" id="cb31-6" title="6"></a>
+<a class="sourceLine" id="cb31-7" title="7"><span class="co">## Loop through the lines of the file </span></a>
+<a class="sourceLine" id="cb31-8" title="8"><span class="cf">while</span> (<span class="ot">TRUE</span>) {</a>
+<a class="sourceLine" id="cb31-9" title="9">  <span class="co">## Read the next line with readLines (returns a character object)</span></a>
+<a class="sourceLine" id="cb31-10" title="10">  my_line &lt;-<span class="st"> </span><span class="kw">readLines</span>(con, <span class="dt">n =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb31-11" title="11">  </a>
+<a class="sourceLine" id="cb31-12" title="12">  <span class="co">## Check to see if we&#39;re at the end</span></a>
+<a class="sourceLine" id="cb31-13" title="13">  <span class="cf">if</span> (<span class="kw">length</span>(my_line) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb31-14" title="14">    <span class="co">## Gotten to the end. Time to exit the loop.</span></a>
+<a class="sourceLine" id="cb31-15" title="15">    <span class="cf">break</span></a>
+<a class="sourceLine" id="cb31-16" title="16">  }</a>
+<a class="sourceLine" id="cb31-17" title="17">  </a>
+<a class="sourceLine" id="cb31-18" title="18">  <span class="co">## Do something</span></a>
+<a class="sourceLine" id="cb31-19" title="19">  <span class="kw">print</span>(my_line)</a>
+<a class="sourceLine" id="cb31-20" title="20">}</a>
+<a class="sourceLine" id="cb31-21" title="21"></a>
+<a class="sourceLine" id="cb31-22" title="22"><span class="co">## Close the connection to the text file</span></a>
+<a class="sourceLine" id="cb31-23" title="23"><span class="kw">close</span>(con)</a></code></pre></div>
+<pre><code>## [1] &quot;If a donkey kicks you and you kick back, you are both donkeys. (Gambia)&quot;
+## [1] &quot;An adult squatting sees farther than a child on top of tree. (Gambia)&quot;
+## [1] &quot;A fly that has no one to advice it, follows the corpse into the grave. (Gambia)&quot;
+## [1] &quot;Giant silk cotton trees grow out of very tiny seeds. (Gambia)&quot;
+## [1] &quot;However black a cow is, the milk is always white. (Gambia)&quot;
+## [1] &quot;The disobedient fowl obeys in a pot of soup (Benin - Nigeria).&quot;
+## [1] &quot;When two elephants fight it is the grass that suffers (Uganda).&quot;
+## [1] &quot;The frog does not jump in the daytime without reason (Nigeria).&quot;
+## [1] &quot;One goat cannot carry another goat&#39;s tail (Nigeria).&quot;
+## [1] &quot;The family is like the forest, if you are outside it is dense, if you are inside you see that each tree has its own position (Akan).&quot;
+## [1] &quot;It is the woman whose child has been eaten by a witch who best knows the evils of witchcraft (Nigeria).&quot;
+## [1] &quot;The hunter does not rub himself in oil and lie by the fire to sleep (Nigeria).&quot;
+## [1] &quot;The hunter in pursuit of an elephant does not stop to throw stones at birds (Uganda).&quot;
+## [1] &quot;If all seeds that fall were to grow, then no one could follow the path under the trees (Akan).&quot;
+## [1] &quot;Even the mightest eagle comes down to the tree tops to rest (Uganda).&quot;
+## [1] &quot;A tiger does not have to proclaim its tigri-tude (Wole Soyinka - Nigeria).&quot;
+## [1] &quot;Before you ask a man for clothes, look at the clothes that he is wearing (Yoruba, Nigeria).&quot;
+## [1] &quot;Until lions have their own historians, tales of the hunt shall always glorify the hunter (Igbo, Nigeria).&quot;
+## [1] &quot;Although the snake does not fly it has caught the bird whose home is in the sky (Akan)&quot;
+## [1] &quot;One should never rub bottoms with a porcupine (Akan).&quot;
+## [1] &quot;Fowls will not spare a cockroach that falls in their mist (Akan).&quot;
+## [1] &quot;You do not need a big stick to break a cock&#39;s head (Akan).&quot;
+## [1] &quot;Marriage is like a groundnut, you have to crack them to see what is inside (Akan).&quot;
+## [1] &quot;The rain wets the leopard&#39;s spots but does not wash them off (Akan).&quot;</code></pre>
+<div class="tip">
+<p>CSV files are basically text files that have some structure (i.e., columns, column labels, text delimiters, etc.). They’re generally easier to work with than plain text files, and easy to create. When possible, use a CSV file over a text file.</p>
+</div>
+<!--- tip --->
+</div>
 <div id="better-alternatives-to-loops" class="slide section level1">
 <h1>(Better) Alternatives to Loops</h1>
 <p>Many R functions are vectorized, so often you don’t actually need a code loop.</p>
-<p>See also <a href="https://www.datacamp.com/community/tutorials/tutorial-on-loops-in-r" target="_blank">Loops Tutorial from DataCamp</a></p>
+<div class="indented2">
+- see also <a href="https://www.datacamp.com/community/tutorials/tutorial-on-loops-in-r" target="_blank">Loops Tutorial from DataCamp</a>
+</div>
 <p><strong>Example: add a random offset to each element of sequence</strong></p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co">## Addition is vectorized, so we don&#39;t need a loop</span></a>
-<a class="sourceLine" id="cb29-2" title="2"><span class="kw">data.frame</span>(<span class="dt">num=</span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">num_plus_offset=</span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="fl">0.5</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co">## Addition is vectorized, so we don&#39;t need a loop</span></a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="kw">data.frame</span>(<span class="dt">num=</span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">num_plus_offset=</span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="fl">0.5</span>))</a></code></pre></div>
 <pre><code>##   num num_plus_offset
 ## 1   1        1.064801
 ## 2   2        1.477202
@@ -393,6 +536,8 @@ Automation with Branches and Loops <br/><img src='images/gears_rainbow_512x202x2
 <p><br />
 </p>
 <p>
+<br/>
+<hr/>
 <strong>Next: </strong> <a href="16_raster1-import-plot.html">Raster Pt I. Importing and Plotting Raster Data</a>
 </p>
 </div>

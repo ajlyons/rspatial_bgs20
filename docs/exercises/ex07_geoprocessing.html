@@ -319,7 +319,9 @@ plot(st_geometry(yose_watersheds), axes=TRUE)</code></pre>
 <p><a id="qtn_urkjql" href="#" class="showhidelink" onclick="showHide('urkjql');return false;"># 2.</a> Create a histogram showing the area of the watersheds in km2. Which is the<br />
 #  largest?</p>
 <div id="urkjql" class="answer-code">
-<pre class="r klippy copyme"><code>## Compute the area of each watershed
+<pre class="r klippy copyme"><code>library(dplyr)
+
+## Compute the area of each watershed
 watershed_area &lt;- st_area(yose_watersheds) %&gt;% units::set_units(&quot;km^2&quot;)
 
 ## Show a histogram
@@ -356,8 +358,8 @@ tm_layout(legend.outside = T)</code></pre>
 <p><img src="ex07_geoprocessing_files/figure-html/watersheds_union-1.png" width="672" /></p>
 </div>
 <!--- ans_ybrynm --->
-<p><a id="qtn_lnlrwe" href="#" class="showhidelink" onclick="showHide('lnlrwe');return false;"># 4.</a> Import the burned areas layer for 1987-2016. If needed, project it to UTM Zone<br />
-#  11N WGS84.</p>
+<p><a id="qtn_lnlrwe" href="#" class="showhidelink" onclick="showHide('lnlrwe');return false;"># 4.</a> Import the burned areas layer for 1987-2016. If needed, project it to UTM<br />
+#  Zone 11N WGS84.</p>
 <div id="lnlrwe" class="answer-code">
 <pre class="r klippy copyme"><code>firehist_gdb &lt;- &quot;./data/yose_firehistory.gdb&quot;
 
@@ -386,16 +388,15 @@ yose_firearea8716_all &lt;- yose_firearea8716_ind %&gt;% st_make_valid() %&gt;% 
 hu_fire &lt;- yose_watersheds_hu %&gt;% st_intersection(yose_firearea8716_all)
 
 ## Plot
-tm_shape(yose_watersheds_hu) + 
-  tm_polygons(&quot;HUNAME&quot;) +
-tm_shape(hu_fire) +
-  tm_polygons()</code></pre>
+tm_shape(yose_watersheds_hu) + tm_polygons(&quot;HUNAME&quot;) +
+  tm_shape(hu_fire) + tm_polygons() +
+  tm_layout(legend.outside = TRUE)</code></pre>
 <p><img src="ex07_geoprocessing_files/figure-html/union_fire-1.png" width="672" /></p>
 </div>
 <!--- ans_mzzbet --->
 <p>#####################################<br/>#### <strong>ANALYZING CAMPGROUND ‘SIZE’</strong> ####<br/>#####################################</p>
-<p><a id="qtn_smbidz" href="#" class="showhidelink" onclick="showHide('smbidz');return false;"># 6.</a> Import the Campsites (not Campgrounds) from the YNP Points of Interest layer.<br />
-#  If needed, project them to UTM Zone 11N WGS84.</p>
+<p><a id="qtn_smbidz" href="#" class="showhidelink" onclick="showHide('smbidz');return false;"># 6.</a> Import the Campsites (not Campgrounds) from the YNP Points of Interest<br />
+#  layer. If needed, project them to UTM Zone 11N WGS84.</p>
 <div id="smbidz" class="answer-code">
 <pre class="r klippy copyme"><code>## Import the Yosemite Points-of-Interest Shapefile and
 ## filter it down to just the campsites
@@ -417,14 +418,15 @@ plot(yose_campsites_utm %&gt;% st_geometry(), pch=16, asp=1, cex=0.5, axes=TRUE)
 <p><a id="qtn_pzokxb" href="#" class="showhidelink" onclick="showHide('pzokxb');return false;"># 7.</a> Extract the campsites that are part of the Wawona Campground. Plot them.</p>
 <div id="pzokxb" class="answer-code">
 <pre class="r klippy copyme"><code>## Filter just those campsites where POINAME = &#39;Wawona Campground Campsite&#39; 
-wawona_campsites &lt;- yose_campsites_utm %&gt;% filter(POINAME == &quot;Wawona Campground Campsite&quot;)
+wawona_campsites &lt;- yose_campsites_utm %&gt;% 
+  filter(POINAME == &quot;Wawona Campground Campsite&quot;)
 
 plot(wawona_campsites %&gt;% st_geometry(), pch = 16, axes = TRUE)</code></pre>
 <p><img src="ex07_geoprocessing_files/figure-html/get_wawona_campsites-1.png" width="672" /></p>
 </div>
 <!--- ans_pzokxb --->
-<p><a id="qtn_yprglc" href="#" class="showhidelink" onclick="showHide('yprglc');return false;"># 8.</a> Create a Minimum Convex Polygon (MCP) around the campsites in Wawona Campground,<br />
-#  and plot it. <a href="#" class="showhidehint" onclick="showHide('fvcurj');return false;"></a></p>
+<p><a id="qtn_yprglc" href="#" class="showhidelink" onclick="showHide('yprglc');return false;"># 8.</a> Create a Minimum Convex Polygon (MCP) around the campsites in Wawona<br />
+#  Campground, and plot it. <a href="#" class="showhidehint" onclick="showHide('fvcurj');return false;"></a></p>
 <div id="fvcurj" class="hint">
 <p><code>st_convex_hull()</code> operates on MULTIPOINT features. Convert a POINT object with many features into a MULTIPOINT object with a single feature with <code>st_union()</code>.</p>
 </div>
@@ -437,23 +439,27 @@ wawona_mcp &lt;- wawona_campsites %&gt;% st_union() %&gt;%  st_convex_hull()
 tmap_mode(&quot;plot&quot;)
 tm_shape(wawona_campsites) + tm_symbols(col = &quot;darkgreen&quot;, shape = 16, size = 0.5) +
   tm_shape(wawona_mcp) + tm_borders(col = &quot;red&quot;) + 
-  tm_layout(title = &quot;Wawona Campground&quot;)</code></pre>
+  tm_layout(main.title = &quot;Wawona Campground&quot;)</code></pre>
 <p><img src="ex07_geoprocessing_files/figure-html/wawona_mcp-1.png" width="672" /></p>
 </div>
 <!--- ans_yprglc --->
 <p><a id="qtn_qtflna" href="#" class="showhidelink" onclick="showHide('qtflna');return false;"># 9.</a> Do the same for the Bridalveil Creek campsites and the Lower Pines campsites.</p>
 <div id="qtflna" class="answer-code">
-<pre class="r klippy copyme"><code>bridalveil_campsites &lt;- yose_campsites_utm %&gt;% filter(POINAME == &quot;Bridalveil Creek Campsite&quot;)
+<pre class="r klippy copyme"><code>bridalveil_campsites &lt;- yose_campsites_utm %&gt;% 
+  filter(POINAME == &quot;Bridalveil Creek Campsite&quot;)
 bridalveil_mcp &lt;- bridalveil_campsites %&gt;% st_union() %&gt;%  st_convex_hull()
+
 tm_shape(bridalveil_campsites) + tm_symbols(col = &quot;darkgreen&quot;, shape = 16, size = 0.5) +
   tm_shape(bridalveil_mcp) + tm_borders(col = &quot;red&quot;) + 
-  tm_layout(title = &quot;Bridalveil Creek&quot;)
+  tm_layout(main.title = &quot;Bridalveil Creek&quot;)
 
-lowerpines_campsites &lt;- yose_campsites_utm %&gt;% filter(POINAME == &quot;Lower Pines Campsite&quot;)
+lowerpines_campsites &lt;- yose_campsites_utm %&gt;% 
+  filter(POINAME == &quot;Lower Pines Campsite&quot;)
 lowerpines_mcp &lt;- lowerpines_campsites %&gt;% st_union() %&gt;%  st_convex_hull()
+
 tm_shape(lowerpines_campsites) + tm_symbols(col = &quot;darkgreen&quot;, shape = 16, size = 0.5) +
   tm_shape(lowerpines_mcp) + tm_borders(col = &quot;red&quot;) +
-  tm_layout(title = &quot;Lower Pines&quot;)
+  tm_layout(main.title = &quot;Lower Pines&quot;)
 
 ## Coming soon...</code></pre>
 <p><img src="ex07_geoprocessing_files/figure-html/bridalveil_lowerpines-1.png" width="672" /><img src="ex07_geoprocessing_files/figure-html/bridalveil_lowerpines-2.png" width="672" /></p>

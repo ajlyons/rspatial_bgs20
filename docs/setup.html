@@ -20,6 +20,10 @@
 <script src="slides/lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="slides/lib/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="slides/lib/navigation-1.1/tabsets.js"></script>
+<script src="slides/lib/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="slides/lib/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="slides/lib/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="slides/lib/klippy-0.0.0.9500/js/klippy.min.js"></script>
 <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACkUlEQVQ4jX2SW0jTcRTHTzNyeZlh6lqmm3POdNPC6SxSEzaqafkykOFoIxTDWpKRFV6iQMNLFyMSsQvUW0WORc2WWBmGKEGZXUyz0NrmNmfa1PYgfHsQ1v5oHjgvX875/M45vy/R8mDJ9caxrFIL5CUWJB00Q9n+7Q+l1BetUMuMTL3JpTB0QVnejd1Hu9DQ60G5eQbqB7PIvj0L2bUZ0KZzghWbs0o7Fx3Tc/B6vStm6+g0wrQvIKh2gKKyUxnNSZoO685SC1YDeL1e9Ll+Ia7WCd5pJ4hojQ8g1nViezETYBqZx93BOdwa9jAgsdUT4J6ZQqC6f4GIiLYU9/RzNWYIdU9hd/8rLjN7UGT8DbWROVVMlQsBBWas142DiIikdfbFMF0POIVm2NzM1zwLS+mvcSsnEajpBSv/8RIgucGJ1EYXEs+NwjrlWfUGMee/Y2PFJIJLrFibex8kOsahhCYnUlpnIL1kh9X9/yMKG2yIOOlAsPYnAveZsE75EEQUQLwTwy5Rsxvx9UxApKEPEYY+BiSizA623oaggkdgq4xLKwRLq7i8sy6EFlpg8wNEVwyAd3wAbZ8cPu3CazeCC/sRojYjaL8Jvm8MPWLDBm03A8CveQ9+7RBia4cYU4QfeokwzTOwc6/4OzKXHap/C5ufD0RNo0i4OAZR81dcnnD69Mp3PxBe9GRkuZdFKk7sqTcQ132EpGUMydetSLnpgOSGHVtbxpHU9AX8mkFEG55/ZrjQL1h82V6esPLVh8Sr40i940J6xzzS7s1C0m6HqHEEiTnatgT5gcPijHxltFwhjpRIQpZjBAJ2lFTBFW5TiOPT8mXx6apdcRl5OaJM1Q6hLC9ls3RPTLgok0NELCKiv02kPqt/O1MZAAAAAElFTkSuQmCC" rel="icon" type="image/x-icon" />
 <script language="javascript" type="text/javascript">
 function TriShowHide(shID) {
@@ -237,10 +241,20 @@ h2 {
   font-weight: bold;
   margin-left: 0px;
 }
+h3 {
+  font-size: 18px;
+  margin-top: 2em;
+}
+pre {
+  font-size: 16px;
+}
 </style>
 <div style="margin-bottom:3em;">
 
 </div>
+<script>
+  addKlippy('left', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
 <div id="computer-setup" class="section level2">
 <h2>Computer Setup</h2>
 <p>The workshop includes a good number of hands-on exercises so you’ll need a laptop or desktop computer (Mac or Windows are both fine). As noted below, you can either install RStudio and a bunch of R packages, <em>or</em> run R in a browser using the RStudio Cloud platform (details below). In either case, a mouse is recommended for navigating the interactive maps we’ll be creating.</p>
@@ -261,28 +275,34 @@ h2 {
 <p><a href="https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a></p>
 <p><em>Note</em>: If you already have R installed, please make sure you have version <strong>3.6</strong> or later. If not, please update R by downloading the latest version above and (re)installing it.</p>
 </div>
+<p><br />
+</p>
 <p>b. <strong>Download and install RStudio Desktop</strong></p>
 <p>Download the version for your operating system. The free version is fine.</p>
 <div class="indented1">
 <p><a href="https://www.rstudio.com/products/rstudio/download/" target="_blank">https://www.rstudio.com/products/rstudio/download/</a></p>
 </div>
+<p><br />
+</p>
 <p>c. <strong>Install Packages</strong></p>
 <p class="indented1">
-R packages are like add-ins - they expand the capabilities of R. To install the packages we’ll be using for the workshop, open RStudio and execute the following commands by copy-pasting them into the console and hitting enter (internet connection required).
+R packages are like add-ins - they expand the capabilities of R. To install the packages we’ll be using for the workshop, click the little copy button in the green text box below, then open RStudio and paste the commands into the console and hit enter. An internet connection is required.
 </p>
-<textarea name="msg" cols="120" rows="7" style="font-family:monospace;" class="indented1">
-pkgs_req <- c("sp", "sf", "tmap", "tmaptools", "leaflet", "ggmap", "maptools", "RColorBrewer", "raster", "maps", "zipcode", "tidyverse",  "jsonlite", "rasterVis", "GISTools", "adehabitatHR", "nngeo", "lwgeom", "conflicted", "tigris", "tidycensus")
+<pre class="r klippy copyme"><code>pkgs_req &lt;- c(&quot;sp&quot;, &quot;sf&quot;, &quot;tmap&quot;, &quot;tmaptools&quot;, &quot;leaflet&quot;, &quot;ggmap&quot;, &quot;maptools&quot;, &quot;RColorBrewer&quot;, &quot;raster&quot;, &quot;maps&quot;, &quot;zipcode&quot;, &quot;tidyverse&quot;,  &quot;jsonlite&quot;, &quot;rasterVis&quot;, &quot;GISTools&quot;, &quot;adehabitatHR&quot;, &quot;nngeo&quot;, &quot;lwgeom&quot;, &quot;conflicted&quot;, &quot;tigris&quot;, &quot;tidycensus&quot;, &quot;stars&quot;)
 
-pkgs_missing <- pkgs_req[!(pkgs_req %in% installed.packages()[,"Package"])]
+pkgs_missing &lt;- pkgs_req[!(pkgs_req %in% installed.packages()[,&quot;Package&quot;])]
 
-if (length(pkgs_missing)) install.packages(pkgs_missing, dependencies=TRUE)
-</textarea>
-<p class="indented1">
-If you are prompted by the question, <em>‘Do you want to install from sources the package which needs compilation?’</em>, select ‘No’.
+if (length(pkgs_missing)) install.packages(pkgs_missing, dependencies=TRUE)</code></pre>
+<p class="indented1" style="border:2px solid grey; margin:1em 2em; padding:10px;">
+If you are prompted by the question, <strong>‘Do you want to install from sources the package which needs compilation?’</strong>, select ‘<strong>No</strong>’.
+</p>
+<p><br />
 </p>
 <p>d. <strong>Download workshop materials</strong></p>
 <p class="indented1">
 The workshop materials are on GitHub. Please download the workshop materials by visiting the site <a href="https://github.com/ajlyons/rspatial_bgs20" target="_blank">https://github.com/ajlyons/rspatial_bgs20</a>, and clicking the green download <img src="images/clone_download_btn_114x24.png" /> button. Unzip the file to your hard drive.
+</p>
+<p><br />
 </p>
 <p>e. <strong>Set the working directory in RStudio</strong></p>
 <p class="indented1">
@@ -296,15 +316,21 @@ load("./data/test_pts.RData")
 plot(pts[[1]], asp=1, pch=16, cex=0.5, type="l", col="red", lwd=2, main="Working Directory Set Correctly!")
 invisible(sapply(pts[2:4], points, asp=1, pch=16, cex=0.5, type="l"))
 </textarea>
+<p><br />
+</p>
 <p>f. <strong>Open the slides</strong></p>
 <p class="indented1">
 Go to <a href="https://ajlyons.github.io/rspatial_bgs20/" target="_blank">https://ajlyons.github.io/rspatial_bgs20/</a> to open the table of contents for the slides and exercises. (You may also double-click <em>index.html</em> in the ‘docs’ folder).
 </p>
 </div>
+<p><br />
+</p>
 </div>
 <div id="slides-and-exercises" class="section level2">
 <h2>Slides and Exercises</h2>
 <p>Most of the exercises will be in the <a href="https://ajlyons.github.io/rspatial_bgs20/" target="_blank">slides</a>. Typically you’ll copy-paste starter code, and/or question prompts, from your browser into a R script, and then keep going from there.</p>
+<p><br />
+</p>
 </div>
 <div id="zoom-setup" class="section level2">
 <h2>Zoom Setup</h2>

@@ -269,9 +269,13 @@ within a distance
 </tr>
 </tbody>
 </table>
+<div class="infobox">
+<p>These functions are also known as <em>spatial predicates</em></p>
+</div>
+<!--- infobox --->
 </div>
 <div id="using-logical-spatial-relationship-functions" class="slide section level1">
-<h1>Using logical spatial relationship functions</h1>
+<h1>Using Logical Spatial Relationship Functions</h1>
 <p>Let’s look at an example:</p>
 <div class="indented2" style="font-family:monospace;">
 <strong>st_intersects(<em>x</em>, <em>y</em>, sparse=TRUE)</strong>
@@ -279,23 +283,47 @@ within a distance
 <p>where</p>
 <div class="indented2">
 <p><code>x</code> (target) and <code>y</code> (source) are both <code>sf</code> objects</p>
-<p><code>sparse = TRUE</code> – return a <strong>list</strong> object (one element for each feature of x), where the elements are vectors integers (indices of y where the test is TRUE)</p>
-<p><code>sparse = FALSE</code> – return a <strong>matrix of logical values</strong> (all pairs of features)</p>
+<p><code>sparse = TRUE</code><br />
+returns a <strong>list</strong> object with<br />
+one element for each feature of <code>x</code>, and<br />
+each element contains the <strong>indices of y</strong> where the test is TRUE</p>
+<p><code>sparse = FALSE</code><br />
+returns a <strong>matrix</strong> of <strong>logical values</strong>, with<br />
+one row for each feature of <code>x</code>, and<br />
+one column for each features in <code>y</code></p>
 </div>
-<h3 id="example-find-all-the-points-of-interest-that-intersect-the-merced-hu-watershed.">Example: Find all the points of interest that intersect the Merced HU Watershed.</h3>
+<h3 id="example-points-and-polygons">Example: Points and Polygons</h3>
+<p>Consider an example where <code>x</code> contains 5 points and <code>y</code> contains 2 polygons:</p>
+<p><img src="images/pts_polys_ex01_504x240x256.png" style="display:block; margin:1em auto; border:1px solid grey;" /> When <code>sparse = TRUE</code>, you get a <strong>list of indices</strong>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">st_intersects</span>(my_pts, my_polys, <span class="dt">sparse =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>When <code>sparse = FALSE</code>, you get a <em>2 x 5</em> <strong>matrix of logical values</strong>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">st_intersects</span>(my_pts, my_polys, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="infobox">
+<p>When you get back the results of a spatial relationship test, you can use them to subset features with <code>dplyr</code> functions:</p>
+<div class="indented1">
+<ul>
+<li>feed TRUE / FALSE values into <code>filter()</code></li>
+<li>feed indices into <code>slice()</code></li>
+</ul>
+</div>
+</div>
+<!--- infobox--->
+</div>
+<div id="example-find-pois-that-intersect-the-merced-watershed" class="slide section level1">
+<h1>Example: Find POIs that Intersect the Merced Watershed</h1>
 <p>Start by importing the watersheds:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">## Import the watersheds, grouping by HUNAME</span></a>
-<a class="sourceLine" id="cb1-2" title="2">gpkg_watershd_fn &lt;-<span class="st"> &quot;./data/yose_watersheds.gpkg&quot;</span></a>
-<a class="sourceLine" id="cb1-3" title="3">yose_hu_watersheds &lt;-<span class="st"> </span><span class="kw">st_read</span>(gpkg_watershd_fn, <span class="dt">layer=</span><span class="st">&quot;calw221&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(HU) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">HUNAME =</span> <span class="kw">first</span>(HUNAME), <span class="dt">NUM_WATERSHEDS =</span> <span class="kw">n</span>())</a>
-<a class="sourceLine" id="cb1-6" title="6"></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="co">## Pull out just the merced water</span></a>
-<a class="sourceLine" id="cb1-8" title="8">merced_watershed &lt;-<span class="st"> </span>yose_hu_watersheds <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(HUNAME <span class="op">==</span><span class="st"> &quot;MERCED RIVER&quot;</span>)</a>
-<a class="sourceLine" id="cb1-9" title="9"></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="co">## Plot boundaries</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="kw">plot</span>(yose_hu_watersheds <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>())</a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="kw">plot</span>(merced_watershed <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="st">&quot;lightpink&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co">## Import the watersheds, grouping by HUNAME</span></a>
+<a class="sourceLine" id="cb3-2" title="2">gpkg_watershd_fn &lt;-<span class="st"> &quot;./data/yose_watersheds.gpkg&quot;</span></a>
+<a class="sourceLine" id="cb3-3" title="3">yose_hu_watersheds &lt;-<span class="st"> </span><span class="kw">st_read</span>(gpkg_watershd_fn, <span class="dt">layer=</span><span class="st">&quot;calw221&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(HU) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">HUNAME =</span> <span class="kw">first</span>(HUNAME), <span class="dt">NUM_WATERSHEDS =</span> <span class="kw">n</span>())</a>
+<a class="sourceLine" id="cb3-6" title="6"></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co">## Pull out just the merced water</span></a>
+<a class="sourceLine" id="cb3-8" title="8">merced_watershed &lt;-<span class="st"> </span>yose_hu_watersheds <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(HUNAME <span class="op">==</span><span class="st"> &quot;MERCED RIVER&quot;</span>)</a>
+<a class="sourceLine" id="cb3-9" title="9"></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co">## Plot boundaries</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="kw">plot</span>(yose_hu_watersheds <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>())</a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="kw">plot</span>(merced_watershed <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="st">&quot;lightpink&quot;</span>)</a></code></pre></div>
 <pre><code>## Reading layer `calw221&#39; from data source `C:\Workshops\R-Spatial\rspatial_mod\outputs\rspatial_bgs20\docs\data\yose_watersheds.gpkg&#39; using driver `GPKG&#39;
 ## Simple feature collection with 127 features and 38 fields
 ## geometry type:  POLYGON
@@ -304,32 +332,30 @@ within a distance
 ## proj4string:    +proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</code></pre>
 <p><img src="14_spatial-queries_files/figure-slidy/watershed_imp_klippy-1.png" width="768" /></p>
 <p>Next import the points of interest:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co">## Import points of interest</span></a>
-<a class="sourceLine" id="cb3-2" title="2">yose_poi &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn=</span><span class="st">&quot;./data&quot;</span>, <span class="dt">layer=</span><span class="st">&quot;yose_poi&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co">## Import points of interest</span></a>
+<a class="sourceLine" id="cb5-2" title="2">yose_poi &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn=</span><span class="st">&quot;./data&quot;</span>, <span class="dt">layer=</span><span class="st">&quot;yose_poi&quot;</span>) </a></code></pre></div>
 <pre><code>## Reading layer `yose_poi&#39; from data source `C:\Workshops\R-Spatial\rspatial_mod\outputs\rspatial_bgs20\docs\data&#39; using driver `ESRI Shapefile&#39;
 ## Simple feature collection with 2720 features and 30 fields
 ## geometry type:  POINT
 ## dimension:      XY
 ## bbox:           xmin: 246416.2 ymin: 4153717 xmax: 301510.7 ymax: 4208419
 ## CRS:            26911</code></pre>
-<p>Do the intersection:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">merced_poi &lt;-<span class="st"> </span>yose_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_intersects</span>(merced_watershed)</a></code></pre></div>
+<p>Apply the intersects test:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">merced_poi &lt;-<span class="st"> </span>yose_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_intersects</span>(merced_watershed)</a></code></pre></div>
 <pre><code>## Error in st_geos_binop(&quot;intersects&quot;, x, y, sparse = sparse, prepared = prepared): st_crs(x) == st_crs(y) is not TRUE</code></pre>
 <div class="indented2" style="color:red;font-weight:bold;">
 Spatial querying requires features to be in the same crs!
 </div>
 <p>In this case, let’s project the HU watershed layer (which is in Albers) to match the points of interest (which are UTM):</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">yose_hu_utm &lt;-<span class="st"> </span>yose_hu_watersheds <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_transform</span>(<span class="kw">st_crs</span>(yose_poi))</a>
-<a class="sourceLine" id="cb7-2" title="2">merced_hu_utm &lt;-<span class="st"> </span>yose_hu_utm <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(HUNAME <span class="op">==</span><span class="st"> &quot;MERCED RIVER&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">yose_hu_utm &lt;-<span class="st"> </span>yose_hu_watersheds <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_transform</span>(<span class="kw">st_crs</span>(yose_poi))</a>
+<a class="sourceLine" id="cb9-2" title="2">merced_hu_utm &lt;-<span class="st"> </span>yose_hu_utm <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(HUNAME <span class="op">==</span><span class="st"> &quot;MERCED RIVER&quot;</span>)</a></code></pre></div>
 <div class="tip">
-<p>Note the trick here. Rather than projecting the watersheds to a specific EPSG number, we project it to match whatever projection <code>yose_poi</code> is in. We don’t even need to know what it is!</p>
+<p>Note the trick here: rather than projecting the watersheds to a specific EPSG number, we project it to match whatever projection <code>yose_poi</code> is in. We don’t even need to know what it is!</p>
 </div>
 <!--- tip --->
-<p>Try the intersection again:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">yose_poi_merced_yn &lt;-<span class="st"> </span>yose_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_intersects</span>(merced_hu_utm, <span class="dt">sparse=</span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="kw">head</span>(yose_poi_merced_yn)</a>
-<a class="sourceLine" id="cb8-3" title="3"></a>
-<a class="sourceLine" id="cb8-4" title="4">merced_poi &lt;-<span class="st"> </span>yose_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="kw">which</span>(yose_poi_merced_yn[,<span class="dv">1</span>]))</a></code></pre></div>
+<p>Try the intersects test again:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">yose_poi_merced_yn &lt;-<span class="st"> </span>yose_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_intersects</span>(merced_hu_utm, <span class="dt">sparse=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw">head</span>(yose_poi_merced_yn)</a></code></pre></div>
 <pre><code>##      [,1]
 ## [1,] TRUE
 ## [2,] TRUE
@@ -337,22 +363,53 @@ Spatial querying requires features to be in the same crs!
 ## [4,] TRUE
 ## [5,] TRUE
 ## [6,] TRUE</code></pre>
-<p>Plot to make sure:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">plot</span>(yose_hu_utm  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">border=</span><span class="st">&quot;gray70&quot;</span>)</a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="kw">plot</span>(merced_hu_utm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="st">&quot;lightpink&quot;</span>)</a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="kw">plot</span>(yose_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">col=</span><span class="st">&quot;gray30&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="fl">0.3</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="kw">plot</span>(merced_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="fl">0.8</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="14_spatial-queries_files/figure-slidy/watershed_poi_plot_klippy-1.png" width="768" /></p>
+<div class="tryit">
+<p>How many points intersect the Merced watershed polygon?</p>
+<p>[<span id="soln_oorhdz" class="showhidesoln" onclick="showHide(&#39;oorhdz&#39;);return false;">Hint</span>] [<span id="soln_pyibqe" class="showhidesoln" onclick="showHide(&#39;pyibqe&#39;);return false;">Solution</span>]</p>
+<div id="oorhdz" class="hint">
+<p>This is equivalent to asking how many TRUE values there are in the first column of <code>yose_poi_merced_yn</code>.</p>
+<p>To get the first column of a matrix <code>x</code>, use <code>x[ , 1]</code></p>
 </div>
-<div id="selecting-with-square-bracket-notation" class="slide section level1">
-<h1>Selecting with Square Bracket Notation</h1>
-<p>You can also subset spatially use the familiar square bracket notation, putting a sf object as the expression for the rows. The following are equivalent:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">poi_merced2 &lt;-<span class="st"> </span>yose_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_intersection</span>(merced_hu_utm)</a>
-<a class="sourceLine" id="cb11-2" title="2">poi_merced1 &lt;-<span class="st"> </span>yose_poi[merced_hu_utm, ]</a></code></pre></div>
+<!--- soln_oorhdz --->
+<div id="pyibqe" class="hint">
+<div class="indented1 indentend1-r">
+<div class="sourceCode" id="cb12"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co">## Sum up the values in the matrix</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw">sum</span>(yose_poi_merced_yn[,<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb12-3" title="3"></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="co">## Or you can compute a frequency table of values in the matrix</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="kw">table</span>(yose_poi_merced_yn[,<span class="dv">1</span>])</a></code></pre></div>
+<pre><code>## [1] 2233
+## 
+## FALSE  TRUE 
+##   487  2233</code></pre>
+</div>
+</div>
+<!--- soln_pyibqe --->
+</div>
+<!--- TryIt --->
+<p>Plot the results to make sure:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co">## Extract the points that intersect the watershed to a new sf object</span></a>
+<a class="sourceLine" id="cb14-2" title="2">merced_poi &lt;-<span class="st"> </span>yose_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(yose_poi_merced_yn[,<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb14-3" title="3"></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="co">## Plot</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="kw">plot</span>(yose_hu_utm  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">border=</span><span class="st">&quot;gray70&quot;</span>)</a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="kw">plot</span>(merced_hu_utm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="st">&quot;lightpink&quot;</span>)</a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="kw">plot</span>(yose_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">col=</span><span class="st">&quot;gray30&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="fl">0.5</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="kw">plot</span>(merced_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="fl">0.8</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="14_spatial-queries_files/figure-slidy/watershed_poi_plot_klippy-1.png" width="768" /></p>
 <div class="infobox">
-<p>By default, sf will do an intersection when the rows argument is a sf object. To use a different spatial test, add the op argument. E.g.,</p>
+<p><strong>Selecting with Square Bracket Notation</strong></p>
+<p>You can also subset spatially use the familiar square bracket notation, putting a sf object as the expression for the rows. The following are equivalent:</p>
 <div class="indented1 indented1-r">
-<div class="sourceCode" id="cb12"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># poi_not_merced &lt;- yose_poi[merced_hu_utm, , op = st_disjoint]</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">poi_merced2 &lt;-<span class="st"> </span>yose_poi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_intersection</span>(merced_hu_utm)</a>
+<a class="sourceLine" id="cb15-2" title="2">poi_merced1 &lt;-<span class="st"> </span>yose_poi[merced_hu_utm, ]</a></code></pre></div>
+</div>
+<p>By default, when the rows argument is a sf object the result will be an intersection. To use a different spatial test, add the optional <code>op</code> argument:</p>
+<div class="indented1 indented1-r">
+<div class="sourceCode" id="cb16"><pre class="sourceCode r sample_code"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co">## Get all the points of interest *except* where they intersect</span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="co">## Note the blank space where the &#39;columns&#39; expression should normally go.</span></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="co">## You still need that comma!</span></a>
+<a class="sourceLine" id="cb16-4" title="4">poi_not_merced &lt;-<span class="st"> </span>yose_poi[merced_hu_utm, , op =<span class="st"> </span>st_disjoint]</a></code></pre></div>
 </div>
 </div>
 <!--- info-box --->
@@ -360,121 +417,147 @@ Spatial querying requires features to be in the same crs!
 </div>
 <div id="example-generating-random-points" class="slide section level1">
 <h1>Example: Generating Random Points</h1>
-<p>In this example, we want to generate 500 random points. Because Yosemite is not rectangular, our approach will be to generate a whole bunch of random points within the bounding box (which is easy to do), filter out the ones that fall outside the boundary, and then randomly select 500 from the ones in the park .</p>
-<p>First we import the boundary and generate 1500 points within the bounding box.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co">## Import the yosemite border</span></a>
-<a class="sourceLine" id="cb13-2" title="2">yose_bnd &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn=</span><span class="st">&quot;./data&quot;</span>, <span class="dt">layer=</span><span class="st">&quot;yose_boundary&quot;</span>)</a></code></pre></div>
-<pre><code>## Reading layer `yose_boundary&#39; from data source `C:\Workshops\R-Spatial\rspatial_mod\outputs\rspatial_bgs20\docs\data&#39; using driver `ESRI Shapefile&#39;
-## Simple feature collection with 1 feature and 11 fields
-## geometry type:  POLYGON
-## dimension:      XY
-## bbox:           xmin: -119.8864 ymin: 37.4947 xmax: -119.1964 ymax: 38.18515
-## CRS:            4269</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">n &lt;-<span class="st"> </span><span class="dv">500</span></a>
-<a class="sourceLine" id="cb15-2" title="2">yose_ext &lt;-<span class="st"> </span><span class="kw">st_bbox</span>(yose_bnd)</a>
-<a class="sourceLine" id="cb15-3" title="3"></a>
-<a class="sourceLine" id="cb15-4" title="4">xs &lt;-<span class="st"> </span><span class="kw">runif</span>(n<span class="op">*</span><span class="dv">3</span>, <span class="dt">min=</span>yose_ext[<span class="dv">1</span>], <span class="dt">max=</span>yose_ext[<span class="dv">3</span>])</a>
-<a class="sourceLine" id="cb15-5" title="5">ys &lt;-<span class="st"> </span><span class="kw">runif</span>(n<span class="op">*</span><span class="dv">3</span>, <span class="dt">min=</span>yose_ext[<span class="dv">2</span>], <span class="dt">max=</span>yose_ext[<span class="dv">4</span>])</a>
-<a class="sourceLine" id="cb15-6" title="6"></a>
-<a class="sourceLine" id="cb15-7" title="7">rand_pts &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(<span class="kw">data.frame</span>(<span class="dt">lon=</span>xs, <span class="dt">lat=</span>ys), <span class="dt">coords=</span><span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>, <span class="st">&quot;lat&quot;</span>), <span class="dt">crs=</span><span class="kw">st_crs</span>(yose_bnd))</a>
-<a class="sourceLine" id="cb15-8" title="8"></a>
-<a class="sourceLine" id="cb15-9" title="9"><span class="kw">plot</span>(rand_pts, <span class="dt">axes=</span>T, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="fl">0.5</span>)</a></code></pre></div>
+<p>In this example, we want to generate 500 random points. Because Yosemite is not rectangular, our approach will be:</p>
+<ol style="list-style-type: decimal">
+<li>generate a whole bunch of random points within the bounding box (which is easy to do)<br />
+</li>
+<li>filter out the points that fall outside the park boundary<br />
+</li>
+<li>randomly select 500 from the ones within the park</li>
+</ol>
+<p>First, we import the boundary and generate 1500 points within the bounding box.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co">## Import the Yosemite border</span></a>
+<a class="sourceLine" id="cb17-2" title="2">yose_bnd_ll &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn=</span><span class="st">&quot;./data&quot;</span>, <span class="dt">layer=</span><span class="st">&quot;yose_boundary&quot;</span>)</a>
+<a class="sourceLine" id="cb17-3" title="3"></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="co">## Generate uniformly distributed random numbers between the x and y ranges</span></a>
+<a class="sourceLine" id="cb17-5" title="5">n &lt;-<span class="st"> </span><span class="dv">500</span></a>
+<a class="sourceLine" id="cb17-6" title="6">yose_ext &lt;-<span class="st"> </span><span class="kw">st_bbox</span>(yose_bnd_ll)</a>
+<a class="sourceLine" id="cb17-7" title="7">xs &lt;-<span class="st"> </span><span class="kw">runif</span>(n <span class="op">*</span><span class="st"> </span><span class="dv">3</span>, <span class="dt">min =</span> yose_ext[<span class="dv">1</span>], <span class="dt">max =</span> yose_ext[<span class="dv">3</span>])</a>
+<a class="sourceLine" id="cb17-8" title="8">ys &lt;-<span class="st"> </span><span class="kw">runif</span>(n <span class="op">*</span><span class="st"> </span><span class="dv">3</span>, <span class="dt">min =</span> yose_ext[<span class="dv">2</span>], <span class="dt">max =</span> yose_ext[<span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb17-9" title="9"></a>
+<a class="sourceLine" id="cb17-10" title="10"><span class="co">## Create a sf object from the random points</span></a>
+<a class="sourceLine" id="cb17-11" title="11">rand_pts &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(<span class="kw">data.frame</span>(<span class="dt">lon =</span> xs, <span class="dt">lat =</span> ys), </a>
+<a class="sourceLine" id="cb17-12" title="12">                     <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>, <span class="st">&quot;lat&quot;</span>), </a>
+<a class="sourceLine" id="cb17-13" title="13">                     <span class="dt">crs=</span><span class="kw">st_crs</span>(yose_bnd_ll))</a>
+<a class="sourceLine" id="cb17-14" title="14"></a>
+<a class="sourceLine" id="cb17-15" title="15"><span class="co">## Plot</span></a>
+<a class="sourceLine" id="cb17-16" title="16"><span class="kw">plot</span>(rand_pts, <span class="dt">axes=</span>T, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="fl">0.5</span>)</a></code></pre></div>
 <p><img src="14_spatial-queries_files/figure-slidy/rand_pts-1.png" width="768" /></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">in_yose_mat &lt;-<span class="st"> </span><span class="kw">st_within</span>(rand_pts, yose_bnd, <span class="dt">sparse=</span><span class="ot">FALSE</span>)</a></code></pre></div>
-<pre><code>## although coordinates are longitude/latitude, st_within assumes that they are planar</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">head</span>(in_yose_mat)</a></code></pre></div>
+<p>Next, we test which points fall within the park boundary, and save those to a new object.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co">## Test which points are within the YNP boundary</span></a>
+<a class="sourceLine" id="cb18-2" title="2">in_yose_mat &lt;-<span class="st"> </span><span class="kw">st_within</span>(rand_pts, yose_bnd_ll, <span class="dt">sparse =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="kw">head</span>(in_yose_mat)</a>
+<a class="sourceLine" id="cb18-4" title="4"></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="co">## Save those in the park to a new sf object</span></a>
+<a class="sourceLine" id="cb18-6" title="6">pts_in_park &lt;-<span class="st"> </span>rand_pts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(in_yose_mat[,<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb18-7" title="7"><span class="kw">nrow</span>(pts_in_park)</a>
+<a class="sourceLine" id="cb18-8" title="8"></a>
+<a class="sourceLine" id="cb18-9" title="9"><span class="kw">tm_shape</span>(yose_bnd_ll) <span class="op">+</span><span class="st"> </span><span class="kw">tm_borders</span>(<span class="dt">col=</span><span class="st">&quot;palegreen4&quot;</span>, <span class="dt">lwd =</span> <span class="dv">4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-10" title="10"><span class="st">  </span><span class="kw">tm_shape</span>(pts_in_park) <span class="op">+</span><span class="st"> </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="fl">0.1</span>, <span class="dt">col=</span><span class="st">&quot;gray20&quot;</span>)</a></code></pre></div>
+<p><img src="14_spatial-queries_files/figure-slidy/test_within_park-1.png" width="768" /></p>
 <pre><code>##      [,1]
 ## [1,] TRUE
 ## [2,] TRUE
 ## [3,] TRUE
 ## [4,] TRUE
 ## [5,] TRUE
-## [6,] TRUE</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">pts_in_park &lt;-<span class="st"> </span>rand_pts[in_yose_mat[,<span class="dv">1</span>], ]</a>
-<a class="sourceLine" id="cb20-2" title="2"><span class="kw">nrow</span>(pts_in_park)</a></code></pre></div>
-<pre><code>## [1] 988</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">plot</span>(pts_in_park, <span class="dt">axes=</span>T, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="fl">0.5</span>)</a></code></pre></div>
-<p><img src="14_spatial-queries_files/figure-slidy/rand_pts-2.png" width="768" /></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">pts_in_park_sample &lt;-<span class="st"> </span>pts_in_park <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(n)</a>
-<a class="sourceLine" id="cb23-2" title="2"><span class="kw">plot</span>(pts_in_park_sample, <span class="dt">axes=</span>T, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">cex=</span><span class="fl">0.5</span>)</a></code></pre></div>
-<p><img src="14_spatial-queries_files/figure-slidy/rand_pts-3.png" width="768" /></p>
+## [6,] TRUE
+## [1] 1010</code></pre>
+<p>Lastly, all we need is 500 points so take a random sample:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co">## Take a random sample of the points </span></a>
+<a class="sourceLine" id="cb20-2" title="2">pts_in_park_<span class="dv">500</span> &lt;-<span class="st"> </span>pts_in_park <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(n)</a>
+<a class="sourceLine" id="cb20-3" title="3"></a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="co">## Plot</span></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="kw">tm_shape</span>(yose_bnd_ll) <span class="op">+</span><span class="st"> </span><span class="kw">tm_borders</span>(<span class="dt">col=</span><span class="st">&quot;palegreen4&quot;</span>, <span class="dt">lwd =</span> <span class="dv">4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-6" title="6"><span class="st">  </span><span class="kw">tm_shape</span>(pts_in_park_<span class="dv">500</span>) <span class="op">+</span><span class="st"> </span><span class="kw">tm_dots</span>(<span class="dt">size =</span> <span class="fl">0.1</span>, <span class="dt">col =</span> <span class="st">&quot;gray20&quot;</span>)</a></code></pre></div>
+<p><img src="14_spatial-queries_files/figure-slidy/sample500-1.png" width="768" /></p>
 </div>
-<div id="distances-and-nearest-neighbors" class="slide section level1">
-<h1>Distances and Nearest Neighbors</h1>
-<p><tt>sf::st_distance()</tt> computes distances <strong>between all pairs of features</strong>. For example, if you wanted to compute the distance from every campground to every cell tower.</p>
-To identify one or more nearest neighbors, use <tt><strong>st_nn()</strong></tt> from the <strong>nngeo</strong> package.
+<div id="computing-distances-and-identifying-nearest-neighbors" class="slide section level1">
+<h1>Computing Distances and Identifying Nearest Neighbors</h1>
+<p><code>sf::st_distance()</code> computes distances <strong>between all pairs of features</strong>. For example, if you wanted to compute the distance from every campground to every cell tower.</p>
+To identify one or more nearest neighbors, use <code>**st_nn()**</code> from the <strong>nngeo</strong> package.
 <div class="tip">
 <p>When computing feature-to-feature distances or identifying nearest neighbors, the layers should be in the same CRS.</p>
 </div>
 <!--- tip --->
 <h3 id="example-find-the-closest-trail-to-each-campground">Example: Find the closest trail to each campground</h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co">## Define a convenience variable for UTM Zone 11</span></a>
-<a class="sourceLine" id="cb24-2" title="2">epsg_utm11n_nad83 &lt;-<span class="st"> </span><span class="dv">26911</span></a>
-<a class="sourceLine" id="cb24-3" title="3"></a>
-<a class="sourceLine" id="cb24-4" title="4"><span class="co">## Import the campgrounds</span></a>
-<a class="sourceLine" id="cb24-5" title="5">yose_campgrnds_utm &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn=</span><span class="st">&quot;./data&quot;</span>, <span class="dt">layer=</span><span class="st">&quot;yose_poi&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POITYPE <span class="op">==</span><span class="st"> &#39;Campground&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-7" title="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(POINAME) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-8" title="8"><span class="st">  </span><span class="kw">st_transform</span>(epsg_utm11n_nad83)</a>
-<a class="sourceLine" id="cb24-9" title="9"></a>
-<a class="sourceLine" id="cb24-10" title="10"><span class="co">## Import the trails</span></a>
-<a class="sourceLine" id="cb24-11" title="11">gdb_fn &lt;-<span class="st"> &quot;./data/yose_trails.gdb&quot;</span></a>
-<a class="sourceLine" id="cb24-12" title="12"><span class="kw">file.exists</span>(gdb_fn)</a>
-<a class="sourceLine" id="cb24-13" title="13">yose_trails_utm &lt;-<span class="st"> </span><span class="kw">st_read</span>(gdb_fn, <span class="dt">layer=</span><span class="st">&quot;Trails&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-14" title="14"><span class="st">  </span><span class="kw">st_transform</span>(epsg_utm11n_nad83)</a>
-<a class="sourceLine" id="cb24-15" title="15"></a>
-<a class="sourceLine" id="cb24-16" title="16"><span class="co">## Load the nngeo package</span></a>
-<a class="sourceLine" id="cb24-17" title="17"><span class="kw">library</span>(nngeo)</a>
-<a class="sourceLine" id="cb24-18" title="18"></a>
-<a class="sourceLine" id="cb24-19" title="19">cp_closest_trail_idx &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">st_nn</span>(yose_campgrnds_utm, yose_trails_utm))</a>
-<a class="sourceLine" id="cb24-20" title="20">cp_closest_trail_idx</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="co">## FIND THE CLOSEST TRAIL TO EACH CAMPGROUND</span></a>
+<a class="sourceLine" id="cb21-2" title="2"></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="co">## Define a convenience variable for UTM Zone 11</span></a>
+<a class="sourceLine" id="cb21-4" title="4">epsg_utm11n_nad83 &lt;-<span class="st"> </span><span class="dv">26911</span></a>
+<a class="sourceLine" id="cb21-5" title="5"></a>
+<a class="sourceLine" id="cb21-6" title="6"><span class="co">## Import the campgrounds</span></a>
+<a class="sourceLine" id="cb21-7" title="7">yose_campgrnds_utm &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="dt">dsn=</span><span class="st">&quot;./data&quot;</span>, <span class="dt">layer=</span><span class="st">&quot;yose_poi&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(POITYPE <span class="op">==</span><span class="st"> &#39;Campground&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-9" title="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(POINAME) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-10" title="10"><span class="st">  </span><span class="kw">st_transform</span>(epsg_utm11n_nad83)</a>
+<a class="sourceLine" id="cb21-11" title="11"></a>
+<a class="sourceLine" id="cb21-12" title="12"><span class="co">## Import the trails</span></a>
+<a class="sourceLine" id="cb21-13" title="13">gdb_fn &lt;-<span class="st"> &quot;./data/yose_trails.gdb&quot;</span></a>
+<a class="sourceLine" id="cb21-14" title="14"><span class="kw">file.exists</span>(gdb_fn)</a>
+<a class="sourceLine" id="cb21-15" title="15">yose_trails_utm &lt;-<span class="st"> </span><span class="kw">st_read</span>(gdb_fn, <span class="dt">layer=</span><span class="st">&quot;Trails&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-16" title="16"><span class="st">  </span><span class="kw">st_transform</span>(epsg_utm11n_nad83)</a>
+<a class="sourceLine" id="cb21-17" title="17"></a>
+<a class="sourceLine" id="cb21-18" title="18"><span class="co">## Load the nngeo package</span></a>
+<a class="sourceLine" id="cb21-19" title="19"><span class="kw">library</span>(nngeo)</a>
+<a class="sourceLine" id="cb21-20" title="20"></a>
+<a class="sourceLine" id="cb21-21" title="21"><span class="co">## Run the st_nn, return results as list</span></a>
+<a class="sourceLine" id="cb21-22" title="22">closest_trail_lst &lt;-<span class="st"> </span><span class="kw">st_nn</span>(yose_campgrnds_utm, yose_trails_utm, <span class="dt">sparse =</span> <span class="ot">TRUE</span>, <span class="dt">progress =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb21-23" title="23"></a>
+<a class="sourceLine" id="cb21-24" title="24">closest_trail_idx &lt;-<span class="st"> </span><span class="kw">unlist</span>(closest_trail_lst)</a>
+<a class="sourceLine" id="cb21-25" title="25">closest_trail_idx</a></code></pre></div>
 <pre><code>## Reading layer `yose_poi&#39; from data source `C:\Workshops\R-Spatial\rspatial_mod\outputs\rspatial_bgs20\docs\data&#39; using driver `ESRI Shapefile&#39;
 ## Simple feature collection with 2720 features and 30 fields
 ## geometry type:  POINT
 ## dimension:      XY
 ## bbox:           xmin: 246416.2 ymin: 4153717 xmax: 301510.7 ymax: 4208419
-## CRS:            26911</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre><code>## Reading layer `Trails&#39; from data source `C:\Workshops\R-Spatial\rspatial_mod\outputs\rspatial_bgs20\docs\data\yose_trails.gdb&#39; using driver `OpenFileGDB&#39;
+## CRS:            26911
+## [1] TRUE
+## Reading layer `Trails&#39; from data source `C:\Workshops\R-Spatial\rspatial_mod\outputs\rspatial_bgs20\docs\data\yose_trails.gdb&#39; using driver `OpenFileGDB&#39;
 ## Simple feature collection with 1074 features and 13 fields
 ## geometry type:  MULTILINESTRING
 ## dimension:      XY
 ## bbox:           xmin: 245134 ymin: 4153668 xmax: 323239.7 ymax: 4250703
-## CRS:            26911</code></pre>
-<pre><code>## lines or polygons</code></pre>
-<pre><code>##  [1] 610 117 275 467 504 961 237 432 343 563 541 603 566 927  72</code></pre>
+## CRS:            26911
+##  [1] 610 117 275 467 504 961 237 432 343 563 541 603 566 927  72</code></pre>
 <p>Plot the results:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="co">## Plot results</span></a>
-<a class="sourceLine" id="cb30-2" title="2">rainbow_cols &lt;-<span class="st"> </span><span class="kw">rainbow</span>(<span class="kw">nrow</span>(yose_campgrnds_utm), <span class="dt">end=</span><span class="dv">5</span><span class="op">/</span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb30-3" title="3"><span class="kw">tm_shape</span>(yose_trails_utm, <span class="dt">bbox=</span>yose_campgrnds_utm) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb30-4" title="4"><span class="st">  </span><span class="kw">tm_lines</span>(<span class="dt">col=</span><span class="st">&quot;gray90&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-5" title="5"><span class="st">  </span><span class="kw">tm_shape</span>(yose_trails_utm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(cp_closest_trail_idx)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb30-6" title="6"><span class="st">  </span><span class="kw">tm_lines</span>(<span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-7" title="7"><span class="st">  </span><span class="kw">tm_shape</span>(yose_campgrnds_utm) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb30-8" title="8"><span class="st">  </span><span class="kw">tm_symbols</span>(<span class="dt">col=</span><span class="st">&quot;POINAME&quot;</span>, <span class="dt">palette =</span> rainbow_cols, <span class="dt">size=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb30-9" title="9"><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.show =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<pre><code>## Warning: Number of levels of the variable &quot;POINAME&quot; is 698, which is larger than max.categories (which
-## is 30), so levels are combined. Set tmap_options(max.categories = 698) in the layer function to show all
-## levels.</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co">## Plot results</span></a>
+<a class="sourceLine" id="cb23-2" title="2">rainbow_cols &lt;-<span class="st"> </span><span class="kw">rainbow</span>(<span class="kw">nrow</span>(yose_campgrnds_utm), <span class="dt">end=</span><span class="dv">5</span><span class="op">/</span><span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="kw">tm_shape</span>(yose_trails_utm, <span class="dt">bbox=</span>yose_campgrnds_utm) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="st">  </span><span class="kw">tm_lines</span>(<span class="dt">col=</span><span class="st">&quot;gray90&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-5" title="5"><span class="st">  </span><span class="kw">tm_shape</span>(yose_trails_utm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(closest_trail_idx)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="st">  </span><span class="kw">tm_lines</span>(<span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-7" title="7"><span class="st">  </span><span class="kw">tm_shape</span>(yose_campgrnds_utm) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-8" title="8"><span class="st">  </span><span class="kw">tm_symbols</span>(<span class="dt">col=</span><span class="st">&quot;POINAME&quot;</span>, <span class="dt">palette =</span> rainbow_cols, <span class="dt">size=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-9" title="9"><span class="st">  </span><span class="kw">tm_layout</span>(<span class="dt">legend.show =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## Warning: Number of levels of the variable &quot;POINAME&quot; is 698, which is larger than max.categories (which is 30), so levels
+## are combined. Set tmap_options(max.categories = 698) in the layer function to show all levels.</code></pre>
 <p><img src="14_spatial-queries_files/figure-slidy/nngeo_plot_results_klippy-1.png" width="768" /></p>
 </div>
 <div id="summary" class="slide section level1">
 <h1>Summary</h1>
-<p>Today we saw how to:</p>
+<p>In this session we saw how to:</p>
 <div class="compact">
 <ul>
-<li>perform spatial queries with <tt>sf</tt></li>
+<li>apply <code>sf</code> functions that test for spatial relationships<br />
+</li>
+<li>use the results of spatial relationship tests to select features<br />
+</li>
+<li>generate random points within an irregular polygon<br />
+</li>
+<li>locate the nearest feature with <code>st_nn()</code></li>
 </ul>
 </div>
 <div class="infobox">
 <p>Additional Resources</p>
 <div class="indented1">
 <p><a href="https://geocompr.robinlovelace.net/spatial-operations.html" target="_blank">Geocomputation with R Ch4: Spatial Data Operations</a>. Robin Lovelace, Jakub Nowosad, Jannes Muenchow</p>
-<p>2019-10-23</p>
 </div>
 </div>
 <!--- additional resources --->
 <p>
+<br/>
+<hr/>
 <strong>Next: </strong> <a href="15_branches_loops.html">Automation with Branches and Loops</a>
 </p>
 </div>

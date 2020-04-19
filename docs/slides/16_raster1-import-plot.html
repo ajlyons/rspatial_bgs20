@@ -251,7 +251,7 @@ Raster Data Pt 1: Importing and Basic Plotting <br/><img src='images/hillshade_4
 <a class="sourceLine" id="cb2-10" title="10"><span class="co">## Plot the DEM</span></a>
 <a class="sourceLine" id="cb2-11" title="11"></a>
 <a class="sourceLine" id="cb2-12" title="12"><span class="kw">plot</span>(yose_area_dem)</a>
-<a class="sourceLine" id="cb2-13" title="13"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(yose_bnd), <span class="dt">col=</span><span class="ot">NA</span>, <span class="dt">border=</span><span class="st">&quot;black&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-13" title="13"><span class="kw">plot</span>(yose_bnd_ll <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">col=</span><span class="ot">NA</span>, <span class="dt">border=</span><span class="st">&quot;black&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">add=</span><span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 <pre><code>## [1] TRUE</code></pre>
 <p><img src="16_raster1-import-plot_files/figure-slidy/import_srtm_execute-1.png" width="768" /></p>
@@ -467,10 +467,13 @@ Raster Data Pt 1: Importing and Basic Plotting <br/><img src='images/hillshade_4
 <h3 id="example">Example</h3>
 <p>Crop the ginormous SRTM DEM to the park boundary.</p>
 <div class="indented1">
-<div class="sourceCode" id="cb11"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">yose_dem_ll &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw">crop</span>(yose_area_dem, yose_bnd)</a>
-<a class="sourceLine" id="cb11-2" title="2">yose_dem_ll</a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="kw">plot</span>(yose_dem_ll)</a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(yose_bnd), <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="ot">NA</span>, <span class="dt">border=</span><span class="st">&quot;black&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co">## Crop the large SRTM raster to the YNP boundary</span></a>
+<a class="sourceLine" id="cb11-2" title="2">yose_dem_ll &lt;-<span class="st"> </span>yose_area_dem <span class="op">%&gt;%</span><span class="st"> </span>raster<span class="op">::</span><span class="kw">crop</span>(yose_bnd_ll)</a>
+<a class="sourceLine" id="cb11-3" title="3">yose_dem_ll</a>
+<a class="sourceLine" id="cb11-4" title="4"></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="co">## Plot the new DEM</span></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="kw">plot</span>(yose_dem_ll)</a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="kw">plot</span>(yose_bnd_ll <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_geometry</span>(), <span class="dt">add=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="ot">NA</span>, <span class="dt">border=</span><span class="st">&quot;black&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## class      : RasterLayer 
 ## dimensions : 829, 828, 686412  (nrow, ncol, ncell)
 ## resolution : 0.0008333333, 0.0008333333  (x, y)
@@ -545,10 +548,13 @@ Raster Data Pt 1: Importing and Basic Plotting <br/><img src='images/hillshade_4
 <p>To manually make certain cell values transparent, you can use a color palette or ramp which includes NA values:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r klippy copyme"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co">## Plot the Yosemite elevation model in grayscale with some of the values set to NA</span></a>
 <a class="sourceLine" id="cb18-2" title="2"></a>
-<a class="sourceLine" id="cb18-3" title="3">grayCols &lt;-<span class="st"> </span><span class="kw">gray</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">255</span><span class="op">/</span><span class="dv">255</span>)</a>
-<a class="sourceLine" id="cb18-4" title="4">grayCols[<span class="dv">200</span><span class="op">:</span><span class="dv">255</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb18-5" title="5">  </a>
-<a class="sourceLine" id="cb18-6" title="6"><span class="kw">plot</span>(yose_dem_ll, <span class="dt">col=</span>grayCols, <span class="dt">asp=</span><span class="dv">1</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb18-3" title="3"><span class="co">## Create a gray scale color ramp</span></a>
+<a class="sourceLine" id="cb18-4" title="4">grayCols &lt;-<span class="st"> </span><span class="kw">gray</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">255</span><span class="op">/</span><span class="dv">255</span>)</a>
+<a class="sourceLine" id="cb18-5" title="5"></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="co">## Make the last 56 elements &#39;NA&#39; (i.e., transparent)</span></a>
+<a class="sourceLine" id="cb18-7" title="7">grayCols[<span class="dv">200</span><span class="op">:</span><span class="dv">255</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb18-8" title="8">  </a>
+<a class="sourceLine" id="cb18-9" title="9"><span class="kw">plot</span>(yose_dem_ll, <span class="dt">col=</span>grayCols, <span class="dt">asp=</span><span class="dv">1</span>)</a></code></pre></div>
 <p><img src="16_raster1-import-plot_files/figure-slidy/plot_yosedem_gray_trans-1.png" width="768" /></p>
 </div>
 <div id="plotting-multi-layer-rasters" class="slide section level1">
@@ -604,8 +610,34 @@ Raster Data Pt 1: Importing and Basic Plotting <br/><img src='images/hillshade_4
 <p>See also RSToolbox</p>
 </div>
 </div>
-<div id="importing-spatial-data-from-the-cloud-bonus" class="slide section level1">
-<h1>Importing Spatial Data from the Cloud (BONUS)</h1>
+<div id="summary" class="slide section level1">
+<h1>Summary</h1>
+<p>Today we saw:</p>
+<div class="compact">
+<ul>
+<li>different types of raster data</li>
+<li>import a raster from disk</li>
+<li>view metadata</li>
+<li>crop a raster</li>
+<li>plot a raster</li>
+<li>download spatial data using <code>raster::getData()</code></li>
+</ul>
+</div>
+<div class="infobox">
+<p><strong>Additional Resources:</strong></p>
+<div class="indented1">
+<p><a href="https://rspatial.org/raster/" target="_blank">Introduction to the ’raster’ package</a>, Robert Hijmans</p>
+<p><a href="https://cran.r-project.org/package=tiler" target="_blank">tiler package</a>, Matthew Leonawicz</p>
+</div>
+</div>
+<p>
+<br/>
+<hr/>
+<strong>Next: </strong> <a href="17_raster2-spatial-manip.html">Raster Pt II. Common Raster Manipulations</a>
+</p>
+</div>
+<div id="bonus-importing-spatial-data-from-the-cloud" class="slide section level1">
+<h1>BONUS: Importing Spatial Data from the Cloud</h1>
 <p>The <code>raster</code> package has a function that can download a handful of spatial layers from public sources. <code>raster::getData()</code> can download the following datasets directly into R:</p>
 <div class="indented2">
 <ul>
@@ -642,30 +674,6 @@ Raster Data Pt 1: Importing and Basic Plotting <br/><img src='images/hillshade_4
 <div class="tryit">
 <p>Using the <code>raster::getData()</code> to plot the administrative boundaries of a country of your choice. See what the different values of the <code>level</code> argument return.</p>
 </div>
-</div>
-<div id="summary" class="slide section level1">
-<h1>Summary</h1>
-<p>Today we saw:</p>
-<div class="compact">
-<ul>
-<li>different types of raster data</li>
-<li>import a raster from disk</li>
-<li>view metadata</li>
-<li>crop a raster</li>
-<li>plot a raster</li>
-<li>download spatial data using <code>raster::getData()</code></li>
-</ul>
-</div>
-<div class="infobox">
-<p><strong>Additional Resources:</strong></p>
-<div class="indented1">
-<p><a href="https://rspatial.org/raster/" target="_blank">Introduction to the ’raster’ package</a>, Robert Hijmans</p>
-<p><a href="https://cran.r-project.org/package=tiler" target="_blank">tiler package</a>, Matthew Leonawicz</p>
-</div>
-</div>
-<p>
-<strong>Next: </strong> <a href="17_raster2-spatial-manip.html">Raster Pt II. Common Raster Manipulations</a>
-</p>
 </div>
 
   <!-- dynamically load mathjax for compatibility with self-contained -->

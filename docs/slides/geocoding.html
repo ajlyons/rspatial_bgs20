@@ -133,6 +133,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       // alert("text copied")
   }}
   </script>
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163964617-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-163964617-1');
+  </script>
   <link href="lib/slidy-2/styles/slidy.css" rel="stylesheet" />
   <script src="lib/slidy-2/scripts/slidy.js"></script>
   <script src="lib/slidy_shiny-1/slidy_shiny.js"></script>
@@ -328,10 +338,8 @@ Geocoding <br/><img src='images/geocoding_482x200.png'/>
 <pre><code>##        lon      lat score locName status  matchAddr side addressType
 ## 1 -122.413 37.78679 89.66   World      M Millennium    L         POI</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">geocode_one</span>(<span class="st">&quot;547 Emerson St, Palo Alto, CA 94301&quot;</span>, my_esri_token, <span class="dt">postal=</span><span class="ot">TRUE</span>)</a></code></pre></div>
-<pre><code>##         lon      lat score locName status                                    matchAddr side
-## 1 -122.1619 37.44418   100   World      M 547 Emerson St, Palo Alto, California, 94301    R
-##    addressType
-## 1 PointAddress</code></pre>
+<pre><code>##         lon      lat score locName status                                    matchAddr side  addressType
+## 1 -122.1619 37.44418   100   World      M 547 Emerson St, Palo Alto, California, 94301    R PointAddress</code></pre>
 </div>
 <div id="batch-geocode-multiple-addresses" class="slide section level1">
 <h1>Batch Geocode Multiple Addresses</h1>

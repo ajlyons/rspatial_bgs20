@@ -84,6 +84,16 @@ if (document.selection) {
 }}
 </script>
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163964617-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-163964617-1');
+</script>
+
 
 
 
@@ -288,7 +298,7 @@ pre {
 <p class="indented1">
 R packages are like add-ins - they expand the capabilities of R. To install the packages we’ll be using for the workshop, click the little copy button in the green text box below, then open RStudio and paste the commands into the console and hit enter. An internet connection is required.
 </p>
-<pre class="r klippy copyme"><code>pkgs_req &lt;- c(&quot;sp&quot;, &quot;sf&quot;, &quot;tmap&quot;, &quot;tmaptools&quot;, &quot;leaflet&quot;, &quot;ggmap&quot;, &quot;maptools&quot;, &quot;RColorBrewer&quot;, &quot;raster&quot;, &quot;maps&quot;, &quot;zipcode&quot;, &quot;tidyverse&quot;,  &quot;jsonlite&quot;, &quot;rasterVis&quot;, &quot;GISTools&quot;, &quot;adehabitatHR&quot;, &quot;nngeo&quot;, &quot;lwgeom&quot;, &quot;conflicted&quot;, &quot;tigris&quot;, &quot;tidycensus&quot;, &quot;stars&quot;)
+<pre class="r klippy copyme"><code>pkgs_req &lt;- c(&quot;sp&quot;, &quot;sf&quot;, &quot;tmap&quot;, &quot;tmaptools&quot;, &quot;leaflet&quot;, &quot;ggmap&quot;, &quot;maptools&quot;, &quot;RColorBrewer&quot;, &quot;raster&quot;, &quot;maps&quot;, &quot;zipcode&quot;, &quot;tidyverse&quot;,  &quot;jsonlite&quot;, &quot;rasterVis&quot;, &quot;GISTools&quot;, &quot;adehabitatHR&quot;, &quot;nngeo&quot;, &quot;lwgeom&quot;, &quot;devtools&quot;, &quot;RStoolbox&quot;, &quot;conflicted&quot;, &quot;tigris&quot;, &quot;tidycensus&quot;, &quot;stars&quot;)
 
 pkgs_missing &lt;- pkgs_req[!(pkgs_req %in% installed.packages()[,&quot;Package&quot;])]
 
